@@ -24,6 +24,12 @@ A personal portfolio that makes my CV credible to NZ grad recruiters (full-stack
 - `npm run build` — production build
 - `npm run lint` — ESLint
 
+## Git workflow
+- Never commit to `main` directly. One branch per change, named `<type>/<short-description>` (e.g. `feat/dark-mode-toggle`), merged by squash-merging a PR. CI (lint + build) and the Vercel preview must pass.
+- Commit messages and PR titles use [Conventional Commits](https://www.conventionalcommits.org): `<type>: <imperative summary>`, e.g. `feat: add project case-study pages`. The PR title becomes the squashed commit on `main`.
+- Types: `feat` (new feature/content), `fix` (bug fix), `docs` (docs only), `style` (formatting, no logic change), `refactor`, `perf`, `test`, `chore` (deps, tooling), `ci` (workflows).
+- No `Co-Authored-By` or other AI attribution lines.
+
 ## Quality bar
 - Lighthouse > 90 in every category.
 - Responsive from 360px wide.
