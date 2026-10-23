@@ -1,4 +1,5 @@
 import type { StaticImageData } from "next/image";
+import guessWhoImage from "./images/guess-whos-the-thief.png";
 import platefulImage from "./images/plateful.png";
 import rockPaperScissorsImage from "./images/rock-paper-scissors.png";
 
@@ -65,7 +66,7 @@ export const projects: Project[] = [
     title: "Guess Who's the Thief",
     summary:
       "An AI-driven detective game where players question suspects and solve clues to crack a jewellery theft.",
-    context: "Team project (3 people) · University of Auckland · 2024",
+    context: "SOFTENG 206 team project (3 people) · University of Auckland · 2024",
     stack: ["Java", "JavaFX", "Maven", "OpenAI API", "JLayer"],
     problem:
       "A mystery game where questioning suspects feels open-ended, with AI-generated responses to whatever the player asks instead of a fixed script.",
@@ -77,6 +78,10 @@ export const projects: Project[] = [
     ],
     challenges: ["Keeping a real-time countdown timer synchronised across every game scene."],
     repoUrl: "https://github.com/kwan244/Guess-Who-Game",
+    image: {
+      src: guessWhoImage,
+      alt: "Game scene inside a jewellery store, with doors to the VIP room, manager's office and VIP lounge, a countdown timer, clue and suspect-interrogation counters, and Guess and Backstory buttons.",
+    },
   },
   {
     slug: "rock-paper-scissors",
