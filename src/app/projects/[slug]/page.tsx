@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 import { projects } from "@/content/projects";
 
 export function generateStaticParams() {
@@ -32,16 +33,28 @@ function Section({ title, items }: { title: string; items?: string[] }) {
   );
 }
 
-export default async function ProjectPage({ params }: PageProps<"/projects/[slug]">) {
+// The back link is URL-independent, so it stays in the shared App Shell; only
+// the params-dependent details sit behind Suspense (keeps navigation instant).
+export default function ProjectPage({ params }: PageProps<"/projects/[slug]">) {
+  return (
+    <div className="space-y-4">
+      <Link href="/#projects" className="text-sm text-foreground/70 hover:underline">
+        ← All projects
+      </Link>
+      <Suspense fallback={<p className="text-foreground/70">Loading project…</p>}>
+        <ProjectDetails params={params} />
+      </Suspense>
+    </div>
+  );
+}
+
+async function ProjectDetails({ params }: Pick<PageProps<"/projects/[slug]">, "params">) {
   const project = await getProject(params);
 
   return (
     <article className="space-y-10">
       <header>
-        <Link href="/#projects" className="text-sm text-foreground/70 hover:underline">
-          ← All projects
-        </Link>
-        <h1 className="mt-4 text-3xl font-bold sm:text-4xl">{project.title}</h1>
+        <h1 className="text-3xl font-bold sm:text-4xl">{project.title}</h1>
         <p className="mt-2 text-foreground/70">{project.context}</p>
         <p className="mt-4 text-lg">{project.summary}</p>
         {(project.liveUrl || project.repoUrl) && (

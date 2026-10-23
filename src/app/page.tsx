@@ -48,7 +48,7 @@ export default function Home() {
           {projects.map((project) => (
             <li key={project.slug} className="rounded-lg border border-foreground/10 p-4">
               <h3 className="font-medium">
-                <Link href={`/projects/${project.slug}`} className="underline-offset-4 hover:underline">
+                <Link href={`/projects/${project.slug}`} prefetch={true} className="underline-offset-4 hover:underline">
                   {project.title}
                 </Link>
               </h3>
