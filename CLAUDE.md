@@ -17,6 +17,7 @@ A personal portfolio that makes my CV credible to NZ grad recruiters (full-stack
 - Semantic HTML. Every image needs meaningful alt text. The site must be fully keyboard navigable.
 - Use the Next.js `Image` and Metadata APIs.
 - Keep it minimal: no extra libraries unless clearly needed. **Ask before adding any dependency.**
+- Stay host-portable (AWS migration planned): no Vercel-specific packages or services (`@vercel/*`, Edge Config, KV/Blob, Vercel cron).
 
 ## Commands
 - `npm run dev` — local dev server
