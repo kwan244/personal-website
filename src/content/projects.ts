@@ -1,5 +1,5 @@
 import type { StaticImageData } from "next/image";
-import guessWhoImage from "./images/guess-whos-the-thief.png";
+import guessWhoImage from "./images/guess-whos-the-thief.jpg";
 import platefulImage from "./images/plateful.png";
 import rockPaperScissorsImage from "./images/rock-paper-scissors.png";
 

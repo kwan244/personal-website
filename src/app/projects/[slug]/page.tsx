@@ -35,6 +35,7 @@ function Section({ title, items }: { title: string; items?: string[] }) {
 
 // The back link is URL-independent, so it stays in the shared App Shell; only
 // the params-dependent details sit behind Suspense (keeps navigation instant).
+// shortcut: unknown slugs stream a not-found page with 200 + noindex instead of a 404; add a Proxy check if a real 404 status matters.
 export default function ProjectPage({ params }: PageProps<"/projects/[slug]">) {
   return (
     <div className="space-y-4">
