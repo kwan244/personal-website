@@ -1,4 +1,6 @@
 import type { StaticImageData } from "next/image";
+import platefulImage from "./images/plateful.png";
+import rockPaperScissorsImage from "./images/rock-paper-scissors.png";
 
 export type Project = {
   slug: string;
@@ -53,6 +55,10 @@ export const projects: Project[] = [
       "Testing on real phones over the local network, which needed the frontend's API address to be configurable and the backend's security settings updated.",
     ],
     repoUrl: "https://github.com/kwan244/se310-plateful",
+    image: {
+      src: platefulImage,
+      alt: "Plateful home page with the headline “Discover, share, and savour with Plateful”, buttons to explore restaurants or view the code, and feature cards for smart discovery, real reviews and community.",
+    },
   },
   {
     slug: "guess-whos-the-thief",
@@ -87,5 +93,9 @@ export const projects: Project[] = [
     ],
     liveUrl: "https://kwan244.github.io/RockPaperScissorsWebsite/",
     repoUrl: "https://github.com/kwan244/RockPaperScissorsWebsite",
+    image: {
+      src: rockPaperScissorsImage,
+      alt: "Rock Paper Scissors game with Easy, Medium and Hard difficulty buttons, three round buttons showing rock, paper and scissors hand emojis, a score line and a Reset Score button.",
+    },
   },
 ];

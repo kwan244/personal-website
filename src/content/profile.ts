@@ -1,5 +1,6 @@
 export type Profile = {
   name: string;
+  legalName: string;
   headline: string;
   location: string;
   summary: string[];
@@ -11,6 +12,8 @@ export type Profile = {
 
 export const profile: Profile = {
   name: "Kevin Wang",
+  // Shown so recruiters can match the site to the CV, which uses the legal name.
+  legalName: "Wangxun Wang",
   headline: "Fourth-year Software Engineering student",
   location: "Auckland, New Zealand",
   summary: [

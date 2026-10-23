@@ -29,8 +29,8 @@ A personal portfolio that makes my CV credible to NZ grad recruiters (full-stack
 - Responsive from 360px wide.
 - Dark mode via `prefers-color-scheme`, with a manual toggle.
 
-## Placeholders
-Use `[YOUR NAME]`, `[EMAIL]`, `[GITHUB]`, `[LINKEDIN]` until real values are provided. **Never invent personal details.**
+## Personal details
+Real values live in `src/content/profile.ts`. I go by Kevin Wang; my legal name (Wangxun Wang) is on my CV, so the site shows both. **Never invent personal details**: content comes from my CV, my repos, or me. Never publish my phone number.
 
 ## Plan
 See `PLAN.md` for the phased checklist.

@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     template: `%s | ${profile.name}`,
     default: `${profile.name} | ${profile.headline}`,
   },
-  description: `Portfolio of ${profile.name}, ${profile.headline.toLowerCase()} based in ${profile.location}.`,
+  description: `Portfolio of ${profile.name} (${profile.legalName}),${profile.headline.toLowerCase()} based in ${profile.location}.`,
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

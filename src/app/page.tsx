@@ -9,6 +9,7 @@ export default function Home() {
         <h1 id="hero-heading" className="text-3xl font-bold sm:text-4xl">
           {profile.name}
         </h1>
+        <p className="mt-1 text-sm text-foreground/70">Legal name: {profile.legalName}</p>
         <p className="mt-2 text-lg text-foreground/70">
           {profile.headline} · {profile.location}
         </p>
