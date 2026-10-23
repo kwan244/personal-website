@@ -46,7 +46,7 @@ export const projects: Project[] = [
       "Implemented the API routes for creating, listing and tracking jobs, backed by Prisma on AWS RDS MySQL and AWS S3 file storage.",
       "Implemented the pages for new predictions, job history and result viewing, including a 3D brain viewer (Niivue) with an adjustable lesion overlay.",
       "Added client-side PDF reports and segmentation-mask downloads for completed jobs.",
-      "Added a mock mode (in-memory database, simulated processing, local files) so the app runs with no external services.",
+      "Added mock and simulation modes alongside production (in-memory database, simulated processing, local files), so the app can be developed and demoed without the database or AI service.",
     ],
     challenges: [
       "Tracking each job through an eight-stage pipeline, from upload through preprocessing, segmentation and classification to a result or an error.",
@@ -56,7 +56,6 @@ export const projects: Project[] = [
     results: [
       "Sole developer: wrote all 81 commits between December 2025 and March 2026.",
       "Wrote 157 unit tests (Jest + React Testing Library) plus Playwright end-to-end tests.",
-      "Three operating modes (mock, simulation, production), so the app can be developed and demoed without the database or AI service.",
     ],
     image: {
       src: strokeImage,
@@ -109,7 +108,7 @@ export const projects: Project[] = [
       "Implemented custom MP3 and MP4 playback (JLayer + JavaFX Media) for sound effects, music and storytelling sequences.",
     ],
     challenges: ["Keeping a real-time countdown timer synchronised across every game scene."],
-    results: ["Contributed 74 commits to the team repository."],
+    results: ["Contributed 74 commits, about 30% of the team's total."],
     repoUrl: "https://github.com/kwan244/Guess-Who-Game",
     image: {
       src: guessWhoImage,
