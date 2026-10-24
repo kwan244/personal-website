@@ -9,7 +9,7 @@ export function Footer() {
 
   return (
     <footer className="border-t border-border">
-      <div className="mx-auto flex max-w-3xl flex-wrap items-center justify-between gap-4 px-4 py-6 text-sm text-muted">
+      <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-4 py-6 text-sm text-muted">
         <p>{profile.name}</p>
         <ul className="flex gap-5">
           {links.map((link) => (

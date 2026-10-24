@@ -52,7 +52,7 @@ function Section({ title, items }: { title: string; items?: string[] }) {
 // shortcut: unknown slugs stream a not-found page with 200 + noindex instead of a 404; add a Proxy check if a real 404 status matters.
 export default function ProjectPage({ params }: PageProps<"/projects/[slug]">) {
   return (
-    <div className="space-y-4">
+    <div className="mx-auto max-w-3xl space-y-4 px-4 py-12">
       <Link href="/#projects" className="text-sm text-muted hover:underline">
         ← All projects
       </Link>
