@@ -3,7 +3,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
+import { profile } from "@/content/profile";
 import { projects } from "@/content/projects";
+import { openGraphBase } from "@/app/shared-metadata";
 
 export function generateStaticParams() {
   return projects.map((project) => ({ slug: project.slug }));
@@ -16,7 +18,19 @@ async function getProject(params: PageProps<"/projects/[slug]">["params"]) {
 
 export async function generateMetadata({ params }: PageProps<"/projects/[slug]">): Promise<Metadata> {
   const project = await getProject(params);
-  return { title: project.title, description: project.summary };
+  const url = `/projects/${project.slug}`;
+  return {
+    title: project.title,
+    description: project.summary,
+    alternates: { canonical: url },
+    openGraph: {
+      ...openGraphBase,
+      type: "article",
+      title: `${project.title} | ${profile.name}`,
+      description: project.summary,
+      url,
+    },
+  };
 }
 
 function Section({ title, items }: { title: string; items?: string[] }) {
