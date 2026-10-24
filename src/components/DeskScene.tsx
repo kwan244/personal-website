@@ -41,7 +41,7 @@ export function DeskScene({ projectCount, className }: { projectCount: number; c
         </linearGradient>
         <filter id="desk-blur"><feGaussianBlur stdDeviation="5" /></filter>
         <filter id="desk-steam-blur" x="-100%" y="-30%" width="300%" height="160%"><feGaussianBlur stdDeviation="2.6" /></filter>
-        <filter id="desk-shadow" x="-30%" y="-30%" width="160%" height="180%"><feDropShadow dx="0" dy="10" stdDeviation="10" floodColor="#000" floodOpacity=".6" /></filter>
+        <filter id="desk-shadow" x="-30%" y="-30%" width="160%" height="180%"><feDropShadow dx="0" dy="8" stdDeviation="6" floodColor="#000" floodOpacity=".55" /></filter>
         <g id="desk-relaxed-hand">
           <g transform="translate(343 476) rotate(18) scale(1.4)">
             <path fill="url(#desk-hand-skin)" d="M-22 4C-28 -12 -32 -30 -31 -44C-31 -52 -29 -58 -24 -58C-19 -58 -18 -53 -18 -48C-18 -60 -14 -66 -9 -66C-4 -66 -2 -61 -3 -53C-2 -66 2 -71 7 -71C12 -71 14 -65 12 -55C14 -63 19 -66 24 -64C29 -62 29 -55 26 -46C25 -40 27 -35 31 -35C35 -42 39 -50 43 -49C47 -48 46 -41 43 -34C36 -20 28 -6 20 4Z" />
@@ -59,11 +59,11 @@ export function DeskScene({ projectCount, className }: { projectCount: number; c
       {/* The idea glow (replaces the old hero blob); lit in the static pose. */}
       <ellipse id="desk-idea-halo" cx="500" cy="554" rx="240" ry="170" fill="url(#desk-halo)" opacity=".72" />
 
-      <g id="desk-laptop" filter="url(#desk-shadow)">
-        <path d="M328 71H664Q676 71 677 84L688 288Q689 301 676 302H318Q305 302 306 289L316 84Q317 72 328 71Z" fill="url(#desk-edge)" />
-        <path d="M329 73H663Q674 73 675 85L686 288Q686 299 675 299H319Q308 299 308 288L318 85Q319 74 329 73Z" fill="url(#desk-bezel)" />
-        <path d="M331 89H661L672 280H321Z" fill="url(#desk-screen)" />
-        <path d="M331 89H475L352 280H321Z" fill="#b0f4d4" opacity=".025" />
+      <g id="desk-laptop" filter="url(#desk-shadow)" transform="translate(496 420) scale(1.15) translate(-496 -420)">
+        <path d="M338 71H654Q665 71 666 84L688 288Q689 301 676 302H318Q305 302 306 289L327 84Q328 72 338 71Z" fill="url(#desk-edge)" />
+        <path d="M339 73H653Q664 73 665 85L686 288Q686 299 675 299H319Q308 299 308 288L329 85Q330 74 339 73Z" fill="url(#desk-bezel)" />
+        <path d="M341 89H651L672 280H321Z" fill="url(#desk-screen)" />
+        <path d="M341 89H476L352 280H321Z" fill="#b0f4d4" opacity=".025" />
         <circle cx="496" cy="81" r="2.3" fill="#274a3a" />
         <g fill="#416c58"><circle cx="353" cy="109" r="4.4" /><circle cx="368" cy="109" r="4.4" /><circle cx="383" cy="109" r="4.4" /></g>
         <g className="font-mono" fontSize="13.5">
@@ -86,8 +86,8 @@ export function DeskScene({ projectCount, className }: { projectCount: number; c
 
       <g id="desk-mug" filter="url(#desk-shadow)">
         <ellipse cx="833" cy="424" rx="59" ry="21" fill="#000" opacity=".3" />
-        <path d="M873 362C914 347 923 410 878 405" fill="none" stroke="#163d2a" strokeWidth="12" />
-        <path d="M876 361C910 353 917 399 883 401" fill="none" stroke="#5c9e7a" strokeOpacity=".55" strokeWidth="2" />
+        <path d="M868 376C898 366 914 384 909 400C904 414 886 418 866 410" fill="none" stroke="#163d2a" strokeWidth="11" strokeLinecap="round" />
+        <path d="M872 372C898 364 911 380 906 395" fill="none" stroke="#5c9e7a" strokeOpacity=".55" strokeWidth="2" strokeLinecap="round" />
         <path d="M783 359C782 391 786 430 816 437C851 446 872 425 877 361Z" fill="url(#desk-ceramic)" />
         <path d="M784 361Q782 406 802 425" fill="none" stroke="#99eac3" strokeOpacity=".18" strokeWidth="1.5" />
         <ellipse cx="830" cy="357" rx="48" ry="41" fill="#143020" stroke="#a7efd0" strokeWidth="1.7" />

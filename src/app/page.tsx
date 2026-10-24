@@ -16,11 +16,11 @@ const others = projects.filter((p) => !p.featured);
 // Sticky-note spots on the desk, in DeskScene units (1000 × 750): top-left corner, size,
 // rotation about that corner, font size and paper tone. Converted to % and cqw below.
 const notes: Record<string, { x: number; y: number; w: number; h: number; r: number; fs: number; tone: string }> = {
-  "stroke-outcome-prediction": { x: 70, y: 100, w: 170, h: 120, r: -5, fs: 16, tone: "from-[#8fdcb9] to-[#5aa585]" },
-  "auss-member-platform": { x: 80, y: 290, w: 160, h: 110, r: 4, fs: 16, tone: "from-[#b7ecd3] to-[#79bfa0]" },
-  plateful: { x: 55, y: 470, w: 116, h: 80, r: -3, fs: 14, tone: "from-[#8fdcb9] to-[#5aa585]" },
-  "guess-whos-the-thief": { x: 772, y: 60, w: 124, h: 86, r: 6, fs: 14, tone: "from-[#b7ecd3] to-[#79bfa0]" },
-  "rock-paper-scissors": { x: 878, y: 176, w: 104, h: 82, r: -5, fs: 13, tone: "from-[#8fdcb9] to-[#5aa585]" },
+  "stroke-outcome-prediction": { x: 40, y: 90, w: 212, h: 150, r: -5, fs: 19, tone: "from-[#8fdcb9] to-[#5aa585]" },
+  "auss-member-platform": { x: 40, y: 300, w: 196, h: 138, r: 4, fs: 19, tone: "from-[#b7ecd3] to-[#79bfa0]" },
+  plateful: { x: 45, y: 490, w: 145, h: 100, r: -3, fs: 17, tone: "from-[#8fdcb9] to-[#5aa585]" },
+  "guess-whos-the-thief": { x: 760, y: 40, w: 155, h: 108, r: 6, fs: 17, tone: "from-[#b7ecd3] to-[#79bfa0]" },
+  "rock-paper-scissors": { x: 850, y: 170, w: 130, h: 102, r: -5, fs: 16, tone: "from-[#8fdcb9] to-[#5aa585]" },
 };
 
 function noteStyle(slug: string) {
@@ -66,11 +66,11 @@ export default function Home() {
             {/* On the laptop screen. The screen stays dark in both themes, so these use fixed mint colours. */}
             <h1
               id="hero-heading"
-              className="absolute top-[25.5%] left-[34.8%] text-[5.1cqw] leading-none whitespace-nowrap text-[#8bf5cb] uppercase"
+              className="absolute top-[20.9%] left-[32.6%] text-[5.86cqw] leading-none whitespace-nowrap text-[#8bf5cb] uppercase"
             >
               {profile.name}
             </h1>
-            <p className="absolute top-[32%] left-[35.2%] flex items-center gap-[0.6cqw] font-mono text-[max(12px,1.35cqw)] text-[#e2f3e8]">
+            <p className="absolute top-[28.9%] left-[33%] flex items-center gap-[0.7cqw] font-mono text-[max(12px,1.55cqw)] text-[#e2f3e8]">
               <span aria-hidden="true">&gt;</span>
               <a
                 href={profile.cv}
@@ -86,7 +86,7 @@ export default function Home() {
                 <li
                   key={project.slug}
                   style={noteStyle(project.slug)}
-                  className="absolute top-(--y) left-(--x) h-(--h) w-(--w) origin-top-left rotate-(--r) drop-shadow-lg"
+                  className="absolute top-(--y) left-(--x) h-(--h) w-(--w) origin-top-left rotate-(--r) drop-shadow-md"
                 >
                   <NoteLink slug={project.slug} title={project.title} pinned />
                 </li>
