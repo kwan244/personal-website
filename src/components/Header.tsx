@@ -9,7 +9,7 @@ const navItems = [
 
 export function Header() {
   return (
-    <header className="border-b border-foreground/10">
+    <header className="border-b border-border">
       <div className="mx-auto flex max-w-3xl flex-wrap items-center justify-between gap-x-6 gap-y-2 px-4 py-4">
         <Link href="/" className="font-semibold">
           {profile.name}

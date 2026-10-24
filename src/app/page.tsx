@@ -9,24 +9,24 @@ export default function Home() {
   return (
     <div className="space-y-16">
       <section aria-labelledby="hero-heading">
-        <h1 id="hero-heading" className="text-3xl font-bold sm:text-4xl">
+        <h1 id="hero-heading" className="text-3xl sm:text-4xl">
           {profile.name}
         </h1>
-        <p className="mt-1 text-sm text-foreground/70">Legal name: {profile.legalName}</p>
-        <p className="mt-2 text-lg text-foreground/70">
+        <p className="mt-1 text-sm text-muted">Legal name: {profile.legalName}</p>
+        <p className="mt-2 text-lg text-muted">
           {profile.headline} · {profile.location}
         </p>
         <a
           href={profile.cv}
           download
-          className="mt-6 inline-block rounded-lg border border-foreground/20 px-4 py-2 font-medium hover:bg-foreground/5"
+          className="mt-6 inline-block rounded-lg border border-border px-4 py-2 font-medium hover:bg-surface"
         >
-          Download CV <span className="text-foreground/70">(PDF)</span>
+          Download CV <span className="text-muted">(PDF)</span>
         </a>
       </section>
 
       <section id="about" aria-labelledby="about-heading" className="scroll-mt-8">
-        <h2 id="about-heading" className="text-xl font-semibold">
+        <h2 id="about-heading" className="text-xl">
           About
         </h2>
         <div className="mt-3 space-y-3">
@@ -37,41 +37,41 @@ export default function Home() {
       </section>
 
       <section id="skills" aria-labelledby="skills-heading" className="scroll-mt-8">
-        <h2 id="skills-heading" className="text-xl font-semibold">
+        <h2 id="skills-heading" className="text-xl">
           Skills
         </h2>
         <dl className="mt-3 grid gap-4 sm:grid-cols-2">
           {profile.skills.map((skill) => (
             <div key={skill.group}>
               <dt className="font-medium">{skill.group}</dt>
-              <dd className="text-foreground/70">{skill.items.join(", ")}</dd>
+              <dd className="text-muted">{skill.items.join(", ")}</dd>
             </div>
           ))}
         </dl>
       </section>
 
       <section id="projects" aria-labelledby="projects-heading" className="scroll-mt-8">
-        <h2 id="projects-heading" className="text-xl font-semibold">
+        <h2 id="projects-heading" className="text-xl">
           Projects
         </h2>
         <ul className="mt-3 space-y-4">
           {projects.map((project) => (
-            <li key={project.slug} className="rounded-lg border border-foreground/10 p-4">
+            <li key={project.slug} className="rounded-lg border border-border bg-surface p-4">
               <h3 className="font-medium">
                 <Link href={`/projects/${project.slug}`} prefetch={true} className="underline-offset-4 hover:underline">
                   {project.title}
                 </Link>
               </h3>
-              <p className="mt-1 text-sm text-foreground/70">{project.context}</p>
+              <p className="mt-1 text-sm text-muted">{project.context}</p>
               <p className="mt-2">{project.summary}</p>
-              <p className="mt-2 text-sm text-foreground/70">{project.stack.join(" · ")}</p>
+              <p className="mt-2 font-mono text-xs text-muted">{project.stack.join(" · ")}</p>
             </li>
           ))}
         </ul>
       </section>
 
       <section id="contact" aria-labelledby="contact-heading" className="scroll-mt-8">
-        <h2 id="contact-heading" className="text-xl font-semibold">
+        <h2 id="contact-heading" className="text-xl">
           Contact
         </h2>
         <p className="mt-3">

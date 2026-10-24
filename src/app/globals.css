@@ -1,21 +1,51 @@
 @import "tailwindcss";
 
+/* Mint on ink. Every text pairing passes WCAG AA; borders are decorative (no form inputs yet). */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --background: #f6fbf8;
+  --surface: #ffffff;
+  --foreground: #0d1512;
+  --muted: #4a5f56;
+  --accent: #047857;
+  --accent-foreground: #ffffff;
+  --border: #d3e3db;
+  --glow: #a7f3d0;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #0a0d0c;
+    --surface: #121816;
+    --foreground: #eef6f2;
+    --muted: #9fb8ad;
+    --accent: #6ee7b7;
+    --accent-foreground: #0a0d0c;
+    --border: #24302b;
+    --glow: #065f46;
+  }
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --color-glow: var(--glow);
+  --font-sans: var(--font-geist-sans);
+  --font-display: var(--font-anton);
+  --font-mono: var(--font-jetbrains-mono);
+}
+
+@layer base {
+  /* Anton ships one weight; faux bold looks smeared. */
+  h1,
+  h2 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: 0.01em;
   }
 }
 
@@ -23,4 +53,25 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+/* Static grain: rendered once, never animated, and never blocks clicks. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-foreground);
 }
