@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { profile } from "@/content/profile";
+import { openGraphBase, siteUrl } from "@/app/shared-metadata";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -15,12 +16,17 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const title = `${profile.name} | ${profile.headline}`;
+const description = `Portfolio of ${profile.name} (${profile.legalName}), ${profile.headline.toLowerCase()} based in ${profile.location}.`;
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: {
     template: `%s | ${profile.name}`,
-    default: `${profile.name} | ${profile.headline}`,
+    default: title,
   },
-  description: `Portfolio of ${profile.name} (${profile.legalName}), ${profile.headline.toLowerCase()} based in ${profile.location}.`,
+  description,
+  openGraph: { ...openGraphBase, type: "website", title, description, url: "/" },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
