@@ -10,6 +10,8 @@ export type Project = {
   title: string;
   summary: string;
   context: string;
+  // Featured projects get a large card with a screenshot on the home page.
+  featured?: boolean;
   stack: string[];
   problem: string;
   role: string[];
@@ -30,6 +32,7 @@ export const projects: Project[] = [
     summary:
       "A full-stack web app that lets clinicians upload MRI scans and patient data, run AI stroke outcome predictions and view the results in a 3D brain viewer.",
     context: "Summer internship · Auckland Bioengineering Institute · 2025–26",
+    featured: true,
     stack: [
       "Next.js",
       "TypeScript",
@@ -72,6 +75,7 @@ export const projects: Project[] = [
     summary:
       "The live membership, events and check-in platform for the Auckland University Strength Society, built by a student dev team.",
     context: "AUSS 2026 dev team · Auckland University Strength Society · 2026",
+    featured: true,
     stack: ["React", "TypeScript", "Vite", "Tailwind CSS", "Express", "Prisma", "PostgreSQL", "Zod", "Stripe", "Railway"],
     problem:
       "AUSS needed one place for members to join and pay, for execs to run events and check people in, and for visitors to find out about the club and its sponsors.",
