@@ -76,7 +76,7 @@ export const projects: Project[] = [
     problem:
       "AUSS needed one place for members to join and pay, for execs to run events and check people in, and for visitors to find out about the club and its sponsors.",
     role: [
-      "Took 38 Jira issues from solutioning through to release, across visitor pages, admin tools, payments and security.",
+      "Took features from solutioning tickets through to release, across visitor pages, admin tools, payments and security.",
       "Migrated the frontend to TypeScript (TSX) and Tailwind CSS v4, with a config refactor.",
       "Built RSVP and event attendee management.",
       "Delivered a security hardening pass: URL validation against SSRF, open redirects and javascript: URIs; centralised Zod input validation; trust-proxy and HTTPS enforcement; student ID privacy; per-route auth assertion tests.",
@@ -108,8 +108,9 @@ export const projects: Project[] = [
     context: "SOFTENG 310 open-source contribution · University of Auckland · 2025",
     stack: ["React", "Vite", "Spring Boot", "MongoDB", "TomTom Maps", "Vitest", "React Testing Library"],
     problem:
-      "Finding a restaurant means juggling cuisine, price, tags, name and location. Plateful brings search, filters, favourites and map-based search together in one responsive app, with a React frontend, a Spring Boot API and a MongoDB database. In SOFTENG 310, students extend an existing public codebase: I worked from my own fork and contributed changes back to the main repository through reviewed pull requests.",
+      "Finding a restaurant means juggling cuisine, price, tags, name and location. Plateful brings search, filters, favourites and map-based search together in one responsive app, with a React frontend, a Spring Boot API and a MongoDB database.",
     role: [
+      "Worked from my own fork of the public repository, as SOFTENG 310 students extend an existing open-source codebase, and contributed changes back through reviewed pull requests.",
       "Implemented major mobile-responsive UI improvements across the Home, Search and Restaurant Details pages, including adaptive layouts, grid restructuring and map fixes.",
       "Set up the frontend testing framework (Vitest + React Testing Library) and wrote regression, navigation and UI behaviour tests.",
       "Added dynamic API configuration and backend security updates to support mobile testing over the local network.",
