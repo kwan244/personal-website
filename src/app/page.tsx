@@ -26,7 +26,12 @@ export default function Home() {
           aria-hidden="true"
           className="pointer-events-none absolute -top-24 -right-40 -z-10 size-96 rounded-full bg-[radial-gradient(closest-side,var(--glow),transparent)] opacity-60 blur-2xl"
         />
-        <HeroBadge text={profile.badge} className="absolute top-2 right-0 size-24 sm:size-32" />
+        <HeroBadge
+          text={profile.badge}
+          href="#projects"
+          label="See my projects"
+          className="absolute top-2 right-0 size-24 sm:size-32"
+        />
         <h1 id="hero-heading" className="text-[clamp(4rem,22vw,9rem)] leading-[0.9] uppercase">
           {firstName} <span className="text-outline block">{otherNames.join(" ")}</span>
         </h1>
