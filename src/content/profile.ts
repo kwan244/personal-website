@@ -3,6 +3,8 @@ export type Profile = {
   legalName: string;
   headline: string;
   location: string;
+  // Text around the circular hero badge.
+  badge: string;
   summary: string[];
   skills: { group: string; items: string[] }[];
   email: string;
@@ -17,6 +19,7 @@ export const profile: Profile = {
   legalName: "Wangxun Wang",
   headline: "Fourth-year Software Engineering student",
   location: "Auckland, New Zealand",
+  badge: "KEVIN WANG · SOFTWARE ENGINEERING · AUCKLAND · ",
   summary: [
     "I'm a fourth-year Bachelor of Engineering (Honours) student specialising in Software Engineering at the University of Auckland, with a GPA of 7.37/9.",
     "Over the 2025–26 summer I interned at the Auckland Bioengineering Institute, building a full-stack Next.js and TypeScript app for an AI stroke outcome prediction platform. Customer-facing work alongside my studies has sharpened my communication and teamwork.",

@@ -49,6 +49,19 @@
   }
 }
 
+/* Outlined display text, e.g. the "Wang" in the hero. Still real text for screen readers. */
+.text-outline {
+  color: transparent;
+  -webkit-text-stroke: 2px var(--accent);
+}
+
+/* clip, not hidden: stops the hero blob widening the page without breaking sticky positioning.
+   Set on html too, or body's value moves to the viewport and body no longer clips. */
+html,
+body {
+  overflow-x: clip;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
