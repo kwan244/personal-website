@@ -10,7 +10,6 @@ import { projects } from "@/content/projects";
 
 export const metadata: Metadata = { alternates: { canonical: "/" } };
 
-const [firstName, ...otherNames] = profile.name.split(" ");
 const featured = projects.filter((p) => p.featured);
 const others = projects.filter((p) => !p.featured);
 
@@ -36,83 +35,89 @@ function noteStyle(slug: string) {
   } as CSSProperties;
 }
 
+// A sticky note linking to a project. Pinned notes sit on the desk and scale with it (cqw).
+function NoteLink({ slug, title, pinned = false }: { slug: string; title: string; pinned?: boolean }) {
+  return (
+    <Link
+      href={`/projects/${slug}`}
+      prefetch={true}
+      className={`relative isolate block h-full leading-tight font-bold text-[#08170f] ${pinned ? "p-[1.4cqw] text-(length:--fs)" : "p-3"}`}
+    >
+      <span
+        aria-hidden="true"
+        className={`absolute inset-0 -z-10 bg-linear-160 ${notes[slug].tone} [clip-path:polygon(0_0,100%_0,100%_86%,90%_100%,0_100%)]`}
+      />
+      <span
+        aria-hidden="true"
+        className={`absolute left-1/2 -translate-x-1/2 -rotate-3 bg-[#e6fff3]/20 ${pinned ? "-top-[0.7cqw] h-[1.4cqw] w-[4.4cqw]" : "-top-1.5 h-3 w-10"}`}
+      />
+      {title}
+    </Link>
+  );
+}
+
 export default function Home() {
   return (
     <>
-      <section aria-labelledby="hero-heading" className="flex min-h-svh">
-        <div className="mx-auto grid w-full max-w-7xl content-center gap-10 px-4 py-12 lg:grid-cols-[1fr_2fr] lg:items-center lg:py-16">
-          <div>
-            <h1 id="hero-heading" className="text-[clamp(4rem,14vw,8rem)] leading-[0.9] uppercase">
-              {firstName} <span className="text-outline block">{otherNames.join(" ")}</span>
-            </h1>
-            <p className="mt-4 text-sm text-muted">Legal name: {profile.legalName}</p>
-            <p className="mt-2 max-w-prose text-lg text-muted">
-              {profile.headline} · {profile.location}
-            </p>
-            <a
-              href={profile.cv}
-              download
-              className="mt-6 inline-block rounded-lg border border-border px-4 py-2 font-medium hover:bg-surface"
+      <section aria-labelledby="hero-heading">
+        <div className="desk-frame relative overflow-hidden bg-[#d6e9df] dark:bg-[#070c0a]">
+          <div className="desk-box @container">
+            <DeskScene projectCount={projects.length} className="size-full" />
+            {/* On the laptop screen. The screen stays dark in both themes, so these use fixed mint colours. */}
+            <h1
+              id="hero-heading"
+              className="absolute top-[25.5%] left-[34.8%] text-[5.1cqw] leading-none whitespace-nowrap text-[#8bf5cb] uppercase"
             >
-              Download CV <span className="text-muted">(PDF)</span>
-            </a>
-          </div>
-
-          {/* The scene stays a night desk in both themes, so its links use the dark accent. */}
-          <div className="scene-dark relative @container">
-            <div className="relative aspect-[500/690] overflow-hidden rounded-2xl border border-[#193028] bg-[#080e0b] sm:aspect-[4/3]">
-              <DeskScene projectCount={projects.length} className="size-full" />
+              {profile.name}
+            </h1>
+            <p className="absolute top-[32%] left-[35.2%] flex items-center gap-[0.6cqw] font-mono text-[max(12px,1.35cqw)] text-[#e2f3e8]">
+              <span aria-hidden="true">&gt;</span>
               <a
-                href="#about"
-                className="absolute bottom-[2%] left-1/2 inline-flex -translate-x-1/2 items-center gap-2 rounded-full border border-[#a1f3ce]/65 bg-[#08140d] px-4 py-1.5 text-[13px] text-[#d8f5e6]"
+                href={profile.cv}
+                download
+                className="py-1 text-[#7ff2c2] underline underline-offset-4 [--accent:#6ee7b7]"
               >
-                Scroll down
-                <svg viewBox="0 0 12 8" aria-hidden="true" className="cue-bob h-2 w-3 stroke-[#a1f3ce]">
-                  <path d="M1 1.5l5 5 5-5" fill="none" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
+                Download CV (PDF)
               </a>
-            </div>
-
-            <ul aria-label="Projects" className="mt-4 grid gap-3 sm:mt-0">
+              <span aria-hidden="true" className="desk-cursor inline-block h-[1.2em] w-[0.6em] bg-[#7ff2c2]" />
+            </p>
+            <ul aria-label="Projects" className="hidden scene-wide:block">
               {projects.map((project) => (
                 <li
                   key={project.slug}
                   style={noteStyle(project.slug)}
-                  className="drop-shadow-lg sm:absolute sm:top-(--y) sm:left-(--x) sm:h-(--h) sm:w-(--w) sm:origin-top-left sm:rotate-(--r)"
+                  className="absolute top-(--y) left-(--x) h-(--h) w-(--w) origin-top-left rotate-(--r) drop-shadow-lg"
                 >
-                  <Link
-                    href={`/projects/${project.slug}`}
-                    prefetch={true}
-                    className="relative isolate block h-full p-3 leading-tight font-bold text-[#08170f] sm:p-[1.4cqw] sm:text-(length:--fs)"
-                  >
-                    <span
-                      aria-hidden="true"
-                      className={`absolute inset-0 -z-10 bg-linear-160 ${notes[project.slug].tone} [clip-path:polygon(0_0,100%_0,100%_86%,90%_100%,0_100%)]`}
-                    />
-                    <span
-                      aria-hidden="true"
-                      className="absolute -top-[0.7cqw] left-1/2 h-[1.4cqw] w-[4.4cqw] -translate-x-1/2 -rotate-3 bg-[#e6fff3]/20"
-                    />
-                    {project.title}
-                  </Link>
+                  <NoteLink slug={project.slug} title={project.title} pinned />
                 </li>
               ))}
             </ul>
-
-            <HeroBadge
-              text={profile.badge}
-              href="#projects"
-              label="See my projects"
-              className="aspect-square max-sm:hidden sm:absolute sm:top-[60%] sm:left-[87%] sm:w-[9%]"
-            />
           </div>
+          <HeroBadge
+            text={profile.badge}
+            href="#projects"
+            label="See my projects"
+            className="absolute right-4 bottom-4 size-24 sm:right-8 sm:bottom-8 sm:size-32"
+          />
         </div>
+        {/* Narrow screens crop the desk's sides, so the notes become a list below it. */}
+        <ul aria-label="Projects" className="mx-auto grid max-w-7xl gap-3 px-4 py-6 sm:grid-cols-2 scene-wide:hidden">
+          {projects.map((project) => (
+            <li key={project.slug} className="drop-shadow-lg">
+              <NoteLink slug={project.slug} title={project.title} />
+            </li>
+          ))}
+        </ul>
       </section>
 
       <section aria-label="About and skills" className="bg-surface">
         <div className="mx-auto grid max-w-7xl gap-12 px-4 py-24 lg:grid-cols-2">
           <div id="about" className="scroll-mt-8">
             <h2 className="text-4xl sm:text-5xl">About</h2>
+            <p className="mt-4 text-lg text-muted">
+              {profile.headline} · {profile.location}
+            </p>
+            <p className="mt-1 text-sm text-muted">Legal name: {profile.legalName}</p>
             <div className="mt-4 max-w-prose space-y-3">
               {profile.summary.map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>
