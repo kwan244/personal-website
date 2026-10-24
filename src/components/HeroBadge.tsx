@@ -1,5 +1,5 @@
-// A link styled as a circular badge. The circling text is decorative (aria-hidden) so the
-// link is announced once, by its label. textLength stretches any text to fill the circle.
+// A round sticker that links somewhere. The circling text is decorative (aria-hidden) so the link
+// is announced once, by its label. textLength stretches any text to fill the circle.
 export function HeroBadge({
   text,
   href,
@@ -17,7 +17,8 @@ export function HeroBadge({
         <defs>
           <path id="hero-badge-circle" d="M 50,50 m -38,0 a 38,38 0 1,1 76,0 a 38,38 0 1,1 -76,0" />
         </defs>
-        <text className="fill-accent font-mono" fontSize="7" textLength="238" lengthAdjust="spacing">
+        <circle cx="50" cy="50" r="48" fill="#08140d" stroke="#a1f3ce" strokeOpacity=".5" strokeWidth="1.2" />
+        <text className="badge-spin fill-accent font-mono" fontSize="7" textLength="238" lengthAdjust="spacing">
           <textPath href="#hero-badge-circle">{text}</textPath>
         </text>
         <path
