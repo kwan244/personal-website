@@ -1,5 +1,5 @@
 import type { StaticImageData } from "next/image";
-import aussImage from "./images/auss.png";
+import aussImage from "./images/auss.jpg";
 import guessWhoImage from "./images/guess-whos-the-thief.jpg";
 import platefulImage from "./images/plateful.png";
 import rockPaperScissorsImage from "./images/rock-paper-scissors.png";
@@ -97,7 +97,7 @@ export const projects: Project[] = [
     repoUrl: "https://github.com/ProjectAuss2026/Myauss",
     image: {
       src: aussImage,
-      alt: "AUSS website Sponsors & Partners page, with the AUSS logo and navigation (Home, About, Sponsorship, Social, Activities, Join AUSS) above the heading “Sponsors & Partners” on a dark background.",
+      alt: "AUSS website home page: navigation (Home, About, Sponsorship, Social, Activities, Join AUSS) over a dimmed training photo, with the heading “A Community of Strength Athletes” and Join AUSS and Learn More buttons.",
     },
   },
   {
