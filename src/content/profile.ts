@@ -8,6 +8,7 @@ export type Profile = {
   email: string;
   github: string;
   linkedin: string;
+  cv: string;
 };
 
 export const profile: Profile = {
@@ -30,4 +31,6 @@ export const profile: Profile = {
   email: "kevinw4ng712@gmail.com",
   github: "https://github.com/kwan244",
   linkedin: "https://www.linkedin.com/in/kevin-wang-2464a4317/",
+  // Public copy without the phone number.
+  cv: "/Kevin-Wang-CV.pdf",
 };

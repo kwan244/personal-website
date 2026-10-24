@@ -16,6 +16,13 @@ export default function Home() {
         <p className="mt-2 text-lg text-foreground/70">
           {profile.headline} · {profile.location}
         </p>
+        <a
+          href={profile.cv}
+          download
+          className="mt-6 inline-block rounded-lg border border-foreground/20 px-4 py-2 font-medium hover:bg-foreground/5"
+        >
+          Download CV <span className="text-foreground/70">(PDF)</span>
+        </a>
       </section>
 
       <section id="about" aria-labelledby="about-heading" className="scroll-mt-8">
