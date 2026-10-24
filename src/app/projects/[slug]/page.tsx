@@ -58,7 +58,7 @@ async function ProjectDetails({ params }: Pick<PageProps<"/projects/[slug]">, "p
         <h1 className="text-3xl font-bold sm:text-4xl">{project.title}</h1>
         <p className="mt-2 text-foreground/70">{project.context}</p>
         <p className="mt-4 text-lg">{project.summary}</p>
-        {(project.liveUrl || project.repoUrl) && (
+        {(project.liveUrl || project.repoUrl || project.repoNote) && (
           <p className="mt-4 flex flex-wrap gap-4">
             {project.liveUrl && (
               <a href={project.liveUrl} className="underline">
@@ -70,6 +70,7 @@ async function ProjectDetails({ params }: Pick<PageProps<"/projects/[slug]">, "p
                 Source code
               </a>
             )}
+            {project.repoNote && <span className="text-foreground/70">{project.repoNote}</span>}
           </p>
         )}
       </header>
