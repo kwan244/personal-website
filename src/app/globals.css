@@ -77,21 +77,20 @@ body::after {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-/* The hero desk covers its frame like a background image, but as a fixed 4:3 box so the HTML
-   notes, name and CV link stay pinned to their spots in the scene. Frame: viewport height minus
-   the header, capped so phones show the laptop, hands, head and chair. 30% of any vertical crop
-   comes off the top, 70% off the bottom. */
+/* The hero desk is a fixed 4:3 box (so the HTML notes, name and CV link stay pinned to their spots)
+   sized to the frame's height: nothing is cropped top or bottom. Wider screens show the scene's
+   edge colour either side, which matches the frame; narrower ones crop the sides. Frame: viewport
+   height minus the header, capped so phones show the laptop, hands, head and chair. */
 .desk-frame {
   --frame-h: min(calc(100svh - 3.5rem), 143.75vw);
   height: var(--frame-h);
 }
 
 .desk-box {
-  --box-w: max(100%, calc(var(--frame-h) * 4 / 3));
   position: absolute;
+  top: 0;
   left: 50%;
-  top: calc((var(--frame-h) - var(--box-w) * 3 / 4) * 0.3);
-  width: var(--box-w);
+  height: 100%;
   aspect-ratio: 4 / 3;
   translate: -50% 0;
 }
