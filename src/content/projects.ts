@@ -1,4 +1,5 @@
 import type { StaticImageData } from "next/image";
+import aussImage from "./images/auss.jpg";
 import guessWhoImage from "./images/guess-whos-the-thief.jpg";
 import platefulImage from "./images/plateful.png";
 import rockPaperScissorsImage from "./images/rock-paper-scissors.png";
@@ -16,6 +17,8 @@ export type Project = {
   results?: string[];
   liveUrl?: string;
   repoUrl?: string;
+  // Shown instead of a source link when the code can't be public.
+  repoNote?: string;
   image?: { src: StaticImageData; alt: string };
 };
 
@@ -57,20 +60,55 @@ export const projects: Project[] = [
       "Sole developer: wrote all 81 commits between December 2025 and March 2026.",
       "Wrote 157 unit tests (Jest + React Testing Library) plus Playwright end-to-end tests.",
     ],
+    repoNote: "Private repository (internship work)",
     image: {
       src: strokeImage,
       alt: "StrokePred New Prediction page with a drag-and-drop area for a T1 MRI scan (.nii or .nii.gz, up to 500 MB) and a Clinical Data form with fields for age, comorbidity index, SAFE, NIHSS and Fugl-Meyer scores.",
     },
   },
   {
+    slug: "auss-member-platform",
+    title: "AUSS Member Platform",
+    summary:
+      "The live membership, events and check-in platform for the Auckland University Strength Society, built by a student dev team.",
+    context: "AUSS 2026 dev team · Auckland University Strength Society · 2026",
+    stack: ["React", "TypeScript", "Vite", "Tailwind CSS", "Express", "Prisma", "PostgreSQL", "Zod", "Stripe", "Railway"],
+    problem:
+      "AUSS needed one place for members to join and pay, for execs to run events and check people in, and for visitors to find out about the club and its sponsors.",
+    role: [
+      "Took 38 Jira issues from solutioning through to release, across visitor pages, admin tools, payments and security.",
+      "Migrated the frontend to TypeScript (TSX) and Tailwind CSS v4, with a config refactor.",
+      "Built RSVP and event attendee management.",
+      "Delivered a security hardening pass: URL validation against SSRF, open redirects and javascript: URIs; centralised Zod input validation; trust-proxy and HTTPS enforcement; student ID privacy; per-route auth assertion tests.",
+      "Built the cash and bank-transfer membership flow: proof-of-payment upload, then admin review and approval of membership status.",
+      "Let non-UoA members register without a Student ID, and fixed the signup consent flow alongside published Terms of Service and Privacy Policy.",
+    ],
+    challenges: [
+      "Making sure user-supplied links stored by admins can't be used for server-side request forgery, open redirects or script injection.",
+      "Mitigating plaintext storage of student IDs and confirming compliance with University data policy.",
+      "Agreeing Terms of Service, Privacy Policy content and data retention with the club before publishing them.",
+      "Supporting manual cash and bank-transfer payments alongside online payments, with an admin approval step before membership activates.",
+    ],
+    results: [
+      "Owned 38 Jira issues: 17 user stories released or ready for release, 20 solutioning and development tickets done, and a P1 registration bug fixed.",
+      "Merged 6 pull requests into the team repository.",
+    ],
+    liveUrl: "https://auss-backend-production.up.railway.app/",
+    repoUrl: "https://github.com/ProjectAuss2026/Myauss",
+    image: {
+      src: aussImage,
+      alt: "AUSS website home page: navigation (Home, About, Sponsorship, Social, Activities, Join AUSS) over a dimmed training photo, with the heading “A Community of Strength Athletes” and Join AUSS and Learn More buttons.",
+    },
+  },
+  {
     slug: "plateful",
     title: "Plateful",
     summary:
-      "A full-stack restaurant discovery app with search, filters, favourites and map-based search.",
-    context: "SOFTENG 310 team project · University of Auckland · 2025",
-    stack: ["React", "Vite", "Spring Boot", "MongoDB", "Vitest", "React Testing Library"],
+      "An open-source, full-stack restaurant discovery app. I forked the public repository and contributed responsive UI, testing and accessibility features through pull requests.",
+    context: "SOFTENG 310 open-source contribution · University of Auckland · 2025",
+    stack: ["React", "Vite", "Spring Boot", "MongoDB", "TomTom Maps", "Vitest", "React Testing Library"],
     problem:
-      "Finding a restaurant means juggling cuisine, tags, name and location. Plateful brings search, filters, favourites and a map together in one responsive app.",
+      "Finding a restaurant means juggling cuisine, price, tags, name and location. Plateful brings search, filters, favourites and map-based search together in one responsive app, with a React frontend, a Spring Boot API and a MongoDB database. In SOFTENG 310, students extend an existing public codebase: I worked from my own fork and contributed changes back to the main repository through reviewed pull requests.",
     role: [
       "Implemented major mobile-responsive UI improvements across the Home, Search and Restaurant Details pages, including adaptive layouts, grid restructuring and map fixes.",
       "Set up the frontend testing framework (Vitest + React Testing Library) and wrote regression, navigation and UI behaviour tests.",
@@ -86,10 +124,11 @@ export const projects: Project[] = [
       "Merged 6 pull requests into the team repository, covering the mobile-responsive UI, the frontend test setup, back navigation and accessibility fixes.",
       "Reviewed 5 of my teammates' pull requests.",
     ],
-    repoUrl: "https://github.com/kwan244/se310-plateful",
+    liveUrl: "https://uoa-dcml.github.io/se310-plateful/",
+    repoUrl: "https://github.com/UOA-DCML/se310-plateful",
     image: {
       src: platefulImage,
-      alt: "Plateful home page with the headline “Discover, share, and savour with Plateful”, buttons to explore restaurants or view the code, and feature cards for smart discovery, real reviews and community.",
+      alt: "Plateful home page with the heading “Looking for something to eat?”, a search bar, filters for cuisine, price, reservation, opening hours and city, and a text-size control in the navigation bar.",
     },
   },
   {
@@ -119,14 +158,19 @@ export const projects: Project[] = [
     slug: "rock-paper-scissors",
     title: "Rock Paper Scissors",
     summary: "A browser game against a computer opponent that adapts to how you play.",
-    context: "Personal project · 2025",
+    context: "Self-learning project · 2025",
     stack: ["HTML", "CSS", "JavaScript"],
     problem:
-      "A classic game against the computer, with three difficulty levels and progress that survives a page refresh, built without a framework.",
+      "I wanted to learn HTML, CSS and JavaScript properly, step by step, by building one complete thing without a framework: a game against the computer with three difficulty levels and progress that survives a page refresh.",
     role: [
       "Built the whole game on my own in plain HTML, CSS and JavaScript.",
       "Implemented Easy, Medium and Hard modes; the computer tracks how often you pick each move and adapts.",
       "Saved score, round, difficulty and move history in localStorage, with a reset that clears it.",
+    ],
+    challenges: [
+      "Learning each layer in turn: structuring the page in HTML, styling it in CSS, then wiring up the game logic and DOM events in JavaScript.",
+      "Making the Medium and Hard modes adapt by tracking how often the player picks each move, while keeping the game fair to play.",
+      "Keeping the score, round, difficulty and move history in localStorage in step with what's on screen, including after a reset.",
     ],
     results: ["Deployed and playable on GitHub Pages, with no build step or dependencies."],
     liveUrl: "https://kwan244.github.io/RockPaperScissorsWebsite/",
