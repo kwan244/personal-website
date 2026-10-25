@@ -59,14 +59,6 @@ export function DeskScene({ projectCount, className }: { projectCount: number; c
       {/* The idea glow (replaces the old hero blob); lit in the static pose. */}
       <ellipse id="desk-idea-halo" cx="500" cy="554" rx="240" ry="170" fill="url(#desk-halo)" opacity=".72" />
 
-      {/* The open lid casts a soft shadow on the desk behind it, so it reads as standing, not lying flat. */}
-      <path
-        d="M330 118H662L648 80H344Z"
-        fill="#000"
-        opacity=".18"
-        filter="url(#desk-blur)"
-        transform="translate(496 420) scale(1.15) translate(-496 -420)"
-      />
       <g id="desk-laptop" filter="url(#desk-shadow)" transform="translate(496 420) scale(1.15) translate(-496 -420)">
         {/* The lid is foreshortened to 82% about the hinge (y 301): seen from above, an upright screen
             looks shorter. page.tsx squashes the HTML name and CV line by the same amount. */}
