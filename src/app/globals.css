@@ -365,9 +365,10 @@ body {
   }
 }
 
+/* Starts fully transparent rather than faint: text that is visible but faint fails contrast checks. */
 @keyframes about-pop {
   from {
-    opacity: 0.25;
+    opacity: 0;
     scale: 0.8;
   }
 }
