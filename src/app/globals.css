@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+/* The desk scene shows its full width (and the overlaid notes) only on screens at least 16:10. */
+@custom-variant scene-wide (@media (aspect-ratio >= 16/10));
+@custom-variant scene-narrow (@media (aspect-ratio < 16/10));
+
 /* Mint on ink. Every text pairing passes WCAG AA; borders are decorative (no form inputs yet). */
 :root {
   --background: #f6fbf8;
@@ -49,12 +53,6 @@
   }
 }
 
-/* Outlined display text, e.g. the "Wang" in the hero. Still real text for screen readers. */
-.text-outline {
-  color: transparent;
-  -webkit-text-stroke: 2px var(--accent);
-}
-
 /* clip, not hidden: stops the hero blob widening the page without breaking sticky positioning.
    Set on html too, or body's value moves to the viewport and body no longer clips. */
 html,
@@ -68,15 +66,40 @@ body {
   font-family: var(--font-sans), system-ui, sans-serif;
 }
 
-/* Static grain: rendered once, never animated, and never blocks clicks. */
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 50;
-  pointer-events: none;
-  opacity: 0.05;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+/* The hero desk is a fixed 16:10 box (so the HTML notes, name and CV link stay pinned to their spots)
+   sized to the frame's height: nothing is cropped top or bottom. Wider screens show the scene's
+   edge colour either side, which matches the frame; narrower ones crop the sides. Frame: viewport
+   height minus the header, capped so phones show the whole laptop. */
+.desk-frame {
+  --frame-h: min(calc(100svh - 3.5rem), 116vw);
+  height: var(--frame-h);
+}
+
+.desk-box {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  height: 100%;
+  aspect-ratio: 16 / 10;
+  translate: -50% 0;
+}
+
+/* Rotate/translate properties, not transform: the badge text keeps its SVG transform attributes. */
+.badge-spin {
+  transform-box: view-box;
+  transform-origin: 50% 50%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .badge-spin {
+    animation: badge-spin 18s linear infinite;
+  }
+}
+
+@keyframes badge-spin {
+  to {
+    rotate: 360deg;
+  }
 }
 
 :focus-visible {
