@@ -109,6 +109,11 @@ body {
   display: block;
 }
 
+/* Dust motes only show while they drift (motion allowed, night theme). */
+.desk-mote {
+  opacity: 0;
+}
+
 /* Sticky notes lie on the desk via --t (deskAnchors.ts). Hovered or focused, a note lifts towards
    the viewer and grows a little about its centre. */
 .desk-note {
@@ -213,6 +218,24 @@ body {
     animation: desk-breathe 6s ease-in-out infinite alternate;
   }
 
+  .desk-mote {
+    animation: desk-mote 12s linear infinite;
+  }
+  .desk-mote:nth-child(even) {
+    animation-name: desk-mote-left;
+    animation-duration: 15s;
+  }
+  .desk-mote:nth-child(3n) {
+    animation-duration: 10s;
+    animation-delay: -3s;
+  }
+  .desk-mote:nth-child(4n + 1) {
+    animation-delay: -7s;
+  }
+  .desk-mote:nth-child(5n + 2) {
+    animation-delay: -11s;
+  }
+
   @supports (animation-timeline: view()) {
     .reveal {
       animation: reveal cubic-bezier(0.16, 1, 0.3, 1) both;
@@ -307,6 +330,37 @@ body {
 @keyframes desk-breathe {
   to {
     opacity: 0.68;
+  }
+}
+
+@keyframes desk-mote {
+  0% {
+    opacity: 0;
+    translate: 0 0;
+  }
+  25% {
+    opacity: 0.75;
+  }
+  75% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0;
+    translate: 9px -48px;
+  }
+}
+
+@keyframes desk-mote-left {
+  0% {
+    opacity: 0;
+    translate: 0 0;
+  }
+  30% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 0;
+    translate: -10px -40px;
   }
 }
 

@@ -226,6 +226,23 @@ export function DeskScene({ className }: { className?: string }) {
         {/* The name (h1), headline and Download CV prompt sit on the screen as real HTML, see page.tsx. */}
       </g>
 
+      <g className="hidden dark:inline" fill="#c8fbe3">
+        <circle className="desk-mote" cx="465.1" cy="323.3" r="1.2" />
+        <circle className="desk-mote" cx="560.9" cy="433.7" r="1.7" />
+        <circle className="desk-mote" cx="413.6" cy="361.6" r="1.2" />
+        <circle className="desk-mote" cx="570.7" cy="361.4" r="1.4" />
+        <circle className="desk-mote" cx="651.4" cy="295.1" r="1.6" />
+        <circle className="desk-mote" cx="695" cy="386.7" r="1.4" />
+        <circle className="desk-mote" cx="407.5" cy="365.7" r="2.1" />
+        <circle className="desk-mote" cx="466.9" cy="265.4" r="1.5" />
+        <circle className="desk-mote" cx="533.6" cy="468.5" r="1.3" />
+        <circle className="desk-mote" cx="616.8" cy="402.7" r="1.8" />
+        <circle className="desk-mote" cx="525.5" cy="297.1" r="1.9" />
+        <circle className="desk-mote" cx="487.2" cy="294.4" r="2.2" />
+        <circle className="desk-mote" cx="625.5" cy="297.8" r="1.2" />
+        <circle className="desk-mote" cx="562" cy="362.7" r="1.7" />
+      </g>
+
       <g id="desk-mug">
         <path
           d="M1092.3 466.5 L1098.6 465.7 L1104.9 464.2 L1111.1 462.1 L1116.8 459.3 L1122 455.9 L1126.5 452.1 L1130.2 447.9 L1132.9 443.5 L1134.6 439 L1135.1 434.6 L1134.6 430.3 L1132.9 426.4 L1130.2 422.9 L1126.4 419.9 L1121.8 417.6 L1116.4 416.1 L1110.4 415.3"
