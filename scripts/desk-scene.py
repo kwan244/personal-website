@@ -168,6 +168,8 @@ for slug, (c, s, rot) in NOTES.items():
     corners = note_corners(c, s, rot)
     shadows.append(poly([(x+2, y+3) for x, y in (P(p) for p in note_corners(c, s, rot, lean=0))]))
     notes_out[slug] = overlay(corners[0], corners[1], corners[3])
+    # Which edge faces the laptop, so the screen's light can fall on that side.
+    notes_out[slug]["light"] = "right" if P((c[0], c[1], 0))[0] < VBW / 2 else "left"
 scr = overlay(lid(.04, .93), lid(.96, .93), lid(.04, .07))
 origin = {"x": "%.3f%%" % (OX / VBW * 100), "y": "%.3f%%" % (OY / VBH * 100)}
 hx0, hy0 = D2(.5, 1); hx1, hy1 = D2(.5, 0)

@@ -16,7 +16,7 @@ export const metadata: Metadata = { alternates: { canonical: "/" } };
 const featured = projects.filter((p) => p.featured);
 const others = projects.filter((p) => !p.featured);
 
-type Anchor = { w: string; h: string; transform: string };
+type Anchor = { w: string; h: string; transform: string; light?: "left" | "right" };
 
 // Lays an HTML box onto the scene in its own 3D perspective (see deskAnchors.ts).
 function anchorStyle(a: Anchor): CSSProperties {
@@ -46,8 +46,23 @@ const screenStack = ["TypeScript", "React", "Next.js", "Spring Boot", "Prisma OR
 // Paper tones, alternating from note to note.
 const noteTones = ["from-[#a3e8c7] to-[#6cb592]", "from-[#c4f1db] to-[#86c7a8]"];
 
-// A sticky note linking to a project. Pinned notes lie on the desk and scale with it (cqw).
-function NoteLink({ project, index, pinned = false }: { project: Project; index: number; pinned?: boolean }) {
+// The note's outline, with the bottom-right corner folded over (the fold fills the triangle beside it).
+const notePaper = "[clip-path:polygon(0_0,100%_0,100%_84%,90%_100%,0_100%)]";
+const noteFold = "[clip-path:polygon(90%_84%,100%_84%,90%_100%)]";
+
+// A sticky note linking to a project. Pinned notes lie on the desk and scale with it (cqw), and catch the
+// screen's light on the side facing the laptop.
+function NoteLink({
+  project,
+  index,
+  pinned = false,
+  light,
+}: {
+  project: Project;
+  index: number;
+  pinned?: boolean;
+  light?: "left" | "right";
+}) {
   return (
     <Link
       href={`/projects/${project.slug}`}
@@ -55,9 +70,21 @@ function NoteLink({ project, index, pinned = false }: { project: Project; index:
       style={pinned ? { fontSize: "1.75cqw" } : undefined}
       className={`relative isolate flex h-full flex-col justify-between leading-tight text-[#08170f] ${pinned ? "p-[0.75em]" : "p-3"}`}
     >
+      {/* Paper: colour, grain, the screen's light on the laptop side (breathing with the screen), the fold. */}
       <span
         aria-hidden="true"
-        className={`absolute inset-0 -z-10 bg-linear-160 ${noteTones[index % noteTones.length]} [clip-path:polygon(0_0,100%_0,100%_84%,90%_100%,0_100%)]`}
+        className={`absolute inset-0 -z-10 bg-linear-160 ${noteTones[index % noteTones.length]} ${notePaper}`}
+      />
+      <span aria-hidden="true" className={`note-grain absolute inset-0 -z-10 ${notePaper}`} />
+      {light && (
+        <span
+          aria-hidden="true"
+          className={`desk-screen-light absolute inset-0 -z-10 ${notePaper} ${light === "right" ? "bg-linear-to-l" : "bg-linear-to-r"} from-[#f4fffa]/70 via-[#f4fffa]/10 via-45% to-transparent opacity-60 dark:opacity-100`}
+        />
+      )}
+      <span
+        aria-hidden="true"
+        className={`absolute inset-0 -z-10 bg-linear-[315deg] from-[#e8fbf1] via-[#b9e3cd] to-[#6fae8f] ${noteFold}`}
       />
       {/* Handwritten, like a real sticky note; the label underneath stays typed, with the pen doodle beside it. */}
       <span className="font-hand text-[1.5em] leading-[0.95] font-bold">{project.title}</span>
@@ -138,7 +165,7 @@ export default function Home() {
                   style={noteStyle(noteAnchor(project.slug))}
                   className="desk-note absolute origin-top-left"
                 >
-                  <NoteLink project={project} index={i} pinned />
+                  <NoteLink project={project} index={i} pinned light={noteAnchor(project.slug).light} />
                 </li>
               ))}
             </ul>
