@@ -37,7 +37,7 @@ NOTES = {
     "auss-member-platform": ((-37.5, 1.5), (20, 12.5), -5),
     "plateful": ((-28, -15), (16.5, 11.5), 4),
     "rock-paper-scissors": ((29, -6), (14.5, 10), -4),
-    "guess-whos-the-thief": ((33, 57), (18, 12), 5),
+    "guess-whos-the-thief": ((32, 57.5), (20.5, 13.2), 5),
 }
 
 # Camera: perspective from the front-right, scaled so the deck is DECK_W units wide.

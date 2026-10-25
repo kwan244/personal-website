@@ -7,6 +7,7 @@ import { DeskScene } from "@/components/DeskScene";
 import { deskAnchors } from "@/components/deskAnchors";
 import { HeroBadge } from "@/components/HeroBadge";
 import { HeroFrame } from "@/components/HeroFrame";
+import { NoteDoodle } from "@/components/NoteDoodle";
 import { profile } from "@/content/profile";
 import { projects, type Project } from "@/content/projects";
 
@@ -58,10 +59,17 @@ function NoteLink({ project, index, pinned = false }: { project: Project; index:
         aria-hidden="true"
         className={`absolute inset-0 -z-10 bg-linear-160 ${noteTones[index % noteTones.length]} [clip-path:polygon(0_0,100%_0,100%_84%,90%_100%,0_100%)]`}
       />
-      {/* Handwritten, like a real sticky note; the label underneath stays typed. */}
+      {/* Handwritten, like a real sticky note; the label underneath stays typed, with the pen doodle beside it. */}
       <span className="font-hand text-[1.5em] leading-[0.95] font-bold">{project.title}</span>
-      <span className="mt-2 font-mono text-[0.72em] font-semibold tracking-wide text-[#123826] uppercase">
-        {project.noteLabel}
+      <span className="mt-2 flex items-end justify-between gap-[0.5em]">
+        <span className="font-mono text-[0.72em] font-semibold tracking-wide whitespace-nowrap text-[#123826] uppercase">
+          {project.noteLabel}
+        </span>
+        {/* Kept clear of the folded corner. */}
+        <NoteDoodle
+          kind={project.noteDoodle}
+          className="-my-[0.2em] mr-[0.45em] size-[1.6em] shrink-0 -rotate-6 text-[#123826]/80"
+        />
       </span>
     </Link>
   );
