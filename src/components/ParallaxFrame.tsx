@@ -2,12 +2,15 @@
 
 import { useEffect, useRef, type ReactNode } from "react";
 
-// How much of the remaining distance the layers cover each frame: lower is softer and slower.
-const EASE = 0.06;
+// The layers move towards the pointer at no more than MAX_SPEED (of the -1 to 1 range per second), so a
+// fast flick glides instead of jolting, and ease out over the last stretch (EASE: share of the remaining
+// distance per 60fps frame). Both are measured in time, so dropped frames don't cause jumps.
+const MAX_SPEED = 1.6;
+const EASE = 0.1;
 
-// The hero frame. While a mouse-like pointer is over it, eases --mx / --my (-1 to 1: the pointer's
-// position from the centre) towards the pointer every frame, for the CSS parallax in globals.css.
-// Never when reduced motion is asked for.
+// The hero frame. While a mouse-like pointer is over it, moves --mx / --my (-1 to 1: the pointer's
+// position from the centre) towards the pointer on the scene and the badge, for the CSS parallax in
+// globals.css. Never when reduced motion is asked for.
 export function ParallaxFrame({ className, children }: { className?: string; children: ReactNode }) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -16,35 +19,59 @@ export function ParallaxFrame({ className, children }: { className?: string; chi
     if (!el || !matchMedia("(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)").matches) {
       return;
     }
+    const layers = el.querySelectorAll<HTMLElement>(".desk-box, .desk-badge");
     const target = { x: 0, y: 0 };
     const current = { x: 0, y: 0 };
+    let box: DOMRect | null = null; // measured once per hover, not on every pointer event
     let frame = 0;
+    let last = 0;
 
+    const step = (from: number, to: number, dt: number) => {
+      const eased = (to - from) * (1 - Math.pow(1 - EASE, dt / 16.67));
+      const cap = MAX_SPEED * (dt / 1000);
+      return from + Math.max(-cap, Math.min(cap, eased));
+    };
     // Runs only while the layers are still moving, then stops until the pointer moves again.
-    const tick = () => {
-      current.x += (target.x - current.x) * EASE;
-      current.y += (target.y - current.y) * EASE;
-      el.style.setProperty("--mx", current.x.toFixed(4));
-      el.style.setProperty("--my", current.y.toFixed(4));
-      frame = Math.abs(target.x - current.x) + Math.abs(target.y - current.y) > 0.001 ? requestAnimationFrame(tick) : 0;
+    const tick = (now: number) => {
+      const dt = Math.min(now - last, 50);
+      last = now;
+      current.x = step(current.x, target.x, dt);
+      current.y = step(current.y, target.y, dt);
+      for (const layer of layers) {
+        layer.style.setProperty("--mx", current.x.toFixed(4));
+        layer.style.setProperty("--my", current.y.toFixed(4));
+      }
+      const moving = Math.abs(target.x - current.x) + Math.abs(target.y - current.y) > 0.001;
+      frame = moving ? requestAnimationFrame(tick) : 0;
     };
     const aim = (x: number, y: number) => {
       target.x = x;
       target.y = y;
-      if (!frame) frame = requestAnimationFrame(tick);
+      if (!frame) {
+        last = performance.now();
+        frame = requestAnimationFrame(tick);
+      }
     };
     const move = (event: PointerEvent) => {
-      const box = el.getBoundingClientRect();
+      box ??= el.getBoundingClientRect();
       aim(((event.clientX - box.left) / box.width) * 2 - 1, ((event.clientY - box.top) / box.height) * 2 - 1);
     };
-    const leave = () => aim(0, 0);
+    const leave = () => {
+      box = null;
+      aim(0, 0);
+    };
+    const remeasure = () => (box = null);
 
     el.addEventListener("pointermove", move);
     el.addEventListener("pointerleave", leave);
+    window.addEventListener("scroll", remeasure, { passive: true });
+    window.addEventListener("resize", remeasure);
     return () => {
       cancelAnimationFrame(frame);
       el.removeEventListener("pointermove", move);
       el.removeEventListener("pointerleave", leave);
+      window.removeEventListener("scroll", remeasure);
+      window.removeEventListener("resize", remeasure);
     };
   }, []);
 

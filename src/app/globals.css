@@ -121,17 +121,27 @@ body {
   filter: drop-shadow(0 22px 24px rgb(0 0 0 / 0.4));
 }
 
-/* Mouse parallax: ParallaxFrame eases --mx / --my towards the pointer (fine pointers, motion allowed).
-   The scene drifts a few pixels against it while its glow and the badge drift with it, so the layers
-   separate slightly. ParallaxFrame does the easing, so there's no CSS transition here. */
-.desk-box {
-  translate: calc(-50% + var(--mx, 0) * -6px) calc(var(--my, 0) * -4px);
+/* Mouse parallax: ParallaxFrame moves --mx / --my on the scene and the badge (fine pointers, motion
+   allowed): the scene drifts a few pixels against the pointer and the badge with it, so the two separate.
+   The values don't inherit, so a change restyles only these two layers, and will-change keeps each on
+   its own layer, so moving them never repaints the drawing. ParallaxFrame does the easing. */
+@property --mx {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0;
 }
-.desk-ambience-layer {
-  translate: calc(var(--mx, 0) * 10px) calc(var(--my, 0) * 6px);
+@property --my {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0;
+}
+.desk-box {
+  translate: calc(-50% + var(--mx) * -6px) calc(var(--my) * -4px);
+  will-change: translate;
 }
 .desk-badge {
-  translate: calc(var(--mx, 0) * 4px) calc(var(--my, 0) * 3px);
+  translate: calc(var(--mx) * 4px) calc(var(--my) * 3px);
+  will-change: translate;
 }
 
 /* Ambient hero motion and scroll reveals. Everything is visible without it: browsers without support

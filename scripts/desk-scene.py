@@ -209,7 +209,7 @@ export function DeskScene({{ className }}: {{ className?: string }}) {{
       </defs>
 
       <rect width="{VBW}" height="{VBH}" className="fill-[#d6e9df] dark:fill-[#070c0a]" />
-      <rect width="{VBW}" height="{VBH}" fill="url(#desk-ambience)" className="desk-ambience-layer" />{"".join(nl + "      " + x for x in g)}
+      <rect width="{VBW}" height="{VBH}" fill="url(#desk-ambience)" />{"".join(nl + "      " + x for x in g)}
       {{/* Note contact shadows; the notes themselves are HTML, shown only when the whole desk fits. */}}
       <path d="{" ".join(shadows)}" fill="#000" filter="url(#desk-contact)" className="opacity-15 scene-narrow:hidden dark:opacity-40" />
 
