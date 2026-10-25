@@ -414,6 +414,30 @@ body {
   }
 }
 
+/* Clicking a desk note (NoteFlight): the page glides up to the project while the note flies onto its card. */
+:root[data-note-flight]::view-transition-old(root) {
+  animation: 550ms cubic-bezier(0.65, 0, 0.35, 1) both flight-page-out;
+}
+:root[data-note-flight]::view-transition-new(root) {
+  animation: 550ms cubic-bezier(0.65, 0, 0.35, 1) both flight-page-in;
+}
+::view-transition-group(note-flight) {
+  animation-duration: 750ms;
+  animation-timing-function: cubic-bezier(0.5, 0, 0.15, 1);
+}
+@keyframes flight-page-out {
+  to {
+    opacity: 0;
+    translate: 0 -30vh;
+  }
+}
+@keyframes flight-page-in {
+  from {
+    opacity: 0;
+    translate: 0 30vh;
+  }
+}
+
 /* With reduced motion, pages simply swap. */
 @media (prefers-reduced-motion: reduce) {
   ::view-transition-old(*),
