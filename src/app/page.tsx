@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { CopyEmailButton } from "@/components/CopyEmailButton";
 import { DeskScene } from "@/components/DeskScene";
+import { deskAnchors } from "@/components/deskAnchors";
 import { HeroBadge } from "@/components/HeroBadge";
 import { profile } from "@/content/profile";
 import { projects } from "@/content/projects";
@@ -13,45 +14,41 @@ export const metadata: Metadata = { alternates: { canonical: "/" } };
 const featured = projects.filter((p) => p.featured);
 const others = projects.filter((p) => !p.featured);
 
-// Sticky-note spots on the desk, in DeskScene units (1000 × 750): top-left corner, size,
-// rotation about that corner, font size and paper tone. Converted to % and cqw below.
-const notes: Record<string, { x: number; y: number; w: number; h: number; r: number; fs: number; tone: string }> = {
-  "stroke-outcome-prediction": { x: 40, y: 90, w: 212, h: 150, r: -5, fs: 19, tone: "from-[#8fdcb9] to-[#5aa585]" },
-  "auss-member-platform": { x: 40, y: 300, w: 196, h: 138, r: 4, fs: 19, tone: "from-[#b7ecd3] to-[#79bfa0]" },
-  plateful: { x: 45, y: 490, w: 145, h: 100, r: -3, fs: 17, tone: "from-[#8fdcb9] to-[#5aa585]" },
-  "guess-whos-the-thief": { x: 760, y: 40, w: 155, h: 108, r: 6, fs: 17, tone: "from-[#b7ecd3] to-[#79bfa0]" },
-  "rock-paper-scissors": { x: 850, y: 170, w: 130, h: 102, r: -5, fs: 16, tone: "from-[#8fdcb9] to-[#5aa585]" },
-};
+type Anchor = { x: number; y: number; w: number; h: number; m: string };
 
-function noteStyle(slug: string) {
-  const n = notes[slug];
-  return {
-    "--x": `${n.x / 10}%`,
-    "--y": `${n.y / 7.5}%`,
-    "--w": `${n.w / 10}%`,
-    "--h": `${n.h / 7.5}%`,
-    "--r": `${n.r}deg`,
-    "--fs": `${n.fs / 10}cqw`,
-  } as CSSProperties;
+// Lays an HTML box onto the scene: positioned in %, sized in cqw (the scene is 1000 units = 100cqw wide)
+// and sheared by the generated matrix so it lies on the laptop screen or the desk.
+function anchorStyle(a: Anchor): CSSProperties {
+  return { left: `${a.x}%`, top: `${a.y}%`, width: `${a.w / 10}cqw`, height: `${a.h / 10}cqw`, transform: a.m };
 }
 
-// A sticky note linking to a project. Pinned notes sit on the desk and scale with it (cqw).
+const noteAnchors: Record<string, Anchor> = deskAnchors.notes;
+
+// Each note's one-word context and paper tone.
+const noteMeta: Record<string, { label: string; tone: string }> = {
+  "stroke-outcome-prediction": { label: "Internship", tone: "from-[#a3e8c7] to-[#6cb592]" },
+  "auss-member-platform": { label: "Club platform", tone: "from-[#c4f1db] to-[#86c7a8]" },
+  plateful: { label: "Open source", tone: "from-[#a3e8c7] to-[#6cb592]" },
+  "guess-whos-the-thief": { label: "Team project", tone: "from-[#c4f1db] to-[#86c7a8]" },
+  "rock-paper-scissors": { label: "Self-taught", tone: "from-[#a3e8c7] to-[#6cb592]" },
+};
+
+// A sticky note linking to a project. Pinned notes lie on the desk and scale with it (cqw).
 function NoteLink({ slug, title, pinned = false }: { slug: string; title: string; pinned?: boolean }) {
+  const { label, tone } = noteMeta[slug];
   return (
     <Link
       href={`/projects/${slug}`}
       prefetch={true}
-      className={`relative isolate block h-full leading-tight font-bold text-[#08170f] ${pinned ? "p-[1.4cqw] text-(length:--fs)" : "p-3"}`}
+      style={pinned ? { fontSize: "1.65cqw" } : undefined}
+      className={`relative isolate flex h-full flex-col justify-between leading-tight font-bold text-[#08170f] ${pinned ? "p-[0.75em]" : "p-3"}`}
     >
       <span
         aria-hidden="true"
-        className={`absolute inset-0 -z-10 bg-linear-160 ${notes[slug].tone} [clip-path:polygon(0_0,100%_0,100%_86%,90%_100%,0_100%)]`}
-      />
-      <span
-        aria-hidden="true"
-        className={`absolute left-1/2 -translate-x-1/2 -rotate-3 bg-[#e6fff3]/20 ${pinned ? "-top-[0.7cqw] h-[1.4cqw] w-[4.4cqw]" : "-top-1.5 h-3 w-10"}`}
+        className={`absolute inset-0 -z-10 bg-linear-160 ${tone} [clip-path:polygon(0_0,100%_0,100%_84%,90%_100%,0_100%)]`}
       />
       {title}
+      <span className="mt-2 font-mono text-[0.68em] font-semibold tracking-wide text-[#1d4532] uppercase">{label}</span>
     </Link>
   );
 }
@@ -62,31 +59,39 @@ export default function Home() {
       <section aria-labelledby="hero-heading">
         <div className="desk-frame relative overflow-hidden bg-[#d6e9df] dark:bg-[#070c0a]">
           <div className="desk-box @container">
-            <DeskScene projectCount={projects.length} className="size-full" />
-            {/* On the laptop screen. The screen stays dark in both themes, so these use fixed mint colours. */}
-            <h1
-              id="hero-heading"
-              className="absolute top-[22.11%] left-[33.88%] text-[6.3cqw] leading-none whitespace-nowrap text-[#8bf5cb] uppercase"
+            <DeskScene className="size-full" />
+            {/* On the laptop screen, which stays dark in both themes, so these use fixed mint colours. */}
+            <div
+              style={anchorStyle(deskAnchors.screen)}
+              className="absolute flex origin-top-left flex-col justify-center gap-[0.9cqw] px-[2.6cqw] pt-[1.6cqw] text-[#e2f3e8]"
             >
-              {profile.name}
-            </h1>
-            <p className="absolute top-[32.01%] left-[34.59%] flex items-center gap-[0.7cqw] font-mono text-[max(12px,1.55cqw)] text-[#e2f3e8]">
-              <span aria-hidden="true">&gt;</span>
-              <a
-                href={profile.cv}
-                download
-                className="py-1.5 text-[#7ff2c2] underline underline-offset-4 [--accent:#6ee7b7]"
-              >
-                Download CV (PDF)
-              </a>
-              <span aria-hidden="true" className="desk-cursor inline-block h-[1.2em] w-[0.6em] bg-[#7ff2c2]" />
-            </p>
+              <p aria-hidden="true" className="font-mono text-[max(10px,1.35cqw)] text-[#8fb8a5]">
+                <span className="text-[#6ee7b7]">kevin@auckland ~ %</span> whoami
+              </p>
+              <h1 id="hero-heading" className="text-[5.2cqw] leading-[0.95] whitespace-nowrap text-[#8bf5cb] uppercase">
+                {profile.name}
+              </h1>
+              <p className="text-[max(11px,1.45cqw)] leading-snug text-balance text-[#c4dccf]">{profile.headline}</p>
+              <p className="flex items-center gap-[0.6cqw] font-mono text-[max(12px,1.5cqw)]">
+                <span aria-hidden="true" className="text-[#6ee7b7]">
+                  &gt;
+                </span>
+                <a
+                  href={profile.cv}
+                  download
+                  className="py-1 text-[#7ff2c2] underline underline-offset-4 [--accent:#6ee7b7]"
+                >
+                  Download CV (PDF)
+                </a>
+                <span aria-hidden="true" className="desk-cursor inline-block h-[1.15em] w-[0.55em] bg-[#7ff2c2]" />
+              </p>
+            </div>
             <ul aria-label="Projects" className="hidden scene-wide:block">
               {projects.map((project) => (
                 <li
                   key={project.slug}
-                  style={noteStyle(project.slug)}
-                  className="absolute top-(--y) left-(--x) h-(--h) w-(--w) origin-top-left rotate-(--r) drop-shadow-md"
+                  style={anchorStyle(noteAnchors[project.slug])}
+                  className="absolute origin-top-left"
                 >
                   <NoteLink slug={project.slug} title={project.title} pinned />
                 </li>

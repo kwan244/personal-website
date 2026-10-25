@@ -69,7 +69,7 @@ body {
 /* The hero desk is a fixed 4:3 box (so the HTML notes, name and CV link stay pinned to their spots)
    sized to the frame's height: nothing is cropped top or bottom. Wider screens show the scene's
    edge colour either side, which matches the frame; narrower ones crop the sides. Frame: viewport
-   height minus the header, capped so phones show the laptop, hands, head and chair. */
+   height minus the header, capped so phones show the whole laptop. */
 .desk-frame {
   --frame-h: min(calc(100svh - 3.5rem), 143.75vw);
   height: var(--frame-h);
@@ -84,7 +84,7 @@ body {
   translate: -50% 0;
 }
 
-/* Rotate/translate properties, not transform: the badge text and hands keep their SVG transform attributes. */
+/* Rotate/translate properties, not transform: the badge text keeps its SVG transform attributes. */
 .badge-spin {
   transform-box: view-box;
   transform-origin: 50% 50%;

@@ -1,11 +1,10 @@
-// The hero's night desk, seen from above and behind. Decorative (aria-hidden): the name, project
-// notes, scroll cue and badge are real HTML on top of it. Ids are prefixed "desk-" so they can't
-// clash with other SVGs. Static pose: thought bubble showing, spark hidden (also the reduced-motion pose).
-// Light theme = the same desk by day: only the room colours (background, ambience, steam) change.
-const typeScriptIcon =
-  "M1.125 0C.502 0 0 .502 0 1.125v21.75C0 23.498.502 24 1.125 24h21.75c.623 0 1.125-.502 1.125-1.125V1.125C24 .502 23.498 0 22.875 0zm17.363 9.75c.612 0 1.154.037 1.627.111a6.38 6.38 0 0 1 1.306.34v2.458a3.95 3.95 0 0 0-.643-.361 5.093 5.093 0 0 0-.717-.26 5.453 5.453 0 0 0-1.426-.2c-.3 0-.573.028-.819.086a2.1 2.1 0 0 0-.623.242c-.17.104-.3.229-.393.374a.888.888 0 0 0-.14.49c0 .196.053.373.156.529.104.156.252.304.443.444s.423.276.696.41c.273.135.582.274.926.416.47.197.892.407 1.266.628.374.222.695.473.963.753.268.279.472.598.614.957.142.359.214.776.214 1.253 0 .657-.125 1.21-.373 1.656a3.033 3.033 0 0 1-1.012 1.085 4.38 4.38 0 0 1-1.487.596c-.566.12-1.163.18-1.79.18a9.916 9.916 0 0 1-1.84-.164 5.544 5.544 0 0 1-1.512-.493v-2.63a5.033 5.033 0 0 0 3.237 1.2c.333 0 .624-.03.872-.09.249-.06.456-.144.623-.25.166-.108.29-.234.373-.38a1.023 1.023 0 0 0-.074-1.089 2.12 2.12 0 0 0-.537-.5 5.597 5.597 0 0 0-.807-.444 27.72 27.72 0 0 0-1.007-.436c-.918-.383-1.602-.852-2.053-1.405-.45-.553-.676-1.222-.676-2.005 0-.614.123-1.141.369-1.582.246-.441.58-.804 1.004-1.089a4.494 4.494 0 0 1 1.47-.629 7.536 7.536 0 0 1 1.77-.201zm-15.113.188h9.563v2.166H9.506v9.646H6.789v-9.646H3.375z";
-
-export function DeskScene({ projectCount, className }: { projectCount: number; className?: string }) {
+// The hero's night desk: the laptop at a 3/4 view with a coffee and project sticky notes. Decorative
+// (aria-hidden): the name, Download CV link and notes are real HTML on top of it (see page.tsx). Ids are
+// prefixed "desk-" so they can't clash with other SVGs. Light theme = the same desk by day: only the
+// room colours (background, ambience, steam) change; the laptop screen stays dark.
+// Geometry is generated from a 3D model (32 × 22 base, 21-high lid opened to 110°) projected through a
+// camera 18° right of front and 40° up; the overlay anchors in page.tsx come from the same model.
+export function DeskScene({ className }: { className?: string }) {
   return (
     <svg viewBox="0 0 1000 750" aria-hidden="true" className={className}>
       <defs>
@@ -14,134 +13,197 @@ export function DeskScene({ projectCount, className }: { projectCount: number; c
           <stop offset=".55" className="[stop-color:#eaf5ef] dark:[stop-color:#0c1e16]" />
           <stop offset="1" className="[stop-color:#d6e9df] dark:[stop-color:#070c0a]" />
         </radialGradient>
-        <radialGradient id="desk-halo"><stop stopColor="#54f5b2" stopOpacity=".55" /><stop offset=".45" stopColor="#3cd69c" stopOpacity=".13" /><stop offset="1" stopColor="#3cd69c" stopOpacity="0" /></radialGradient>
-        <linearGradient id="desk-screen" x2=".5" y2="1"><stop stopColor="#0e3023" /><stop offset="1" stopColor="#030c08" /></linearGradient>
-        <linearGradient id="desk-edge" x2=".15" y2="1"><stop stopColor="#b1e7d2" /><stop offset=".12" stopColor="#427364" /><stop offset=".5" stopColor="#20382e" /><stop offset="1" stopColor="#41715c" /></linearGradient>
-        <linearGradient id="desk-bezel" x2="0" y2="1"><stop stopColor="#101b16" /><stop offset=".3" stopColor="#020705" /><stop offset="1" stopColor="#0a130e" /></linearGradient>
-        <linearGradient id="desk-deck" x2=".9" y2="1"><stop stopColor="#527c6b" /><stop offset=".12" stopColor="#2d4a3d" /><stop offset=".55" stopColor="#233c31" /><stop offset=".85" stopColor="#1c3027" /><stop offset="1" stopColor="#3b5e4e" /></linearGradient>
-        <linearGradient id="desk-trackpad" x2="1" y2="1"><stop stopColor="#12271c" /><stop offset="1" stopColor="#243f32" /></linearGradient>
-        <linearGradient id="desk-cloth" x2=".9" y2=".7"><stop stopColor="#345f4e" /><stop offset=".18" stopColor="#173a2a" /><stop offset=".48" stopColor="#0c2017" /><stop offset="1" stopColor="#050e09" /></linearGradient>
-        <linearGradient id="desk-arm" x2="1" y2=".6"><stop stopColor="#254e3e" /><stop offset=".26" stopColor="#19382a" /><stop offset=".6" stopColor="#0c2017" /><stop offset="1" stopColor="#07100b" /></linearGradient>
-        <linearGradient id="desk-skin" x2=".3" y2="1"><stop stopColor="#5f8f78" /><stop offset=".45" stopColor="#2f4d40" /><stop offset="1" stopColor="#16251e" /></linearGradient>
-        <linearGradient id="desk-hand-skin" gradientUnits="userSpaceOnUse" x1="0" y1="-72" x2="0" y2="6"><stop stopColor="#6a9c84" /><stop offset=".4" stopColor="#3a5c4c" /><stop offset="1" stopColor="#1b2d24" /></linearGradient>
-        <radialGradient id="desk-hair" cx=".36" cy=".12" r=".87"><stop stopColor="#254c38" /><stop offset=".35" stopColor="#10271a" /><stop offset=".7" stopColor="#070e09" /><stop offset="1" stopColor="#030705" /></radialGradient>
-        <linearGradient id="desk-hair-light" x2=".5" y2="1"><stop stopColor="#a4f5cf" stopOpacity=".8" /><stop offset=".28" stopColor="#498466" stopOpacity=".4" /><stop offset="1" stopColor="#142a1c" stopOpacity="0" /></linearGradient>
-        <linearGradient id="desk-ceramic" x2="1" y2=".4"><stop stopColor="#497d66" /><stop offset=".12" stopColor="#234a37" /><stop offset=".4" stopColor="#102b1e" /><stop offset="1" stopColor="#040c08" /></linearGradient>
-        <radialGradient id="desk-coffee" cx=".4" cy=".32"><stop stopColor="#987149" /><stop offset=".5" stopColor="#715033" /><stop offset="1" stopColor="#352419" /></radialGradient>
+        <radialGradient id="desk-pool">
+          <stop stopColor="#6ee7b7" stopOpacity=".26" />
+          <stop offset=".6" stopColor="#6ee7b7" stopOpacity=".08" />
+          <stop offset="1" stopColor="#6ee7b7" stopOpacity="0" />
+        </radialGradient>
+        <linearGradient id="desk-screen" x2=".5" y2="1">
+          <stop stopColor="#0e3023" />
+          <stop offset="1" stopColor="#030c08" />
+        </linearGradient>
+        <linearGradient id="desk-edge" x2=".2" y2="1">
+          <stop stopColor="#b1e7d2" />
+          <stop offset=".14" stopColor="#427364" />
+          <stop offset=".55" stopColor="#20382e" />
+          <stop offset="1" stopColor="#41715c" />
+        </linearGradient>
+        <linearGradient id="desk-bezel" x2="0" y2="1">
+          <stop stopColor="#101b16" />
+          <stop offset=".3" stopColor="#020705" />
+          <stop offset="1" stopColor="#0a130e" />
+        </linearGradient>
+        <linearGradient id="desk-deck" x2=".9" y2="1">
+          <stop stopColor="#527c6b" />
+          <stop offset=".2" stopColor="#2d4a3d" />
+          <stop offset=".6" stopColor="#233c31" />
+          <stop offset="1" stopColor="#1a2d24" />
+        </linearGradient>
+        <linearGradient id="desk-trackpad" x2="1" y2="1">
+          <stop stopColor="#12271c" />
+          <stop offset="1" stopColor="#243f32" />
+        </linearGradient>
+        <linearGradient id="desk-ceramic" x2="1" y2=".3">
+          <stop stopColor="#497d66" />
+          <stop offset=".15" stopColor="#234a37" />
+          <stop offset=".5" stopColor="#102b1e" />
+          <stop offset="1" stopColor="#040c08" />
+        </linearGradient>
+        <radialGradient id="desk-coffee" cx=".4" cy=".35">
+          <stop stopColor="#987149" />
+          <stop offset=".55" stopColor="#715033" />
+          <stop offset="1" stopColor="#352419" />
+        </radialGradient>
         <linearGradient id="desk-steam" x2="0" y2="1">
           <stop stopOpacity="0" className="[stop-color:#5f8f78] dark:[stop-color:#c9ead8]" />
           <stop offset=".5" stopOpacity=".55" className="[stop-color:#5f8f78] dark:[stop-color:#c9ead8]" />
           <stop offset="1" stopOpacity="0" className="[stop-color:#5f8f78] dark:[stop-color:#c9ead8]" />
         </linearGradient>
-        <filter id="desk-blur"><feGaussianBlur stdDeviation="5" /></filter>
-        <filter id="desk-steam-blur" x="-100%" y="-30%" width="300%" height="160%"><feGaussianBlur stdDeviation="2.6" /></filter>
-        <filter id="desk-shadow" x="-30%" y="-30%" width="160%" height="180%"><feDropShadow dx="0" dy="8" stdDeviation="6" floodColor="#000" floodOpacity=".55" /></filter>
-        <g id="desk-relaxed-hand">
-          <g transform="translate(343 476) rotate(18) scale(1.4)">
-            <path fill="url(#desk-hand-skin)" d="M-22 4C-28 -12 -32 -30 -31 -44C-31 -52 -29 -58 -24 -58C-19 -58 -18 -53 -18 -48C-18 -60 -14 -66 -9 -66C-4 -66 -2 -61 -3 -53C-2 -66 2 -71 7 -71C12 -71 14 -65 12 -55C14 -63 19 -66 24 -64C29 -62 29 -55 26 -46C25 -40 27 -35 31 -35C35 -42 39 -50 43 -49C47 -48 46 -41 43 -34C36 -20 28 -6 20 4Z" />
-            <path d="M-27 -42Q0 -52 24 -44" fill="none" stroke="#a7e9c9" strokeOpacity=".16" strokeWidth="3" filter="url(#desk-steam-blur)" />
-          </g>
-        </g>
-        <linearGradient id="desk-chair" x2="0" y2="1"><stop stopColor="#1b3328" /><stop offset=".25" stopColor="#10221a" /><stop offset="1" stopColor="#060d09" /></linearGradient>
-        <linearGradient id="desk-chair-pad" x2="0" y2="1"><stop stopColor="#162c22" /><stop offset=".45" stopColor="#0b1a13" /><stop offset="1" stopColor="#040a07" /></linearGradient>
-        <linearGradient id="desk-chair-rim" x2="1" y2="0"><stop stopColor="#7fe3b6" stopOpacity=".08" /><stop offset=".5" stopColor="#9df6cf" stopOpacity=".55" /><stop offset="1" stopColor="#7fe3b6" stopOpacity=".08" /></linearGradient>
+        <filter id="desk-soft" x="-30%" y="-30%" width="160%" height="160%">
+          <feGaussianBlur stdDeviation="8" />
+        </filter>
+        <filter id="desk-glow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="4" />
+        </filter>
+        <filter id="desk-steam-blur" x="-100%" y="-30%" width="300%" height="160%">
+          <feGaussianBlur stdDeviation="2.6" />
+        </filter>
       </defs>
 
       <rect width="1000" height="750" className="fill-[#d6e9df] dark:fill-[#070c0a]" />
-      <ellipse cx="500" cy="340" rx="510" ry="420" fill="url(#desk-ambience)" />
-      <ellipse cx="495" cy="285" rx="320" ry="245" fill="url(#desk-halo)" opacity=".24" />
-      {/* The idea glow (replaces the old hero blob); lit in the static pose. */}
-      <ellipse id="desk-idea-halo" cx="500" cy="554" rx="240" ry="170" fill="url(#desk-halo)" opacity=".72" />
+      <ellipse cx="500" cy="360" rx="500" ry="420" fill="url(#desk-ambience)" />
 
-      {/* Laptop geometry is generated from a 3D model (32 × 22 base, 21-high lid opened to 112°) projected
-          through a camera above and behind the person, so the base and lid are the same real size and the
-          lid stands up. From up here the lid's top edge is nearer the eye than its hinge, so it reads wider. */}
-      <g id="desk-laptop" filter="url(#desk-shadow)">
-        <path d="M300.8 46.7 L691.2 46.7 L670.7 286.1 L321.3 286.1Z" fill="url(#desk-edge)" stroke="url(#desk-edge)" strokeWidth="6" strokeLinejoin="round" />
-        <path d="M305.9 50.7 L686.1 50.7 L666.7 283.9 L325.3 283.9Z" fill="url(#desk-bezel)" />
-        <path d="M317.9 65.3 L674.1 65.3 L657.9 271 L334.1 271Z" fill="url(#desk-screen)" />
-        <path d="M317.9 65.3 L465 65.3 L362.2 271 L334.1 271Z" fill="#b0f4d4" opacity=".025" />
-        <circle cx="496" cy="57.9" r="2.3" fill="#274a3a" />
-        <g fill="#416c58"><circle cx="336.6" cy="83.5" r="5" /><circle cx="352" cy="83.5" r="5" /><circle cx="367.4" cy="83.5" r="5" /></g>
-        <g className="font-mono" fontSize="15.5">
-          <text x="336.9" y="114.2" fill="#d8ebdf">$ npm run build-me</text>
-          <path d="m339.4 132.9 3.5 4.6 8-11.5" fill="none" stroke="#80f2c4" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
-          <text x="357.3" y="137.8" fill="#7ff1c5">compiled {projectCount} projects</text>
+      <path
+        d="M753.5 489.8 L759.7 468.8 L762.5 447.6 L761.9 426.6 L758 405.9 L750.9 385.8 L740.8 366.4 L727.9 348 L712.4 330.7 L694.4 314.7 L674.2 300 L652 286.8 L628.1 275.2 L602.7 265.2 L576 257 L548.3 250.5 L519.8 245.8 L490.7 243.1 L461.4 242.1 L432.1 243.1 L403 245.8 L374.3 250.5 L346.4 257 L319.5 265.2 L293.7 275.2 L269.4 286.8 L246.8 300 L226.2 314.7 L207.7 330.7 L191.6 348 L178.1 366.4 L167.4 385.8 L159.8 405.9 L155.2 426.6 L153.9 447.6 L156 468.8 L161.6 489.8 L170.6 510.5 L183 530.6 L198.8 549.8 L217.8 567.8 L239.9 584.5 L264.9 599.5 L292.4 612.6 L322.1 623.6 L353.6 632.4 L386.6 638.8 L420.6 642.6 L455.1 643.9 L489.6 642.6 L523.7 638.8 L556.9 632.4 L588.8 623.6 L618.8 612.6 L646.7 599.5 L672.2 584.5 L694.8 567.8 L714.4 549.8 L730.8 530.6 L743.9 510.5Z"
+        fill="url(#desk-pool)"
+      />
+      <path
+        d="M238.5 478.7 L637.8 567.6 L715.1 381.6 L341.3 304.9Z"
+        fill="#000"
+        opacity=".5"
+        filter="url(#desk-soft)"
+      />
+      {/* Note shadows; the notes themselves are HTML, shown only when the whole desk fits. */}
+      <path
+        d="M59.8 222.2 L292.7 214.9 L292.2 297 L50.5 304.9Z M52.6 329.8 L248.6 338.5 L231.1 418.3 L28.6 409Z M40.2 459.9 L224.6 451.4 L224 534.9 L33.3 544Z M212.1 559.5 L390.2 566 L379.8 653 L195.7 646Z M621.4 597.3 L800.7 586.2 L821.9 674.4 L636.6 686.2Z"
+        fill="#000"
+        opacity=".35"
+        filter="url(#desk-soft)"
+        className="scene-narrow:hidden"
+      />
+
+      <g id="desk-laptop">
+        <path d="M623.3 550.4 L695.7 378.4 L696.4 366.5 L623.8 538.3Z" fill="#0f1f18" />
+        <path d="M243.9 466.1 L623.3 550.4 L623.8 538.3 L243 454.1Z" fill="#17291f" />
+        <path
+          d="M338.2 293.1 L696.4 366.5 L623.8 538.3 L243 454.1Z"
+          fill="url(#desk-deck)"
+          stroke="#5e927b"
+          strokeWidth="1.2"
+          strokeLinejoin="round"
+        />
+        <path d="M392.3 487.1 L468.4 504" stroke="#87e1b7" strokeOpacity=".5" strokeWidth="1.5" strokeLinecap="round" />
+        <path
+          d="M354.7 305 L670.8 370 L634.8 453.1 L309 383.6Z"
+          fill="#07110b"
+          stroke="#567963"
+          strokeWidth="1.2"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M360 308.6 L378.5 312.4 L371.5 324.7 L352.9 320.9Z M381.3 313 L399.8 316.8 L392.9 329.2 L374.3 325.3Z M402.7 317.4 L421.3 321.2 L414.5 333.7 L395.8 329.8Z M445.7 326.3 L464.4 330.1 L457.8 342.6 L439 338.7Z M467.3 330.7 L486.1 334.6 L479.6 347.1 L460.7 343.2Z M489 335.2 L507.9 339.1 L501.5 351.7 L482.5 347.7Z M510.8 339.7 L529.8 343.6 L523.5 356.2 L504.4 352.3Z M532.7 344.2 L551.7 348.1 L545.5 360.8 L526.4 356.8Z M554.6 348.7 L573.7 352.6 L567.7 365.4 L548.4 361.4Z M598.8 357.8 L618.1 361.8 L612.2 374.6 L592.8 370.6Z M621 362.4 L640.3 366.3 L634.6 379.2 L615.1 375.2Z M643.3 367 L662.7 371 L657.1 383.9 L637.6 379.8Z M351.5 323.4 L370.1 327.2 L363 339.7 L344.3 335.8Z M372.9 327.8 L391.6 331.7 L384.6 344.2 L365.8 340.3Z M416 336.7 L434.8 340.6 L428 353.2 L409.1 349.3Z M437.6 341.2 L456.5 345.1 L449.8 357.8 L430.9 353.8Z M459.4 345.7 L478.3 349.7 L471.7 362.4 L452.7 358.4Z M503.1 354.8 L522.2 358.8 L515.8 371.6 L496.7 367.6Z M525.1 359.4 L544.3 363.3 L538 376.2 L518.8 372.2Z M547.2 363.9 L566.4 367.9 L560.3 380.8 L541 376.8Z M569.4 368.5 L588.7 372.6 L582.6 385.5 L563.2 381.5Z M591.6 373.2 L611 377.2 L605.1 390.2 L585.6 386.1Z M614 377.8 L633.4 381.8 L627.6 394.9 L608 390.8Z M636.4 382.4 L655.9 386.5 L650.2 399.6 L630.6 395.5Z M342.8 338.3 L361.5 342.2 L354.4 354.8 L335.6 350.9Z M364.4 342.8 L383.2 346.7 L376.1 359.4 L357.2 355.4Z M386 347.3 L404.8 351.2 L397.9 364 L378.9 360Z M407.7 351.8 L426.6 355.8 L419.7 368.6 L400.7 364.6Z M429.5 356.4 L448.5 360.3 L441.7 373.2 L422.6 369.2Z M451.4 361 L470.4 364.9 L463.8 377.8 L444.6 373.8Z M473.3 365.5 L492.5 369.5 L485.9 382.5 L466.7 378.4Z M495.4 370.1 L514.6 374.1 L508.1 387.1 L488.8 383.1Z M517.5 374.8 L536.8 378.8 L530.4 391.8 L511.1 387.7Z M562 384.1 L581.4 388.1 L575.3 401.2 L555.8 397.1Z M584.4 388.7 L603.9 392.8 L597.9 406 L578.3 401.9Z M629.4 398.1 L649.1 402.2 L643.3 415.5 L623.5 411.4Z M334.1 353.4 L352.9 357.4 L345.6 370.1 L326.7 366.2Z M355.8 358 L374.6 361.9 L367.5 374.8 L348.5 370.8Z M377.5 362.5 L396.5 366.5 L389.4 379.4 L370.4 375.4Z M399.3 367.1 L418.4 371.1 L411.4 384.1 L392.3 380Z M421.3 371.7 L440.3 375.8 L433.5 388.7 L414.3 384.7Z M465.3 381 L484.6 385.1 L477.9 398.1 L458.6 394.1Z M487.5 385.7 L506.8 389.7 L500.3 402.9 L480.9 398.8Z M509.8 390.4 L529.1 394.4 L522.7 407.6 L503.2 403.5Z M532.1 395.1 L551.6 399.1 L545.3 412.4 L525.7 408.3Z M554.5 399.8 L574.1 403.9 L567.9 417.2 L548.2 413Z M577 404.5 L596.7 408.6 L590.6 422 L570.9 417.8Z M599.7 409.3 L619.4 413.4 L613.4 426.8 L593.6 422.6Z M622.3 414 L642.1 418.2 L636.3 431.7 L616.4 427.4Z M323.8 368.4 L354.3 374.9 L347 387.9 L316.4 381.3Z M357.9 375.6 L388.6 382.1 L381.5 395.2 L350.6 388.6Z M392.3 382.9 L565.2 419.5 L558.9 433 L385.1 396Z M568.9 420.3 L600.8 427.1 L594.7 440.6 L562.6 433.8Z M604.5 427.9 L636.6 434.7 L630.7 448.3 L598.4 441.5Z"
+          fill="#0f1d16"
+          stroke="#395d4c"
+          strokeWidth=".7"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M424.1 321.8 L442.8 325.7 L436.1 338.1 L417.3 334.2Z M576.7 353.2 L595.9 357.2 L589.9 370 L570.6 366Z M394.4 332.3 L413.1 336.1 L406.2 348.7 L387.4 344.8Z M481.2 350.3 L500.2 354.2 L493.8 367 L474.6 363Z M539.7 379.4 L559.1 383.4 L552.8 396.5 L533.4 392.4Z M606.9 393.4 L626.4 397.5 L620.5 410.7 L600.9 406.6Z M443.2 376.4 L462.4 380.4 L455.7 393.4 L436.4 389.4Z"
+          fill="#6ee7b7"
+          filter="url(#desk-glow)"
+        />
+        <path
+          d="M424.1 321.8 L442.8 325.7 L436.1 338.1 L417.3 334.2Z M576.7 353.2 L595.9 357.2 L589.9 370 L570.6 366Z M394.4 332.3 L413.1 336.1 L406.2 348.7 L387.4 344.8Z M481.2 350.3 L500.2 354.2 L493.8 367 L474.6 363Z M539.7 379.4 L559.1 383.4 L552.8 396.5 L533.4 392.4Z M606.9 393.4 L626.4 397.5 L620.5 410.7 L600.9 406.6Z M443.2 376.4 L462.4 380.4 L455.7 393.4 L436.4 389.4Z"
+          fill="#b9f8dc"
+        />
+        <path
+          d="M404.4 416.9 L523.4 442.5 L496.6 498.3 L375.2 471.6Z"
+          fill="url(#desk-trackpad)"
+          stroke="#5a7c65"
+          strokeOpacity=".6"
+          strokeLinejoin="round"
+        />
+        <path d="M359.7 58 L730.2 126 L731.8 124.3 L362.1 56.5Z" fill="#2d4a3d" />
+        <path d="M696.4 366.5 L730.2 126 L731.8 124.3 L698 364.3Z" fill="#1c3128" />
+        <path
+          d="M359.7 58 L730.2 126 L696.4 366.5 L338.2 293.1Z"
+          fill="url(#desk-edge)"
+          stroke="url(#desk-edge)"
+          strokeWidth="5"
+          strokeLinejoin="round"
+        />
+        <path d="M363.7 62.4 L725.1 128.9 L692.3 362.8 L342.6 291.2Z" fill="url(#desk-bezel)" />
+        <path d="M372.5 77.6 L712.5 140.5 L683.9 347.2 L353.6 280Z" fill="url(#desk-screen)" />
+        <path d="M372.5 77.6 L503.1 101.8 L381.6 285.7 L353.6 280Z" fill="#b0f4d4" opacity=".03" />
+        <circle cx="540.8" cy="101.3" r="2.2" fill="#274a3a" />
+        <g fill="#416c58">
+          <circle cx="385.5" cy="94.7" r="4.5" />
+          <circle cx="398.1" cy="97.1" r="4.5" />
+          <circle cx="410.7" cy="99.4" r="4.5" />
         </g>
-        {/* The name (h1) and the Download CV prompt line sit here as real HTML, see page.tsx. */}
-        <path d="M321.3 286.1 L670.7 286.1 L716 492 L276 492Z" fill="url(#desk-deck)" stroke="#5e927b" strokeWidth="1" strokeLinejoin="round" />
-        <path d="M363.2 286.1 L628.8 286.1 L629.2 288.6 L362.8 288.6Z" fill="#040c08" stroke="#1c3929" />
-        <path d="M325.1 292.7 L282.1 484.3 L709.9 484.3 L666.9 292.7" fill="none" stroke="#8cd2b0" strokeOpacity=".18" strokeWidth="2" />
-        <path d="M340 297.7 L652 297.7 L670.2 391.7 L321.8 391.7Z" fill="#07110b" stroke="#567963" strokeWidth="1.5" strokeLinejoin="round" />
-        <path d="M346.3 300.2 L365 300.2 L362.7 314.4 L343.6 314.4Z M367.9 300.2 L386.6 300.2 L384.7 314.4 L365.6 314.4Z M389.5 300.2 L408.2 300.2 L406.7 314.4 L387.6 314.4Z M411 300.2 L429.8 300.2 L428.6 314.4 L409.6 314.4Z M432.6 300.2 L451.4 300.2 L450.6 314.4 L431.5 314.4Z M454.2 300.2 L473 300.2 L472.6 314.4 L453.5 314.4Z M475.8 300.2 L494.6 300.2 L494.6 314.4 L475.5 314.4Z M497.4 300.2 L516.2 300.2 L516.5 314.4 L497.4 314.4Z M519 300.2 L537.8 300.2 L538.5 314.4 L519.4 314.4Z M540.6 300.2 L559.4 300.2 L560.5 314.4 L541.4 314.4Z M562.2 300.2 L581 300.2 L582.4 314.4 L563.4 314.4Z M583.8 300.2 L602.5 300.2 L604.4 314.4 L585.3 314.4Z M605.4 300.2 L624.1 300.2 L626.4 314.4 L607.3 314.4Z M627 300.2 L645.7 300.2 L648.4 314.4 L629.3 314.4Z M343.1 317.2 L362.3 317.2 L359.9 331.9 L340.4 331.9Z M365.2 317.2 L384.3 317.2 L382.3 331.9 L362.8 331.9Z M387.2 317.2 L406.4 317.2 L404.8 331.9 L385.3 331.9Z M409.3 317.2 L428.4 317.2 L427.2 331.9 L407.7 331.9Z M431.3 317.2 L450.5 317.2 L449.6 331.9 L430.2 331.9Z M453.4 317.2 L472.5 317.2 L472.1 331.9 L452.6 331.9Z M475.4 317.2 L494.5 317.2 L494.5 331.9 L475 331.9Z M497.5 317.2 L516.6 317.2 L517 331.9 L497.5 331.9Z M519.5 317.2 L538.6 317.2 L539.4 331.9 L519.9 331.9Z M541.5 317.2 L560.7 317.2 L561.8 331.9 L542.4 331.9Z M563.6 317.2 L582.7 317.2 L584.3 331.9 L564.8 331.9Z M585.6 317.2 L604.8 317.2 L606.7 331.9 L587.2 331.9Z M607.7 317.2 L626.8 317.2 L629.2 331.9 L609.7 331.9Z M629.7 317.2 L648.9 317.2 L651.6 331.9 L632.1 331.9Z M339.9 334.9 L359.4 334.9 L356.9 350.2 L337 350.2Z M362.4 334.9 L381.9 334.9 L379.8 350.2 L359.9 350.2Z M384.9 334.9 L404.4 334.9 L402.8 350.2 L382.9 350.2Z M407.4 334.9 L427 334.9 L425.7 350.2 L405.8 350.2Z M429.9 334.9 L449.5 334.9 L448.6 350.2 L428.7 350.2Z M452.4 334.9 L472 334.9 L471.6 350.2 L451.7 350.2Z M475 334.9 L494.5 334.9 L494.5 350.2 L474.6 350.2Z M497.5 334.9 L517 334.9 L517.4 350.2 L497.5 350.2Z M520 334.9 L539.6 334.9 L540.3 350.2 L520.4 350.2Z M542.5 334.9 L562.1 334.9 L563.3 350.2 L543.4 350.2Z M565 334.9 L584.6 334.9 L586.2 350.2 L566.3 350.2Z M587.6 334.9 L607.1 334.9 L609.1 350.2 L589.2 350.2Z M610.1 334.9 L629.6 334.9 L632.1 350.2 L612.2 350.2Z M632.6 334.9 L652.1 334.9 L655 350.2 L635.1 350.2Z M336.4 353.3 L356.4 353.3 L353.8 369.4 L333.5 369.4Z M359.4 353.3 L379.4 353.3 L377.3 369.4 L356.9 369.4Z M382.5 353.3 L402.4 353.3 L400.7 369.4 L380.3 369.4Z M405.5 353.3 L425.5 353.3 L424.1 369.4 L403.8 369.4Z M428.5 353.3 L448.5 353.3 L447.6 369.4 L427.2 369.4Z M451.5 353.3 L471.5 353.3 L471 369.4 L450.7 369.4Z M474.5 353.3 L494.5 353.3 L494.5 369.4 L474.1 369.4Z M497.5 353.3 L517.5 353.3 L517.9 369.4 L497.5 369.4Z M520.5 353.3 L540.5 353.3 L541.3 369.4 L521 369.4Z M543.5 353.3 L563.5 353.3 L564.8 369.4 L544.4 369.4Z M566.5 353.3 L586.5 353.3 L588.2 369.4 L567.9 369.4Z M589.6 353.3 L609.5 353.3 L611.7 369.4 L591.3 369.4Z M612.6 353.3 L632.6 353.3 L635.1 369.4 L614.7 369.4Z M635.6 353.3 L655.6 353.3 L658.5 369.4 L638.2 369.4Z M331.3 372.6 L364.3 372.6 L361.7 389.4 L328.2 389.4Z M368.1 372.6 L401.1 372.6 L399.3 389.4 L365.7 389.4Z M404.9 372.6 L587.1 372.6 L588.8 389.4 L403.2 389.4Z M590.9 372.6 L623.9 372.6 L626.3 389.4 L592.7 389.4Z M627.7 372.6 L660.7 372.6 L663.8 389.4 L630.3 389.4Z" fill="#0f1d16" stroke="#395d4c" strokeWidth=".65" strokeLinejoin="round" />
-        <path d="M431.8 404.5 L560.2 404.5 L565.3 476.7 L426.7 476.7Z" fill="url(#desk-trackpad)" stroke="#5a7c65" strokeOpacity=".6" strokeLinejoin="round" />
-        <path d="M289.2 492 L702.8 492" stroke="#030906" strokeWidth="4" strokeLinecap="round" />
-        <path d="M452 492 L540 492" stroke="#87e1b7" strokeOpacity=".6" strokeWidth="1.5" strokeLinecap="round" />
+        {/* The name (h1), headline and Download CV prompt sit on the screen as real HTML, see page.tsx. */}
       </g>
 
-      <g id="desk-mug" filter="url(#desk-shadow)">
-        <ellipse cx="833" cy="424" rx="59" ry="21" fill="#000" opacity=".3" />
-        <path d="M868 376C898 366 914 384 909 400C904 414 886 418 866 410" fill="none" stroke="#163d2a" strokeWidth="11" strokeLinecap="round" />
-        <path d="M872 372C898 364 911 380 906 395" fill="none" stroke="#5c9e7a" strokeOpacity=".55" strokeWidth="2" strokeLinecap="round" />
-        <path d="M783 359C782 391 786 430 816 437C851 446 872 425 877 361Z" fill="url(#desk-ceramic)" />
-        <path d="M784 361Q782 406 802 425" fill="none" stroke="#99eac3" strokeOpacity=".18" strokeWidth="1.5" />
-        <ellipse cx="830" cy="357" rx="48" ry="41" fill="#143020" stroke="#a7efd0" strokeWidth="1.7" />
-        <ellipse cx="830" cy="361" rx="43" ry="35" fill="#352c1e" stroke="#64917a" strokeWidth="1" />
-        <ellipse cx="830" cy="364" rx="40" ry="32" fill="url(#desk-coffee)" stroke="#a88659" strokeWidth="1.2" />
-        <path d="M794 362C801 333 838 327 859 347" fill="none" stroke="#d5b48b" strokeOpacity=".35" strokeWidth="1.5" />
-        <ellipse cx="810" cy="347" rx="8" ry="3.5" transform="rotate(-28 810 347)" fill="#e4cfa8" opacity=".16" />
-        <path d="M808 370c4-14 24-18 36-8c8 7 4 18-6 18" fill="none" stroke="#e2c49b" strokeOpacity=".28" strokeWidth="2.5" strokeLinecap="round" />
+      <g id="desk-mug">
+        <path
+          d="M888.6 497.1 L889.6 492.3 L889.7 487.4 L888.8 482.5 L887 477.6 L884.3 472.9 L880.7 468.5 L876.4 464.3 L871.3 460.5 L865.6 457.1 L859.4 454.2 L852.8 451.9 L845.8 450.1 L838.7 448.9 L831.4 448.4 L824.2 448.4 L817.2 449.1 L810.4 450.4 L804 452.3 L798.1 454.8 L792.8 457.8 L788.2 461.2 L784.3 465.1 L781.2 469.3 L779.1 473.9 L777.8 478.6 L777.5 483.5 L778.1 488.4 L779.7 493.3 L782.3 498.1 L785.7 502.7 L790 507 L795 510.9 L800.7 514.4 L807 517.4 L813.8 519.9 L820.9 521.8 L828.3 523 L835.7 523.6 L843.2 523.6 L850.4 522.8 L857.4 521.5 L863.9 519.5 L869.9 516.9 L875.2 513.8 L879.8 510.2 L883.6 506.1 L886.6 501.8Z"
+          fill="#000"
+          opacity=".45"
+          filter="url(#desk-soft)"
+        />
+        <path
+          d="M850 453.2 L855.6 452.5 L861 451.2 L866.1 449.1 L870.7 446.5 L874.7 443.4 L877.9 439.9 L880.3 436.1 L881.7 432.1 L882.2 428 L881.7 423.9 L880.2 420.1 L877.8 416.5 L874.5 413.4 L870.4 410.7 L865.7 408.6 L860.5 407.2 L855 406.5"
+          fill="none"
+          stroke="#163d2a"
+          strokeWidth="10"
+          strokeLinecap="round"
+        />
+        <path
+          d="M850 453.2 L855.6 452.5 L861 451.2 L866.1 449.1 L870.7 446.5 L874.7 443.4 L877.9 439.9 L880.3 436.1 L881.7 432.1"
+          fill="none"
+          stroke="#5c9e7a"
+          strokeOpacity=".5"
+          strokeWidth="2"
+          strokeLinecap="round"
+        />
+        <path
+          d="M766.7 465.7 L766.9 462.2 L772.8 391 L773.7 387.6 L775.3 384.3 L777.6 381.3 L780.5 378.5 L784 376 L788 373.8 L792.4 372.1 L797.2 370.7 L802.2 369.7 L807.5 369.3 L812.9 369.2 L818.3 369.6 L823.6 370.5 L828.8 371.7 L833.7 373.4 L838.3 375.5 L842.5 377.9 L846.3 380.7 L849.5 383.7 L852.1 386.9 L854.1 390.3 L855.4 393.8 L856 397.3 L855.8 400.8 L848.2 472.1 L847.4 475.6 L845.9 478.9 L843.7 482.1 L840.9 485 L837.5 487.6 L833.6 489.8 L829.2 491.7 L824.5 493.1 L819.4 494.1 L814.1 494.6 L808.8 494.7 L803.4 494.2 L798 493.3 L792.9 492 L788 490.2 L783.4 488 L779.3 485.5 L775.7 482.7 L772.6 479.6 L770.1 476.3 L768.3 472.8 L767.1 469.3Z"
+          fill="url(#desk-ceramic)"
+        />
+        <path
+          d="M855 404.3 L855.8 400.8 L856 397.3 L855.4 393.8 L854.1 390.3 L852.1 386.9 L849.5 383.7 L846.3 380.7 L842.5 377.9 L838.3 375.5 L833.7 373.4 L828.8 371.7 L823.6 370.5 L818.3 369.6 L812.9 369.2 L807.5 369.3 L802.2 369.7 L797.2 370.7 L792.4 372.1 L788 373.8 L784 376 L780.5 378.5 L777.6 381.3 L775.3 384.3 L773.7 387.6 L772.8 391 L772.5 394.5 L773 398 L774.2 401.5 L776.1 404.9 L778.6 408.2 L781.8 411.3 L785.5 414.1 L789.7 416.6 L794.4 418.8 L799.4 420.5 L804.7 421.9 L810.1 422.7 L815.6 423.2 L821.1 423.1 L826.5 422.6 L831.6 421.6 L836.5 420.2 L841 418.4 L845 416.1 L848.4 413.6 L851.3 410.7 L853.5 407.6Z"
+          fill="#143020"
+          stroke="#a7efd0"
+          strokeWidth="1.6"
+        />
+        <path
+          d="M848.6 409.8 L849.3 406.8 L849.4 403.8 L848.9 400.8 L847.8 397.8 L846.1 394.8 L843.9 392.1 L841.1 389.5 L837.9 387.1 L834.3 385 L830.3 383.2 L826.1 381.8 L821.6 380.7 L817.1 379.9 L812.4 379.6 L807.8 379.6 L803.3 380 L798.9 380.9 L794.8 382 L791 383.6 L787.6 385.4 L784.6 387.6 L782.2 390 L780.2 392.6 L778.8 395.4 L778 398.4 L777.8 401.4 L778.2 404.4 L779.2 407.4 L780.9 410.4 L783 413.2 L785.7 415.8 L788.9 418.2 L792.6 420.4 L796.6 422.2 L800.9 423.8 L805.4 424.9 L810 425.7 L814.8 426 L819.5 426 L824.1 425.5 L828.5 424.7 L832.7 423.5 L836.5 421.9 L839.9 420 L842.9 417.8 L845.4 415.3 L847.3 412.6Z"
+          fill="url(#desk-coffee)"
+          stroke="#a88659"
+          strokeWidth="1"
+        />
       </g>
-      <g id="desk-steam-rising" fill="none" stroke="url(#desk-steam)" strokeLinecap="round" filter="url(#desk-steam-blur)" opacity=".35">
-        <path className="desk-wisp" d="M822 332C808 312 840 298 831 278S813 249 822 219" strokeWidth="7" />
-        <path className="desk-wisp" d="M834 329C847 310 829 296 839 276S841 247 834 231" strokeWidth="3" />
-        <path className="desk-wisp" d="M814 332C804 315 825 298 819 281S809 251 814 236" strokeWidth="4.5" />
-      </g>
-
-      <g id="desk-person">
-        <path d="M196 750C196 705 214 668 252 650C290 632 340 632 380 650L425 662H575L620 650C660 632 710 632 748 650C786 668 804 705 804 750Z" fill="url(#desk-cloth)" />
-        <path d="M214 690C222 664 238 652 262 645C300 634 342 636 380 650M786 690C778 664 762 652 738 645C700 634 658 636 620 650" fill="none" stroke="#7fe3b6" strokeOpacity=".2" strokeWidth="6" filter="url(#desk-blur)" />
-        <path d="M190 770C176 732 174 690 191 660C204 636 220 605 237 579L299 495L319 465Q335 455 361 479L369 496L337 540L302 623L268 705L252 770Z" fill="url(#desk-arm)" />
-        <path d="M810 770C824 732 826 690 809 660C796 636 780 605 763 579L701 495L681 465Q665 455 639 479L631 496L663 540L698 623L732 705L748 770Z" fill="url(#desk-arm)" />
-        <g className="desk-hand"><use href="#desk-relaxed-hand" /></g>
-        <g className="desk-hand desk-hand-right"><use href="#desk-relaxed-hand" transform="translate(1000 0) scale(-1 1)" /></g>
-        <path d="M427 654Q450 646 456 637H544Q550 646 573 654L565 703H435Z" fill="#0a1a10" />
-        <path d="M457 643H543L545 691Q502 715 454 691Z" fill="url(#desk-skin)" />
-        <ellipse cx="412" cy="640" rx="10" ry="20" fill="url(#desk-skin)" transform="rotate(-9 412 640)" />
-        <ellipse cx="588" cy="640" rx="10" ry="20" fill="url(#desk-skin)" transform="rotate(9 588 640)" />
-        <path d="M411 615C397 586 409 549 433 532C444 512 480 500 505 511C539 507 566 528 578 554C601 573 599 615 585 641C576 669 547 701 501 703C455 702 424 666 415 641Z" fill="url(#desk-hair)" />
-        <path d="M411 611C403 581 414 554 437 536C453 513 480 505 504 512C538 509 562 527 578 554" fill="none" stroke="#79dfad" strokeOpacity=".17" strokeWidth="5" filter="url(#desk-blur)" />
-        <g fill="none" stroke="url(#desk-hair-light)" strokeLinecap="round" strokeWidth="2" opacity=".55">
-          <path d="M440 545Q452 528 472 522" /><path d="M466 528Q484 512 506 513" /><path d="M500 516Q526 512 548 528" /><path d="M536 528Q556 536 568 552" />
-        </g>
-        <path d="M405 684Q425 675 449 695Q500 712 551 695Q575 675 595 684L610 711H389Z" fill="#07150c" />
-      </g>
-
-      <g id="desk-chair-back">
-        <path d="M200 760L206 690C210 660 238 645 280 641Q500 622 720 641C762 645 790 660 794 690L800 760Z" fill="url(#desk-chair)" />
-        <path d="M206 690C210 660 238 645 280 641Q500 622 720 641C762 645 790 660 794 690" fill="none" stroke="#7fe3b6" strokeOpacity=".14" strokeWidth="8" filter="url(#desk-blur)" />
-        <path d="M206 690C210 660 238 645 280 641Q500 622 720 641C762 645 790 660 794 690" fill="none" stroke="url(#desk-chair-rim)" strokeWidth="1.8" />
-        <path d="M232 760L236 698C239 676 258 664 292 661Q500 645 708 661C742 664 761 676 764 698L768 760Z" fill="url(#desk-chair-pad)" />
-        <ellipse cx="500" cy="668" rx="210" ry="16" fill="#7fe3b6" opacity=".05" filter="url(#desk-blur)" />
-      </g>
-
-      <path id="desk-spark" d="m591 511 5.5 12 12 5.5-12 5.5-5.5 12-5.5-12-12-5.5 12-5.5Z" fill="#91f6c9" opacity="0" />
-      {/* Hidden on narrow screens: the crop would cut the bubble in half. */}
-      <g id="desk-thought" className="scene-narrow:hidden">
-        <g fill="#08140d" stroke="#a1f3ce" strokeWidth="1.5">
-          <circle cx="615" cy="550" r="5" />
-          <circle cx="639" cy="536" r="8" />
-          <rect x="663" y="500" width="190" height="47" rx="23.5" />
-        </g>
-        {/* HTML inside the pill so the icon (18px) + name centre together without measuring text. */}
-        <foreignObject x="663" y="500" width="190" height="47">
-          <div className="flex h-full items-center justify-center gap-[10px] font-sans text-[15px] text-[#e5f6eb]">
-            <svg viewBox="0 0 24 24" className="size-[18px] shrink-0 fill-[#a1f3ce]">
-              <path d={typeScriptIcon} />
-            </svg>
-            TypeScript
-          </div>
-        </foreignObject>
+      <g
+        id="desk-steam-rising"
+        fill="none"
+        stroke="url(#desk-steam)"
+        strokeLinecap="round"
+        filter="url(#desk-steam-blur)"
+        opacity=".35"
+      >
+        <path className="desk-wisp" d="M808.2 383.9c-14-20 16-34 7-54s-12-29-1-58" strokeWidth="7" />
+        <path className="desk-wisp" d="M821.2 381.9c12-19-6-31 3-50s4-27-2-42" strokeWidth="3" />
+        <path className="desk-wisp" d="M800.2 385.9c-9-16 11-30 5-46s-9-26-4-40" strokeWidth="4.5" />
       </g>
     </svg>
   );
