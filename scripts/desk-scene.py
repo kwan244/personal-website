@@ -9,6 +9,7 @@ E = lambda k, d: float(os.environ.get(k, d))
 VBW, VBH = 1200, 750
 AZ, EL, DIST = math.radians(E("AZ", 20)), math.radians(E("EL", 42)), E("DIST", 105)
 DECK_W, LID_TOP = E("DECKW", 430), E("TOP", 40)
+YAW, LSCALE = math.radians(E("YAW", -12)), E("LSCALE", 1.1)  # the laptop's turn on the desk, and its size
 
 def sub(a, b): return tuple(x - y for x, y in zip(a, b))
 def add(a, b): return tuple(x + y for x, y in zip(a, b))
@@ -22,16 +23,18 @@ def circle3(c, r, n, z=None): return [(c[0] + r*math.cos(2*math.pi*i/n), c[1] + 
 W, D, T, H = 32.0, 22.0, 1.3, 21.0
 lean = math.radians(20)
 Lv, Ln = (0, math.sin(lean), math.cos(lean)), (0, math.cos(lean), -math.sin(lean))
-def deck(u, v, z=T): return (-W/2 + u*W, -D/2 + v*D, z)
-def lid(u, t, back=0.0): return add(add((-W/2 + u*W, D/2, T), mul(Lv, t*H)), mul(Ln, back))
-mug_c, mug_r, mug_h = (31.0, -1.0, 0.0), 3.0, 7.0
+def place(p):  # scale the laptop, then turn it about its centre (negative = facing further left)
+    x, y, z = mul(p, LSCALE); c, s = math.cos(YAW), math.sin(YAW); return (x*c - y*s, x*s + y*c, z)
+def deck(u, v, z=T): return place((-W/2 + u*W, -D/2 + v*D, z))
+def lid(u, t, back=0.0): return place(add(add((-W/2 + u*W, D/2, T), mul(Lv, t*H)), mul(Ln, back)))
+mug_c, mug_r, mug_h = (36.0, 12.0, 0.0), 3.0, 7.0
 # slug: centre (x, y) on the desk, size (w, h), rotation (deg) on top of facing the camera
 NOTES = {
     "stroke-outcome-prediction": ((-41, 24), (22, 12), 4),
-    "auss-member-platform": ((-40, 4), (17, 10.5), -5),
-    "plateful": ((-26, -17), (15, 10), 4),
-    "rock-paper-scissors": ((14, -17.5), (13.5, 8.5), -4),
-    "guess-whos-the-thief": ((30, 34), (15, 10), 5),
+    "auss-member-platform": ((-42, 4), (17, 10.5), -5),
+    "plateful": ((-28, -15), (15, 10), 4),
+    "rock-paper-scissors": ((33, -3), (13.5, 8.5), -4),
+    "guess-whos-the-thief": ((36, 56), (15, 10), 5),
 }
 
 # Camera: perspective from the front-right, scaled so the deck is DECK_W units wide.
@@ -39,7 +42,7 @@ tgt = (0.0, -2.0, 4.0)
 cam = add(tgt, mul((math.sin(AZ)*math.cos(EL), -math.cos(AZ)*math.cos(EL), math.sin(EL)), DIST))
 fwd = norm(sub(tgt, cam)); right = norm(cross(fwd, (0, 0, 1))); up = cross(right, fwd)
 def raw(p): v = sub(p, cam); z = dot(v, fwd); return (dot(v, right)/z, -dot(v, up)/z)
-S = DECK_W / math.dist(raw(deck(0, 0)), raw(deck(1, 0)))
+S = DECK_W / math.dist(raw((-W/2, -D/2, T)), raw((W/2, -D/2, T)))  # scene scale from the unturned, unscaled deck
 # Centre the laptop's outline (not just its screen), so phones can crop to it evenly.
 _xs = [raw(p)[0] for p in [deck(u, v, z) for u in (0, 1) for v in (0, 1) for z in (0, T)] + [lid(u, t) for u in (0, 1) for t in (0, 1)]]
 OX = VBW/2 - (min(_xs) + max(_xs))/2*S
@@ -83,7 +86,7 @@ def note_corners(c, s, rot):  # TL, TR, BR, BL; TL is the far-left corner
 
 g = []
 # Light: the screen is the key light. A pool on the desk in front of it and a bloom around the lid.
-g.append(f'<path d="{poly([P((x, y, 0)) for x, y, _ in circle3((0, -9, 0), 34, 64)])}" fill="url(#desk-pool)" className="opacity-50 dark:opacity-100" />')
+g.append(f'<path d="{poly([P((x, y, 0)) for x, y, _ in circle3(place((0, -9, 0)), 34, 64)])}" fill="url(#desk-pool)" className="opacity-50 dark:opacity-100" />')
 g.append(f'<path d="{quad(L2,-.04,1.04,-.02,1.05)}" fill="#6ee7b7" filter="url(#desk-bloom)" className="opacity-10 dark:opacity-25" />')
 # Shadows: a soft one cast away from the room light, and tight contact shadows where things meet the desk.
 foot = [P(deck(u, v, 0)) for u, v in [(0, 0), (1, 0), (1, 1), (0, 1)]]

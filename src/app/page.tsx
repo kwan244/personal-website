@@ -102,7 +102,7 @@ export default function Home() {
             text={profile.badge}
             href="#projects"
             label="See my projects"
-            className="absolute right-4 bottom-4 size-24 sm:right-8 sm:bottom-8 sm:size-32"
+            className="absolute bottom-4 left-4 size-20 sm:right-8 sm:bottom-8 sm:left-auto sm:size-32"
           />
         </div>
         {/* Narrow screens crop the desk's sides, so the notes become a list below it. */}
