@@ -6,6 +6,7 @@ import { CopyEmailButton } from "@/components/CopyEmailButton";
 import { DeskScene } from "@/components/DeskScene";
 import { deskAnchors } from "@/components/deskAnchors";
 import { HeroBadge } from "@/components/HeroBadge";
+import { ParallaxFrame } from "@/components/ParallaxFrame";
 import { profile } from "@/content/profile";
 import { projects } from "@/content/projects";
 
@@ -20,6 +21,12 @@ type Anchor = { w: string; h: string; transform: string };
 function anchorStyle(a: Anchor): CSSProperties {
   const { x, y } = deskAnchors.origin;
   return { left: x, top: y, width: a.w, height: a.h, transform: a.transform };
+}
+
+// Notes take their transform as --t, so the hover lift in globals.css can build on it.
+function noteStyle(a: Anchor) {
+  const { x, y } = deskAnchors.origin;
+  return { left: x, top: y, width: a.w, height: a.h, "--t": a.transform } as CSSProperties;
 }
 
 const noteAnchors: Record<string, Anchor> = deskAnchors.notes;
@@ -40,7 +47,7 @@ function NoteLink({ slug, title, pinned = false }: { slug: string; title: string
     <Link
       href={`/projects/${slug}`}
       prefetch={true}
-      style={pinned ? { fontSize: "1.5cqw" } : undefined}
+      style={pinned ? { fontSize: "1.75cqw" } : undefined}
       className={`relative isolate flex h-full flex-col justify-between leading-tight font-bold text-[#08170f] ${pinned ? "p-[0.75em]" : "p-3"}`}
     >
       <span
@@ -48,7 +55,7 @@ function NoteLink({ slug, title, pinned = false }: { slug: string; title: string
         className={`absolute inset-0 -z-10 bg-linear-160 ${tone} [clip-path:polygon(0_0,100%_0,100%_84%,90%_100%,0_100%)]`}
       />
       {title}
-      <span className="mt-2 font-mono text-[0.68em] font-semibold tracking-wide text-[#1d4532] uppercase">{label}</span>
+      <span className="mt-2 font-mono text-[0.72em] font-semibold tracking-wide text-[#123826] uppercase">{label}</span>
     </Link>
   );
 }
@@ -57,7 +64,7 @@ export default function Home() {
   return (
     <>
       <section aria-labelledby="hero-heading">
-        <div className="desk-frame relative overflow-hidden bg-[#d6e9df] dark:bg-[#070c0a]">
+        <ParallaxFrame className="desk-frame relative overflow-hidden bg-[#d6e9df] dark:bg-[#070c0a]">
           <div className="desk-box @container">
             <DeskScene className="size-full" />
             {/* On the laptop screen, which stays dark in both themes, so these use fixed mint colours. */}
@@ -65,33 +72,40 @@ export default function Home() {
               style={anchorStyle(deskAnchors.screen)}
               className="absolute flex origin-top-left flex-col justify-center gap-[0.75cqw] px-[2.2cqw] pt-[1.4cqw] text-[#e2f3e8]"
             >
-              <p aria-hidden="true" className="font-mono text-[max(10px,1.15cqw)] text-[#8fb8a5]">
+              {/* The prompt and headline drop on small scenes, where they wouldn't fit on the screen. */}
+              <p aria-hidden="true" className="font-mono text-[max(10px,1.15cqw)] text-[#8fb8a5] @max-4xl:hidden">
                 <span className="text-[#6ee7b7]">kevin@auckland ~ %</span> whoami
               </p>
               <h1 id="hero-heading" className="text-[4.4cqw] leading-[0.95] whitespace-nowrap text-[#8bf5cb] uppercase">
                 {profile.name}
               </h1>
-              <p className="text-[max(11px,1.25cqw)] leading-snug text-balance text-[#c4dccf]">{profile.headline}</p>
-              <p className="flex items-center gap-[0.6cqw] font-mono text-[max(12px,1.3cqw)]">
+              <p className="text-[max(11px,1.25cqw)] leading-snug text-balance text-[#c4dccf] @max-4xl:hidden">
+                {profile.headline}
+              </p>
+              {/* Inline, so the cursor follows the last word when the link wraps on small screens. */}
+              <p className="font-mono text-[max(12px,1.3cqw)]">
                 <span aria-hidden="true" className="text-[#6ee7b7]">
-                  &gt;
+                  &gt;{" "}
                 </span>
                 <a
                   href={profile.cv}
                   download
                   className="py-1 text-[#7ff2c2] underline underline-offset-4 [--accent:#6ee7b7]"
                 >
-                  Download CV (PDF)
-                </a>
-                <span aria-hidden="true" className="desk-cursor inline-block h-[1.15em] w-[0.55em] bg-[#7ff2c2]" />
+                  click here to download CV<span className="sr-only"> (PDF)</span>
+                </a>{" "}
+                <span
+                  aria-hidden="true"
+                  className="desk-cursor inline-block h-[1.15em] w-[0.55em] bg-[#7ff2c2] align-[-0.2em]"
+                />
               </p>
             </div>
             <ul aria-label="Projects" className="hidden scene-wide:block">
               {projects.map((project) => (
                 <li
                   key={project.slug}
-                  style={anchorStyle(noteAnchors[project.slug])}
-                  className="absolute origin-top-left"
+                  style={noteStyle(noteAnchors[project.slug])}
+                  className="desk-note absolute origin-top-left"
                 >
                   <NoteLink slug={project.slug} title={project.title} pinned />
                 </li>
@@ -102,9 +116,9 @@ export default function Home() {
             text={profile.badge}
             href="#projects"
             label="See my projects"
-            className="absolute bottom-4 left-4 size-20 sm:right-8 sm:bottom-8 sm:left-auto sm:size-32"
+            className="desk-badge absolute bottom-4 left-4 size-[clamp(4.5rem,min(15svh,22vw),8rem)] sm:right-8 sm:bottom-8 sm:left-auto"
           />
-        </div>
+        </ParallaxFrame>
         {/* Narrow screens crop the desk's sides, so the notes become a list below it. */}
         <ul aria-label="Projects" className="mx-auto grid max-w-7xl gap-3 px-4 py-6 sm:grid-cols-2 scene-wide:hidden">
           {projects.map((project) => (
@@ -117,7 +131,7 @@ export default function Home() {
 
       <section aria-label="About and skills" className="bg-surface">
         <div className="mx-auto grid max-w-7xl gap-12 px-4 py-24 lg:grid-cols-2">
-          <div id="about" className="scroll-mt-8">
+          <div id="about" className="reveal scroll-mt-8">
             <h2 className="text-4xl sm:text-5xl">About</h2>
             <p className="mt-4 text-lg text-muted">
               {profile.headline} · {profile.location}
@@ -129,7 +143,7 @@ export default function Home() {
               ))}
             </div>
           </div>
-          <div id="skills" className="scroll-mt-8">
+          <div id="skills" className="reveal scroll-mt-8">
             <h2 className="text-4xl sm:text-5xl">Skills</h2>
             <dl className="mt-4 grid gap-4 sm:grid-cols-2">
               {profile.skills.map((skill) => (
@@ -150,17 +164,17 @@ export default function Home() {
           </h2>
           <ul className="mt-10 space-y-16">
             {featured.map((project, i) => (
-              <li key={project.slug} className="relative grid items-center gap-8 md:grid-cols-2">
+              <li key={project.slug} className="reveal group relative grid items-center gap-8 md:grid-cols-2">
                 {project.image && (
                   <Image
                     src={project.image.src}
                     alt={project.image.alt}
                     sizes="(min-width: 768px) 50vw, 100vw"
-                    className={`h-auto w-full rounded-xl border border-border ${i % 2 ? "md:order-last" : ""}`}
+                    className={`h-auto w-full rounded-xl border border-border transition duration-300 ease-out group-focus-within:border-accent group-hover:border-accent group-hover:shadow-[0_18px_40px_-18px_rgb(0_0_0/0.45)] motion-safe:group-hover:-translate-y-1 ${i % 2 ? "md:order-last" : ""}`}
                   />
                 )}
                 <div>
-                  <h3 className="font-display text-4xl">
+                  <h3 className="font-display text-4xl transition-colors group-hover:text-accent">
                     {/* Stretched link: the whole row is clickable, with one accessible name. */}
                     <Link href={`/projects/${project.slug}`} prefetch={true} className="after:absolute after:inset-0">
                       {project.title}
@@ -175,8 +189,11 @@ export default function Home() {
           </ul>
           <ul className="mt-16 grid gap-6 md:grid-cols-3">
             {others.map((project) => (
-              <li key={project.slug} className="relative rounded-xl border border-border bg-surface p-6">
-                <h3 className="font-display text-2xl">
+              <li
+                key={project.slug}
+                className="reveal group relative rounded-xl border border-border bg-surface p-6 transition duration-300 ease-out focus-within:border-accent hover:border-accent hover:shadow-[0_18px_40px_-18px_rgb(0_0_0/0.45)] motion-safe:hover:-translate-y-1"
+              >
+                <h3 className="font-display text-2xl transition-colors group-hover:text-accent">
                   <Link href={`/projects/${project.slug}`} prefetch={true} className="after:absolute after:inset-0">
                     {project.title}
                   </Link>
@@ -190,7 +207,7 @@ export default function Home() {
       </section>
 
       <section id="contact" aria-labelledby="contact-heading" className="flex min-h-[70svh] scroll-mt-8 items-center bg-surface">
-        <div className="mx-auto w-full max-w-7xl px-4 py-24">
+        <div className="reveal mx-auto w-full max-w-7xl px-4 py-24">
           <h2 id="contact-heading" className="text-4xl sm:text-5xl">
             Contact
           </h2>

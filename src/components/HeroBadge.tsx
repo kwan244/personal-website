@@ -12,15 +12,18 @@ export function HeroBadge({
   className?: string;
 }) {
   return (
-    <a href={href} aria-label={label} className={`block rounded-full ${className ?? ""}`}>
+    <a href={href} aria-label={label} className={`hero-badge block rounded-full ${className ?? ""}`}>
       <svg viewBox="0 0 100 100" aria-hidden="true" className="size-full">
         <defs>
           <path id="hero-badge-circle" d="M 50,50 m -38,0 a 38,38 0 1,1 76,0 a 38,38 0 1,1 -76,0" />
         </defs>
         <circle cx="50" cy="50" r="48" fill="#08140d" stroke="#a1f3ce" strokeOpacity=".5" strokeWidth="1.2" />
-        <text className="badge-spin fill-[#6ee7b7] font-mono" fontSize="7" textLength="238" lengthAdjust="spacing">
-          <textPath href="#hero-badge-circle">{text}</textPath>
-        </text>
+        {/* The slow spin, plus a second spin that only runs while the badge is hovered or focused. */}
+        <g className="badge-boost">
+          <text className="badge-spin fill-[#6ee7b7] font-mono" fontSize="7" textLength="238" lengthAdjust="spacing">
+            <textPath href="#hero-badge-circle">{text}</textPath>
+          </text>
+        </g>
         <path
           d="M50 34 V64 M38 53 L50 65 L62 53"
           fill="none"

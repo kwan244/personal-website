@@ -30,11 +30,11 @@ def lid(u, t, back=0.0): return place(add(add((-W/2 + u*W, D/2, T), mul(Lv, t*H)
 mug_c, mug_r, mug_h = (36.0, 12.0, 0.0), 3.0, 7.0
 # slug: centre (x, y) on the desk, size (w, h), rotation (deg) on top of facing the camera
 NOTES = {
-    "stroke-outcome-prediction": ((-41, 24), (22, 12), 4),
-    "auss-member-platform": ((-42, 4), (17, 10.5), -5),
-    "plateful": ((-28, -15), (15, 10), 4),
-    "rock-paper-scissors": ((33, -3), (13.5, 8.5), -4),
-    "guess-whos-the-thief": ((36, 56), (15, 10), 5),
+    "stroke-outcome-prediction": ((-46, 25), (29, 13.5), 4),
+    "auss-member-platform": ((-37.5, 1.5), (20, 12.5), -5),
+    "plateful": ((-28, -15), (16.5, 11.5), 4),
+    "rock-paper-scissors": ((29, -6), (14.5, 10), -4),
+    "guess-whos-the-thief": ((33, 57), (18, 12), 5),
 }
 
 # Camera: perspective from the front-right, scaled so the deck is DECK_W units wide.
@@ -78,11 +78,17 @@ def overlay(tl, tr, bl):
     tx, ty = K*dot(v, right), -K*dot(v, up)
     return {"w": cq(w), "h": cq(h), "transform": f"perspective({cq(S)}) translate3d({cq(tx)}, {cq(ty)}, 0) matrix3d({m})"}
 
-def note_corners(c, s, rot):  # TL, TR, BR, BL; TL is the far-left corner
+NOTE_LEAN = math.radians(E("LEAN", 22))  # notes are propped up along their back edge, so they read less squashed
+
+def note_corners(c, s, rot, lean=NOTE_LEAN):  # TL, TR, BR, BL; TL is the far-left corner
     # Turned to face the camera (text runs level on screen), plus each note's own small rotation.
     (cx, cy), (w, h) = c, s; a = math.atan2(right[1], right[0]) + math.radians(rot)
-    return [(cx + dx*math.cos(a) - dy*math.sin(a), cy + dx*math.sin(a) + dy*math.cos(a), 0.02)
-            for dx, dy in [(-w/2, h/2), (w/2, h/2), (w/2, -h/2), (-w/2, -h/2)]]
+    out = []
+    for dx, dy in [(-w/2, h/2), (w/2, h/2), (w/2, -h/2), (-w/2, -h/2)]:
+        up = dy + h/2  # distance from the near edge, which stays on the desk
+        ly, z = -h/2 + up*math.cos(lean), up*math.sin(lean) + 0.02
+        out.append((cx + dx*math.cos(a) - ly*math.sin(a), cy + dx*math.sin(a) + ly*math.cos(a), z))
+    return out
 
 g = []
 # Light: the screen is the key light. A pool on the desk in front of it and a bloom around the lid.
@@ -114,7 +120,7 @@ for r in range(5):
         kw = .85/14; u0 = .075 + c*kw + .004
         (lit if (r, c) in LIT else keys).append(quad(D2, u0, u0 + kw - .008, v0, v1))
 lap.append(f'<path d="{" ".join(keys)}" fill="url(#desk-keys)" stroke="#34584a" strokeWidth=".7" strokeLinejoin="round" />')
-lap.append(f'<path d="{" ".join(lit)}" fill="#6ee7b7" filter="url(#desk-glow)" />')
+lap.append(f'<path d="{" ".join(lit)}" fill="#6ee7b7" filter="url(#desk-glow)" className="desk-keys-glow" />')
 lap.append(f'<path d="{" ".join(lit)}" fill="#b9f8dc" />')
 lap.append(f'<path d="{quad(D2,.34,.66,.06,.38)}" fill="url(#desk-trackpad)" stroke="#5a8a72" strokeOpacity=".55" strokeLinejoin="round" />')
 lap.append(f'<path d="{poly([P(lid(0,1)),P(lid(1,1)),P(lid(1,1,.6)),P(lid(0,1,.6))])}" fill="#2d4a3d" />')
@@ -139,15 +145,18 @@ mug.append(f'<path d="{line([P((mug_c[0] - mug_r*.97, mug_c[1] - mug_r*.25, z)) 
 mug.append(f'<path d="{poly(mtop)}" fill="#143020" stroke="#a7efd0" strokeWidth="1.6" />')
 mug.append(f'<path d="{poly([P(p) for p in circle3(mug_c, mug_r*.86, 64, z=mug_h-.7)])}" fill="url(#desk-coffee)" stroke="#a88659" strokeWidth="1" />')
 mx, my = P((mug_c[0], mug_c[1], mug_h))
-steam = (f'<path className="desk-wisp" d="M{f(mx-6)} {f(my-14)}c-14-20 16-34 7-54s-12-29-1-58" strokeWidth="7" />'
-         f'<path className="desk-wisp" d="M{f(mx+8)} {f(my-16)}c12-19-6-31 3-50s4-27-2-42" strokeWidth="3" />'
-         f'<path className="desk-wisp" d="M{f(mx-14)} {f(my-12)}c-9-16 11-30 5-46s-9-26-4-40" strokeWidth="4.5" />')
+# Steam: a soft haze plus four wisps, staggered by CSS (globals.css) so the plume never empties.
+steam = (f'<path className="desk-wisp" d="M{f(mx)} {f(my-10)}c-12-30 14-58 0-96s-8-50 4-80" strokeWidth="24" strokeOpacity=".45" />'
+         f'<path className="desk-wisp" d="M{f(mx-8)} {f(my-12)}c-16-24 18-40 8-64s-14-34 0-70" strokeWidth="9" />'
+         f'<path className="desk-wisp" d="M{f(mx+10)} {f(my-14)}c14-22-8-36 4-58s6-32-3-52" strokeWidth="5" />'
+         f'<path className="desk-wisp" d="M{f(mx-18)} {f(my-10)}c-11-19 13-35 6-54s-11-30-4-48" strokeWidth="6" />'
+         f'<path className="desk-wisp" d="M{f(mx+2)} {f(my-16)}c-6-26 14-44 2-72s-10-38 4-80" strokeWidth="4" />')
 
 # Paper lies flat, so its shadow is a thin contact line rather than a float.
 shadows, notes_out = [], {}
 for slug, (c, s, rot) in NOTES.items():
     corners = note_corners(c, s, rot)
-    shadows.append(poly([(x+2, y+3) for x, y in (P(p) for p in corners)]))
+    shadows.append(poly([(x+2, y+3) for x, y in (P(p) for p in note_corners(c, s, rot, lean=0))]))
     notes_out[slug] = overlay(corners[0], corners[1], corners[3])
 scr = overlay(lid(.04, .93), lid(.96, .93), lid(.04, .07))
 origin = {"x": "%.3f%%" % (OX / VBW * 100), "y": "%.3f%%" % (OY / VBH * 100)}
@@ -180,19 +189,20 @@ export function DeskScene({{ className }}: {{ className?: string }}) {{
         <linearGradient id="desk-ceramic" x2="1" y2=".25"><stop stopColor="#4f8a70" /><stop offset=".14" stopColor="#24503b" /><stop offset=".5" stopColor="#102b1e" /><stop offset="1" stopColor="#050e09" /></linearGradient>
         <radialGradient id="desk-coffee" cx=".4" cy=".35"><stop stopColor="#987149" /><stop offset=".55" stopColor="#715033" /><stop offset="1" stopColor="#352419" /></radialGradient>
         <linearGradient id="desk-steam" x2="0" y2="1">
-          <stop stopOpacity="0" className="[stop-color:#5f8f78] dark:[stop-color:#c9ead8]" />
-          <stop offset=".5" stopOpacity=".55" className="[stop-color:#5f8f78] dark:[stop-color:#c9ead8]" />
-          <stop offset="1" stopOpacity="0" className="[stop-color:#5f8f78] dark:[stop-color:#c9ead8]" />
+          <stop stopOpacity="0" className="[stop-color:#ffffff] dark:[stop-color:#c9ead8]" />
+          <stop offset=".45" stopOpacity=".85" className="[stop-color:#ffffff] dark:[stop-color:#c9ead8]" />
+          <stop offset="1" stopOpacity="0" className="[stop-color:#ffffff] dark:[stop-color:#c9ead8]" />
         </linearGradient>
         <filter id="desk-soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="14" /></filter>
         <filter id="desk-contact" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="3" /></filter>
         <filter id="desk-bloom" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="26" /></filter>
         <filter id="desk-glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="4" /></filter>
-        <filter id="desk-steam-blur" x="-100%" y="-30%" width="300%" height="160%"><feGaussianBlur stdDeviation="2.6" /></filter>
+        <filter id="desk-steam-blur" x="-100%" y="-30%" width="300%" height="160%"><feGaussianBlur stdDeviation="3.2" /></filter>
+        <filter id="desk-steam-shade" x="-150%" y="-40%" width="400%" height="180%"><feGaussianBlur stdDeviation="7" /></filter>
       </defs>
 
       <rect width="{VBW}" height="{VBH}" className="fill-[#d6e9df] dark:fill-[#070c0a]" />
-      <rect width="{VBW}" height="{VBH}" fill="url(#desk-ambience)" />{"".join(nl + "      " + x for x in g)}
+      <rect width="{VBW}" height="{VBH}" fill="url(#desk-ambience)" className="desk-ambience-layer" />{"".join(nl + "      " + x for x in g)}
       {{/* Note contact shadows; the notes themselves are HTML, shown only when the whole desk fits. */}}
       <path d="{" ".join(shadows)}" fill="#000" filter="url(#desk-contact)" className="opacity-15 scene-narrow:hidden dark:opacity-40" />
 
@@ -202,7 +212,11 @@ export function DeskScene({{ className }}: {{ className?: string }}) {{
 
       <g id="desk-mug">{"".join(nl + "        " + x for x in mug)}
       </g>
-      <g id="desk-steam-rising" fill="none" stroke="url(#desk-steam)" strokeLinecap="round" filter="url(#desk-steam-blur)" opacity=".35">
+      {{/* By day, white steam needs a faint shade behind it to show against the pale room. */}}
+      <g fill="none" stroke="#5f8f78" strokeLinecap="round" filter="url(#desk-steam-shade)" opacity=".16" className="dark:hidden">
+        {steam}
+      </g>
+      <g id="desk-steam-rising" fill="none" stroke="url(#desk-steam)" strokeLinecap="round" filter="url(#desk-steam-blur)" className="opacity-90 dark:opacity-70">
         {steam}
       </g>
     </svg>
