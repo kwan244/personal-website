@@ -38,6 +38,7 @@
   --font-sans: var(--font-geist-sans);
   --font-display: var(--font-anton);
   --font-mono: var(--font-jetbrains-mono);
+  --font-hand: var(--font-caveat);
 }
 
 @layer base {

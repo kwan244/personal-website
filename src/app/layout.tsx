@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Anton, Geist, JetBrains_Mono } from "next/font/google";
+import { Anton, Caveat, Geist, JetBrains_Mono } from "next/font/google";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { profile } from "@/content/profile";
@@ -22,6 +22,12 @@ const jetBrainsMono = JetBrains_Mono({
   subsets: ["latin"],
 });
 
+// Handwriting, for the sticky-note titles only.
+const caveat = Caveat({
+  variable: "--font-caveat",
+  subsets: ["latin"],
+});
+
 const title = `${profile.name} | ${profile.headline}`;
 const description = `Portfolio of ${profile.name} (${profile.legalName}), ${profile.headline.toLowerCase()} based in ${profile.location}.`;
 
@@ -39,7 +45,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en-NZ"
-      className={`${geistSans.variable} ${anton.variable} ${jetBrainsMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${anton.variable} ${jetBrainsMono.variable} ${caveat.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
         <a

@@ -52,13 +52,14 @@ function NoteLink({ project, index, pinned = false }: { project: Project; index:
       href={`/projects/${project.slug}`}
       prefetch={true}
       style={pinned ? { fontSize: "1.75cqw" } : undefined}
-      className={`relative isolate flex h-full flex-col justify-between leading-tight font-bold text-[#08170f] ${pinned ? "p-[0.75em]" : "p-3"}`}
+      className={`relative isolate flex h-full flex-col justify-between leading-tight text-[#08170f] ${pinned ? "p-[0.75em]" : "p-3"}`}
     >
       <span
         aria-hidden="true"
         className={`absolute inset-0 -z-10 bg-linear-160 ${noteTones[index % noteTones.length]} [clip-path:polygon(0_0,100%_0,100%_84%,90%_100%,0_100%)]`}
       />
-      {project.title}
+      {/* Handwritten, like a real sticky note; the label underneath stays typed. */}
+      <span className="font-hand text-[1.5em] leading-[0.95] font-bold">{project.title}</span>
       <span className="mt-2 font-mono text-[0.72em] font-semibold tracking-wide text-[#123826] uppercase">
         {project.noteLabel}
       </span>
