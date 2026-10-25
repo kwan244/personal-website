@@ -396,6 +396,34 @@ body {
   }
 }
 
+/* Page transitions (ProjectMorph): a project's screenshot and title morph between its card and its case
+   study, softened mid-flight; everything else crossfades. Clicks pass through the transition overlay. */
+::view-transition-group(.morph) {
+  animation-duration: 450ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+::view-transition-image-pair(.morph) {
+  animation-name: morph-blur;
+}
+::view-transition {
+  pointer-events: none;
+}
+@keyframes morph-blur {
+  30% {
+    filter: blur(3px);
+  }
+}
+
+/* With reduced motion, pages simply swap. */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(*),
+  ::view-transition-new(*),
+  ::view-transition-group(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+  }
+}
+
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;

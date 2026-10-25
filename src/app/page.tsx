@@ -8,6 +8,7 @@ import { deskAnchors } from "@/components/deskAnchors";
 import { HeroBadge } from "@/components/HeroBadge";
 import { HeroFrame } from "@/components/HeroFrame";
 import { NoteDoodle } from "@/components/NoteDoodle";
+import { ProjectMorph } from "@/components/ProjectMorph";
 import { profile } from "@/content/profile";
 import { projects, type Project } from "@/content/projects";
 
@@ -222,19 +223,24 @@ export default function Home() {
           <ul className="mt-10 space-y-16">
             {featured.map((project, i) => (
               <li key={project.slug} className="reveal group relative grid items-center gap-8 md:grid-cols-2">
+                {/* The screenshot and title morph into the case study's (see ProjectMorph). */}
                 {project.image && (
-                  <Image
-                    src={project.image.src}
-                    alt={project.image.alt}
-                    sizes="(min-width: 768px) 50vw, 100vw"
-                    className={`h-auto w-full rounded-xl border border-border transition duration-300 ease-out group-focus-within:border-accent group-hover:border-accent group-hover:shadow-[0_18px_40px_-18px_rgb(0_0_0/0.45)] motion-safe:group-hover:-translate-y-1 ${i % 2 ? "md:order-last" : ""}`}
-                  />
+                  <ProjectMorph slug={project.slug} part="image">
+                    <Image
+                      src={project.image.src}
+                      alt={project.image.alt}
+                      sizes="(min-width: 768px) 50vw, 100vw"
+                      className={`h-auto w-full rounded-xl border border-border transition duration-300 ease-out group-focus-within:border-accent group-hover:border-accent group-hover:shadow-[0_18px_40px_-18px_rgb(0_0_0/0.45)] motion-safe:group-hover:-translate-y-1 ${i % 2 ? "md:order-last" : ""}`}
+                    />
+                  </ProjectMorph>
                 )}
                 <div>
                   <h3 className="font-display text-4xl transition-colors group-hover:text-accent">
                     {/* Stretched link: the whole row is clickable, with one accessible name. */}
                     <Link href={`/projects/${project.slug}`} prefetch={true} className="after:absolute after:inset-0">
-                      {project.title}
+                      <ProjectMorph slug={project.slug} part="title">
+                        <span className="inline-block">{project.title}</span>
+                      </ProjectMorph>
                     </Link>
                   </h3>
                   <p className="mt-2 text-sm text-muted">{project.context}</p>
@@ -252,7 +258,9 @@ export default function Home() {
               >
                 <h3 className="font-display text-2xl transition-colors group-hover:text-accent">
                   <Link href={`/projects/${project.slug}`} prefetch={true} className="after:absolute after:inset-0">
-                    {project.title}
+                    <ProjectMorph slug={project.slug} part="title">
+                      <span className="inline-block">{project.title}</span>
+                    </ProjectMorph>
                   </Link>
                 </h3>
                 <p className="mt-1 text-sm text-muted">{project.context}</p>
