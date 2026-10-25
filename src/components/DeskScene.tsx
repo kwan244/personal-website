@@ -19,11 +19,6 @@ export function DeskScene({ projectCount, className }: { projectCount: number; c
         <linearGradient id="desk-edge" x2=".15" y2="1"><stop stopColor="#b1e7d2" /><stop offset=".12" stopColor="#427364" /><stop offset=".5" stopColor="#20382e" /><stop offset="1" stopColor="#41715c" /></linearGradient>
         <linearGradient id="desk-bezel" x2="0" y2="1"><stop stopColor="#101b16" /><stop offset=".3" stopColor="#020705" /><stop offset="1" stopColor="#0a130e" /></linearGradient>
         <linearGradient id="desk-deck" x2=".9" y2="1"><stop stopColor="#527c6b" /><stop offset=".12" stopColor="#2d4a3d" /><stop offset=".55" stopColor="#233c31" /><stop offset=".85" stopColor="#1c3027" /><stop offset="1" stopColor="#3b5e4e" /></linearGradient>
-        <linearGradient id="desk-key" x2=".2" y2="1"><stop stopColor="#20372d" /><stop offset=".35" stopColor="#101e17" /><stop offset="1" stopColor="#070f0b" /></linearGradient>
-        <pattern id="desk-key-grid" width="23.4" height="18" patternUnits="userSpaceOnUse">
-          <rect x="1.4" y="1.5" width="21" height="15" rx="3" fill="url(#desk-key)" stroke="#395d4c" strokeWidth=".65" />
-          <path d="M5 3h13" stroke="#78b79b" strokeOpacity=".08" strokeLinecap="round" />
-        </pattern>
         <linearGradient id="desk-trackpad" x2="1" y2="1"><stop stopColor="#12271c" /><stop offset="1" stopColor="#243f32" /></linearGradient>
         <linearGradient id="desk-cloth" x2=".9" y2=".7"><stop stopColor="#345f4e" /><stop offset=".18" stopColor="#173a2a" /><stop offset=".48" stopColor="#0c2017" /><stop offset="1" stopColor="#050e09" /></linearGradient>
         <linearGradient id="desk-arm" x2="1" y2=".6"><stop stopColor="#254e3e" /><stop offset=".26" stopColor="#19382a" /><stop offset=".6" stopColor="#0c2017" /><stop offset="1" stopColor="#07100b" /></linearGradient>
@@ -59,33 +54,30 @@ export function DeskScene({ projectCount, className }: { projectCount: number; c
       {/* The idea glow (replaces the old hero blob); lit in the static pose. */}
       <ellipse id="desk-idea-halo" cx="500" cy="554" rx="240" ry="170" fill="url(#desk-halo)" opacity=".72" />
 
-      <g id="desk-laptop" filter="url(#desk-shadow)" transform="translate(496 420) scale(1.15) translate(-496 -420)">
-        {/* The lid is foreshortened to 82% about the hinge (y 301): seen from above, an upright screen
-            looks shorter. page.tsx squashes the HTML name and CV line by the same amount. */}
-        <g transform="translate(0 301) scale(1 0.82) translate(0 -301)">
-          <path d="M315 71H677Q689 71 690 84L701 288Q702 301 689 302H303Q290 301 291 288L302 84Q303 71 315 71Z" fill="url(#desk-edge)" />
-          <path d="M316 73H676Q687 73 688 85L699 288Q699 299 688 299H304Q293 299 293 288L304 85Q305 73 316 73Z" fill="url(#desk-bezel)" />
-          <path d="M318 89H674L686 280H306Z" fill="url(#desk-screen)" />
-          <path d="M318 89H460L330 280H306Z" fill="#b0f4d4" opacity=".025" />
-          <circle cx="496" cy="81" r="2.3" fill="#274a3a" />
-          <g fill="#416c58"><circle cx="333" cy="109" r="4.4" /><circle cx="348" cy="109" r="4.4" /><circle cx="363" cy="109" r="4.4" /></g>
-          <g className="font-mono" fontSize="13.5">
-            <text x="332" y="143" fill="#d8ebdf">$ npm run build-me</text>
-            <path d="m333 160 3 4 7-10" fill="none" stroke="#80f2c4" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" />
-            <text x="352" y="165" fill="#7ff1c5">compiled {projectCount} projects</text>
-          </g>
+      {/* Laptop geometry is generated from a 3D model (32 × 22 base, 21-high lid opened to 112°) projected
+          through a camera above and behind the person, so the base and lid are the same real size and the
+          lid stands up. From up here the lid's top edge is nearer the eye than its hinge, so it reads wider. */}
+      <g id="desk-laptop" filter="url(#desk-shadow)">
+        <path d="M300.8 46.7 L691.2 46.7 L670.7 286.1 L321.3 286.1Z" fill="url(#desk-edge)" stroke="url(#desk-edge)" strokeWidth="6" strokeLinejoin="round" />
+        <path d="M305.9 50.7 L686.1 50.7 L666.7 283.9 L325.3 283.9Z" fill="url(#desk-bezel)" />
+        <path d="M317.9 65.3 L674.1 65.3 L657.9 271 L334.1 271Z" fill="url(#desk-screen)" />
+        <path d="M317.9 65.3 L465 65.3 L362.2 271 L334.1 271Z" fill="#b0f4d4" opacity=".025" />
+        <circle cx="496" cy="57.9" r="2.3" fill="#274a3a" />
+        <g fill="#416c58"><circle cx="336.6" cy="83.5" r="5" /><circle cx="352" cy="83.5" r="5" /><circle cx="367.4" cy="83.5" r="5" /></g>
+        <g className="font-mono" fontSize="15.5">
+          <text x="336.9" y="114.2" fill="#d8ebdf">$ npm run build-me</text>
+          <path d="m339.4 132.9 3.5 4.6 8-11.5" fill="none" stroke="#80f2c4" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+          <text x="357.3" y="137.8" fill="#7ff1c5">compiled {projectCount} projects</text>
         </g>
         {/* The name (h1) and the Download CV prompt line sit here as real HTML, see page.tsx. */}
-        <path d="M291 301H701Q710 301 711 312L716 478Q718 489 706 492H287Q274 490 276 479L281 313Q283 303 291 301Z" fill="url(#desk-deck)" stroke="#5e927b" strokeWidth="1" />
-        <path d="M325 300H667L669 306H323Z" fill="#040c08" stroke="#1c3929" />
-        <path d="M286 312L280 477Q279 486 289 488H705Q713 487 711 478L706 313" fill="none" stroke="#8cd2b0" strokeOpacity=".18" strokeWidth="2" />
-        <path d="M322 318H670Q676 318 677 324L684 406Q685 414 677 414H316Q308 414 309 406L316 325Q317 318 322 318Z" fill="#07110b" stroke="#567963" strokeWidth="1.5" />
-        <path d="M321 321H671L680 410H313Z" fill="url(#desk-key-grid)" />
-        <path d="M415 395H570L572 410H413Z" fill="url(#desk-key)" stroke="#365543" strokeWidth="1" />
-        <path d="M447 422H545Q549 422 549 426L552 477Q552 481 548 481H444Q440 481 440 477L443 426Q443 422 447 422Z" fill="url(#desk-trackpad)" stroke="#5a7c65" strokeOpacity=".6" />
-        <path d="M448 424H544" stroke="#050d08" strokeOpacity=".7" />
-        <path d="M291 493H702" stroke="#030906" strokeWidth="4" strokeLinecap="round" />
-        <path d="M455 492H546" stroke="#87e1b7" strokeOpacity=".6" strokeWidth="1.5" strokeLinecap="round" />
+        <path d="M321.3 286.1 L670.7 286.1 L716 492 L276 492Z" fill="url(#desk-deck)" stroke="#5e927b" strokeWidth="1" strokeLinejoin="round" />
+        <path d="M363.2 286.1 L628.8 286.1 L629.2 288.6 L362.8 288.6Z" fill="#040c08" stroke="#1c3929" />
+        <path d="M325.1 292.7 L282.1 484.3 L709.9 484.3 L666.9 292.7" fill="none" stroke="#8cd2b0" strokeOpacity=".18" strokeWidth="2" />
+        <path d="M340 297.7 L652 297.7 L670.2 391.7 L321.8 391.7Z" fill="#07110b" stroke="#567963" strokeWidth="1.5" strokeLinejoin="round" />
+        <path d="M346.3 300.2 L365 300.2 L362.7 314.4 L343.6 314.4Z M367.9 300.2 L386.6 300.2 L384.7 314.4 L365.6 314.4Z M389.5 300.2 L408.2 300.2 L406.7 314.4 L387.6 314.4Z M411 300.2 L429.8 300.2 L428.6 314.4 L409.6 314.4Z M432.6 300.2 L451.4 300.2 L450.6 314.4 L431.5 314.4Z M454.2 300.2 L473 300.2 L472.6 314.4 L453.5 314.4Z M475.8 300.2 L494.6 300.2 L494.6 314.4 L475.5 314.4Z M497.4 300.2 L516.2 300.2 L516.5 314.4 L497.4 314.4Z M519 300.2 L537.8 300.2 L538.5 314.4 L519.4 314.4Z M540.6 300.2 L559.4 300.2 L560.5 314.4 L541.4 314.4Z M562.2 300.2 L581 300.2 L582.4 314.4 L563.4 314.4Z M583.8 300.2 L602.5 300.2 L604.4 314.4 L585.3 314.4Z M605.4 300.2 L624.1 300.2 L626.4 314.4 L607.3 314.4Z M627 300.2 L645.7 300.2 L648.4 314.4 L629.3 314.4Z M343.1 317.2 L362.3 317.2 L359.9 331.9 L340.4 331.9Z M365.2 317.2 L384.3 317.2 L382.3 331.9 L362.8 331.9Z M387.2 317.2 L406.4 317.2 L404.8 331.9 L385.3 331.9Z M409.3 317.2 L428.4 317.2 L427.2 331.9 L407.7 331.9Z M431.3 317.2 L450.5 317.2 L449.6 331.9 L430.2 331.9Z M453.4 317.2 L472.5 317.2 L472.1 331.9 L452.6 331.9Z M475.4 317.2 L494.5 317.2 L494.5 331.9 L475 331.9Z M497.5 317.2 L516.6 317.2 L517 331.9 L497.5 331.9Z M519.5 317.2 L538.6 317.2 L539.4 331.9 L519.9 331.9Z M541.5 317.2 L560.7 317.2 L561.8 331.9 L542.4 331.9Z M563.6 317.2 L582.7 317.2 L584.3 331.9 L564.8 331.9Z M585.6 317.2 L604.8 317.2 L606.7 331.9 L587.2 331.9Z M607.7 317.2 L626.8 317.2 L629.2 331.9 L609.7 331.9Z M629.7 317.2 L648.9 317.2 L651.6 331.9 L632.1 331.9Z M339.9 334.9 L359.4 334.9 L356.9 350.2 L337 350.2Z M362.4 334.9 L381.9 334.9 L379.8 350.2 L359.9 350.2Z M384.9 334.9 L404.4 334.9 L402.8 350.2 L382.9 350.2Z M407.4 334.9 L427 334.9 L425.7 350.2 L405.8 350.2Z M429.9 334.9 L449.5 334.9 L448.6 350.2 L428.7 350.2Z M452.4 334.9 L472 334.9 L471.6 350.2 L451.7 350.2Z M475 334.9 L494.5 334.9 L494.5 350.2 L474.6 350.2Z M497.5 334.9 L517 334.9 L517.4 350.2 L497.5 350.2Z M520 334.9 L539.6 334.9 L540.3 350.2 L520.4 350.2Z M542.5 334.9 L562.1 334.9 L563.3 350.2 L543.4 350.2Z M565 334.9 L584.6 334.9 L586.2 350.2 L566.3 350.2Z M587.6 334.9 L607.1 334.9 L609.1 350.2 L589.2 350.2Z M610.1 334.9 L629.6 334.9 L632.1 350.2 L612.2 350.2Z M632.6 334.9 L652.1 334.9 L655 350.2 L635.1 350.2Z M336.4 353.3 L356.4 353.3 L353.8 369.4 L333.5 369.4Z M359.4 353.3 L379.4 353.3 L377.3 369.4 L356.9 369.4Z M382.5 353.3 L402.4 353.3 L400.7 369.4 L380.3 369.4Z M405.5 353.3 L425.5 353.3 L424.1 369.4 L403.8 369.4Z M428.5 353.3 L448.5 353.3 L447.6 369.4 L427.2 369.4Z M451.5 353.3 L471.5 353.3 L471 369.4 L450.7 369.4Z M474.5 353.3 L494.5 353.3 L494.5 369.4 L474.1 369.4Z M497.5 353.3 L517.5 353.3 L517.9 369.4 L497.5 369.4Z M520.5 353.3 L540.5 353.3 L541.3 369.4 L521 369.4Z M543.5 353.3 L563.5 353.3 L564.8 369.4 L544.4 369.4Z M566.5 353.3 L586.5 353.3 L588.2 369.4 L567.9 369.4Z M589.6 353.3 L609.5 353.3 L611.7 369.4 L591.3 369.4Z M612.6 353.3 L632.6 353.3 L635.1 369.4 L614.7 369.4Z M635.6 353.3 L655.6 353.3 L658.5 369.4 L638.2 369.4Z M331.3 372.6 L364.3 372.6 L361.7 389.4 L328.2 389.4Z M368.1 372.6 L401.1 372.6 L399.3 389.4 L365.7 389.4Z M404.9 372.6 L587.1 372.6 L588.8 389.4 L403.2 389.4Z M590.9 372.6 L623.9 372.6 L626.3 389.4 L592.7 389.4Z M627.7 372.6 L660.7 372.6 L663.8 389.4 L630.3 389.4Z" fill="#0f1d16" stroke="#395d4c" strokeWidth=".65" strokeLinejoin="round" />
+        <path d="M431.8 404.5 L560.2 404.5 L565.3 476.7 L426.7 476.7Z" fill="url(#desk-trackpad)" stroke="#5a7c65" strokeOpacity=".6" strokeLinejoin="round" />
+        <path d="M289.2 492 L702.8 492" stroke="#030906" strokeWidth="4" strokeLinecap="round" />
+        <path d="M452 492 L540 492" stroke="#87e1b7" strokeOpacity=".6" strokeWidth="1.5" strokeLinecap="round" />
       </g>
 
       <g id="desk-mug" filter="url(#desk-shadow)">

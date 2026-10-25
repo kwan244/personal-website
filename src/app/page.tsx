@@ -64,26 +64,23 @@ export default function Home() {
           <div className="desk-box @container">
             <DeskScene projectCount={projects.length} className="size-full" />
             {/* On the laptop screen. The screen stays dark in both themes, so these use fixed mint colours. */}
-            {/* Same 82% foreshortening as the SVG lid, about the hinge (37.75% down the scene). */}
-            <div className="absolute inset-0 origin-[50%_37.75%] scale-y-[0.82]">
-              <h1
-                id="hero-heading"
-                className="absolute top-[20.9%] left-[30.3%] text-[6.3cqw] leading-none whitespace-nowrap text-[#8bf5cb] uppercase"
+            <h1
+              id="hero-heading"
+              className="absolute top-[22.11%] left-[33.88%] text-[6.3cqw] leading-none whitespace-nowrap text-[#8bf5cb] uppercase"
+            >
+              {profile.name}
+            </h1>
+            <p className="absolute top-[32.01%] left-[34.59%] flex items-center gap-[0.7cqw] font-mono text-[max(12px,1.55cqw)] text-[#e2f3e8]">
+              <span aria-hidden="true">&gt;</span>
+              <a
+                href={profile.cv}
+                download
+                className="py-1.5 text-[#7ff2c2] underline underline-offset-4 [--accent:#6ee7b7]"
               >
-                {profile.name}
-              </h1>
-              <p className="absolute top-[28.9%] left-[30.7%] flex items-center gap-[0.7cqw] font-mono text-[max(12px,1.55cqw)] text-[#e2f3e8]">
-                <span aria-hidden="true">&gt;</span>
-                <a
-                  href={profile.cv}
-                  download
-                  className="py-1.5 text-[#7ff2c2] underline underline-offset-4 [--accent:#6ee7b7]"
-                >
-                  Download CV (PDF)
-                </a>
-                <span aria-hidden="true" className="desk-cursor inline-block h-[1.2em] w-[0.6em] bg-[#7ff2c2]" />
-              </p>
-            </div>
+                Download CV (PDF)
+              </a>
+              <span aria-hidden="true" className="desk-cursor inline-block h-[1.2em] w-[0.6em] bg-[#7ff2c2]" />
+            </p>
             <ul aria-label="Projects" className="hidden scene-wide:block">
               {projects.map((project) => (
                 <li
