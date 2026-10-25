@@ -30,11 +30,11 @@ def lid(u, t, back=0.0): return place(add(add((-W/2 + u*W, D/2, T), mul(Lv, t*H)
 mug_c, mug_r, mug_h = (36.0, 12.0, 0.0), 3.0, 7.0
 # slug: centre (x, y) on the desk, size (w, h), rotation (deg) on top of facing the camera
 NOTES = {
-    "stroke-outcome-prediction": ((-41, 24), (22, 12), 4),
-    "auss-member-platform": ((-42, 4), (17, 10.5), -5),
-    "plateful": ((-28, -15), (15, 10), 4),
-    "rock-paper-scissors": ((33, -3), (13.5, 8.5), -4),
-    "guess-whos-the-thief": ((36, 56), (15, 10), 5),
+    "stroke-outcome-prediction": ((-46, 25), (29, 13.5), 4),
+    "auss-member-platform": ((-37.5, 1.5), (20, 12.5), -5),
+    "plateful": ((-28, -15), (16.5, 11.5), 4),
+    "rock-paper-scissors": ((29, -6), (14.5, 10), -4),
+    "guess-whos-the-thief": ((33, 57), (18, 12), 5),
 }
 
 # Camera: perspective from the front-right, scaled so the deck is DECK_W units wide.
@@ -78,11 +78,17 @@ def overlay(tl, tr, bl):
     tx, ty = K*dot(v, right), -K*dot(v, up)
     return {"w": cq(w), "h": cq(h), "transform": f"perspective({cq(S)}) translate3d({cq(tx)}, {cq(ty)}, 0) matrix3d({m})"}
 
-def note_corners(c, s, rot):  # TL, TR, BR, BL; TL is the far-left corner
+NOTE_LEAN = math.radians(E("LEAN", 22))  # notes are propped up along their back edge, so they read less squashed
+
+def note_corners(c, s, rot, lean=NOTE_LEAN):  # TL, TR, BR, BL; TL is the far-left corner
     # Turned to face the camera (text runs level on screen), plus each note's own small rotation.
     (cx, cy), (w, h) = c, s; a = math.atan2(right[1], right[0]) + math.radians(rot)
-    return [(cx + dx*math.cos(a) - dy*math.sin(a), cy + dx*math.sin(a) + dy*math.cos(a), 0.02)
-            for dx, dy in [(-w/2, h/2), (w/2, h/2), (w/2, -h/2), (-w/2, -h/2)]]
+    out = []
+    for dx, dy in [(-w/2, h/2), (w/2, h/2), (w/2, -h/2), (-w/2, -h/2)]:
+        up = dy + h/2  # distance from the near edge, which stays on the desk
+        ly, z = -h/2 + up*math.cos(lean), up*math.sin(lean) + 0.02
+        out.append((cx + dx*math.cos(a) - ly*math.sin(a), cy + dx*math.sin(a) + ly*math.cos(a), z))
+    return out
 
 g = []
 # Light: the screen is the key light. A pool on the desk in front of it and a bloom around the lid.
@@ -150,7 +156,7 @@ steam = (f'<path className="desk-wisp" d="M{f(mx)} {f(my-10)}c-12-30 14-58 0-96s
 shadows, notes_out = [], {}
 for slug, (c, s, rot) in NOTES.items():
     corners = note_corners(c, s, rot)
-    shadows.append(poly([(x+2, y+3) for x, y in (P(p) for p in corners)]))
+    shadows.append(poly([(x+2, y+3) for x, y in (P(p) for p in note_corners(c, s, rot, lean=0))]))
     notes_out[slug] = overlay(corners[0], corners[1], corners[3])
 scr = overlay(lid(.04, .93), lid(.96, .93), lid(.04, .07))
 origin = {"x": "%.3f%%" % (OX / VBW * 100), "y": "%.3f%%" % (OY / VBH * 100)}
@@ -196,7 +202,7 @@ export function DeskScene({{ className }}: {{ className?: string }}) {{
       </defs>
 
       <rect width="{VBW}" height="{VBH}" className="fill-[#d6e9df] dark:fill-[#070c0a]" />
-      <rect width="{VBW}" height="{VBH}" fill="url(#desk-ambience)" className="desk-ambience-layer" />{"".join(nl + "      " + x for x in g)}
+      <rect width="{VBW}" height="{VBH}" fill="url(#desk-ambience)" />{"".join(nl + "      " + x for x in g)}
       {{/* Note contact shadows; the notes themselves are HTML, shown only when the whole desk fits. */}}
       <path d="{" ".join(shadows)}" fill="#000" filter="url(#desk-contact)" className="opacity-15 scene-narrow:hidden dark:opacity-40" />
 

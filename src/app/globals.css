@@ -81,7 +81,7 @@ body {
   left: 50%;
   height: 100%;
   aspect-ratio: 16 / 10;
-  /* translate (centring + parallax) is set below */
+  translate: -50% 0;
 }
 
 /* Rotate/translate properties, not transform: the badge text keeps its SVG transform attributes. */
@@ -103,16 +103,11 @@ body {
   filter: drop-shadow(0 22px 24px rgb(0 0 0 / 0.4));
 }
 
-/* Mouse parallax: ParallaxFrame sets --mx / --my only for a fine pointer with motion allowed. The scene
-   drifts against the pointer, its glow and the badge with it, so the layers separate. */
-.desk-box {
-  translate: calc(-50% + var(--mx, 0) * -14px) calc(var(--my, 0) * -9px);
-}
-.desk-ambience-layer {
-  translate: calc(var(--mx, 0) * 22px) calc(var(--my, 0) * 14px);
-}
-.desk-badge {
-  translate: calc(var(--mx, 0) * 10px) calc(var(--my, 0) * 7px);
+/* Mouse parallax: while a fine pointer is over the hero (and motion is allowed), ParallaxFrame sets
+   data-tilt and --mx / --my, and the desk tilts a little away from the pointer, so its near edge swings
+   more than the back. At rest there is no transform, so the scene stays crisp. */
+.desk-frame[data-tilt] .desk-box {
+  transform: perspective(1800px) rotateX(calc(var(--my, 0) * -2deg)) rotateY(calc(var(--mx, 0) * 3deg));
 }
 
 /* Ambient hero motion and scroll reveals. Everything is visible without it: browsers without support
@@ -134,10 +129,8 @@ body {
       transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
       filter 0.35s ease-out;
   }
-  .desk-box,
-  .desk-ambience-layer,
-  .desk-badge {
-    transition: translate 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  .desk-box {
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .desk-wisp {

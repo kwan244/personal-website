@@ -47,7 +47,7 @@ function NoteLink({ slug, title, pinned = false }: { slug: string; title: string
     <Link
       href={`/projects/${slug}`}
       prefetch={true}
-      style={pinned ? { fontSize: "1.5cqw" } : undefined}
+      style={pinned ? { fontSize: "1.75cqw" } : undefined}
       className={`relative isolate flex h-full flex-col justify-between leading-tight font-bold text-[#08170f] ${pinned ? "p-[0.75em]" : "p-3"}`}
     >
       <span
@@ -55,7 +55,7 @@ function NoteLink({ slug, title, pinned = false }: { slug: string; title: string
         className={`absolute inset-0 -z-10 bg-linear-160 ${tone} [clip-path:polygon(0_0,100%_0,100%_84%,90%_100%,0_100%)]`}
       />
       {title}
-      <span className="mt-2 font-mono text-[0.68em] font-semibold tracking-wide text-[#1d4532] uppercase">{label}</span>
+      <span className="mt-2 font-mono text-[0.72em] font-semibold tracking-wide text-[#123826] uppercase">{label}</span>
     </Link>
   );
 }
@@ -72,25 +72,32 @@ export default function Home() {
               style={anchorStyle(deskAnchors.screen)}
               className="absolute flex origin-top-left flex-col justify-center gap-[0.75cqw] px-[2.2cqw] pt-[1.4cqw] text-[#e2f3e8]"
             >
-              <p aria-hidden="true" className="font-mono text-[max(10px,1.15cqw)] text-[#8fb8a5]">
+              {/* The prompt and headline drop on small scenes, where they wouldn't fit on the screen. */}
+              <p aria-hidden="true" className="font-mono text-[max(10px,1.15cqw)] text-[#8fb8a5] @max-4xl:hidden">
                 <span className="text-[#6ee7b7]">kevin@auckland ~ %</span> whoami
               </p>
               <h1 id="hero-heading" className="text-[4.4cqw] leading-[0.95] whitespace-nowrap text-[#8bf5cb] uppercase">
                 {profile.name}
               </h1>
-              <p className="text-[max(11px,1.25cqw)] leading-snug text-balance text-[#c4dccf]">{profile.headline}</p>
-              <p className="flex items-center gap-[0.6cqw] font-mono text-[max(12px,1.3cqw)]">
+              <p className="text-[max(11px,1.25cqw)] leading-snug text-balance text-[#c4dccf] @max-4xl:hidden">
+                {profile.headline}
+              </p>
+              {/* Inline, so the cursor follows the last word when the link wraps on small screens. */}
+              <p className="font-mono text-[max(12px,1.3cqw)]">
                 <span aria-hidden="true" className="text-[#6ee7b7]">
-                  &gt;
+                  &gt;{" "}
                 </span>
                 <a
                   href={profile.cv}
                   download
                   className="py-1 text-[#7ff2c2] underline underline-offset-4 [--accent:#6ee7b7]"
                 >
-                  click here to download CV (PDF)
-                </a>
-                <span aria-hidden="true" className="desk-cursor inline-block h-[1.15em] w-[0.55em] bg-[#7ff2c2]" />
+                  click here to download CV<span className="sr-only"> (PDF)</span>
+                </a>{" "}
+                <span
+                  aria-hidden="true"
+                  className="desk-cursor inline-block h-[1.15em] w-[0.55em] bg-[#7ff2c2] align-[-0.2em]"
+                />
               </p>
             </div>
             <ul aria-label="Projects" className="hidden scene-wide:block">
@@ -109,7 +116,7 @@ export default function Home() {
             text={profile.badge}
             href="#projects"
             label="See my projects"
-            className="desk-badge absolute bottom-4 left-4 size-20 sm:right-8 sm:bottom-8 sm:left-auto sm:size-32"
+            className="absolute bottom-4 left-4 size-[clamp(4.5rem,min(15svh,22vw),8rem)] sm:right-8 sm:bottom-8 sm:left-auto"
           />
         </ParallaxFrame>
         {/* Narrow screens crop the desk's sides, so the notes become a list below it. */}
