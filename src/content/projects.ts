@@ -13,6 +13,8 @@ export type Project = {
   // My part in one line (clear on team projects) and when, for the case study's at-a-glance panel.
   roleLabel: string;
   dates: string;
+  // One- or two-word context on the project's sticky note in the home page hero.
+  noteLabel: string;
   // Featured projects get a large card with a screenshot on the home page.
   featured?: boolean;
   stack: string[];
@@ -37,6 +39,7 @@ export const projects: Project[] = [
     context: "Summer internship · Auckland Bioengineering Institute · 2025–26",
     roleLabel: "Sole developer, as a summer intern",
     dates: "Dec 2025 – Mar 2026",
+    noteLabel: "Internship",
     featured: true,
     stack: [
       "Next.js",
@@ -82,6 +85,7 @@ export const projects: Project[] = [
     context: "AUSS 2026 dev team · Auckland University Strength Society · 2026",
     roleLabel: "Developer on the club's dev team",
     dates: "Feb 2026 – present",
+    noteLabel: "Club platform",
     featured: true,
     stack: ["React", "TypeScript", "Vite", "Tailwind CSS", "Express", "Prisma", "PostgreSQL", "Zod", "Stripe", "Railway"],
     problem:
@@ -119,6 +123,7 @@ export const projects: Project[] = [
     context: "SOFTENG 310 open-source contribution · University of Auckland · 2025",
     roleLabel: "Contributor: mobile UI, frontend tests and accessibility",
     dates: "Sep – Oct 2025",
+    noteLabel: "Open source",
     stack: ["React", "Vite", "Spring Boot", "MongoDB", "TomTom Maps", "Vitest", "React Testing Library"],
     problem:
       "Finding a restaurant means juggling cuisine, price, tags, name and location. Plateful brings search, filters, favourites and map-based search together in one responsive app, with a React frontend, a Spring Boot API and a MongoDB database.",
@@ -153,6 +158,7 @@ export const projects: Project[] = [
     context: "SOFTENG 206 team project (3 people) · University of Auckland · 2024",
     roleLabel: "One of 3: AI dialogue, game logic, puzzles and media",
     dates: "Sep – Dec 2024",
+    noteLabel: "Team project",
     stack: ["Java", "JavaFX", "Maven", "OpenAI API", "JLayer"],
     problem:
       "A mystery game where questioning suspects feels open-ended, with AI-generated responses to whatever the player asks instead of a fixed script.",
@@ -177,6 +183,7 @@ export const projects: Project[] = [
     context: "Self-learning project · 2025",
     roleLabel: "Solo",
     dates: "Jan 2025",
+    noteLabel: "Self-taught",
     stack: ["HTML", "CSS", "JavaScript"],
     problem:
       "I wanted to learn HTML, CSS and JavaScript properly, step by step, by building one complete thing without a framework: a game against the computer with three difficulty levels and progress that survives a page refresh.",

@@ -27,7 +27,7 @@ export function HeroBadge({
         <path
           d="M50 34 V64 M38 53 L50 65 L62 53"
           fill="none"
-          className="stroke-[#6ee7b7]"
+          className="badge-arrow stroke-[#6ee7b7]"
           strokeWidth="4"
           strokeLinecap="round"
           strokeLinejoin="round"

@@ -1,7 +1,10 @@
 # Generates the hero desk scene (the laptop at a 3/4 view, project notes on the desk) as
 # src/components/DeskScene.tsx, plus src/components/deskAnchors.ts: CSS 3D transforms that lay the HTML
 # overlays (screen text, notes) onto the same model through the same camera, so the text and the drawing
-# share one true perspective. Run: python scripts/desk-scene.py  (env AZ, EL, DIST, DECKW, TOP tweak the camera)
+# share one true perspective. Run: python scripts/desk-scene.py
+# Env overrides: AZ, EL, DIST (camera angle and distance), DECKW, TOP (framing), YAW, LSCALE (the laptop's
+# turn and size on the desk), LEAN (how far the notes are propped up). Every project in src/content/projects.ts
+# needs a spot in NOTES below.
 import math, json, sys, os
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "components")
@@ -92,8 +95,11 @@ def note_corners(c, s, rot, lean=NOTE_LEAN):  # TL, TR, BR, BL; TL is the far-le
 
 g = []
 # Light: the screen is the key light. A pool on the desk in front of it and a bloom around the lid.
-g.append(f'<path d="{poly([P((x, y, 0)) for x, y, _ in circle3(place((0, -9, 0)), 34, 64)])}" fill="url(#desk-pool)" className="opacity-50 dark:opacity-100" />')
-g.append(f'<path d="{quad(L2,-.04,1.04,-.02,1.05)}" fill="#6ee7b7" filter="url(#desk-bloom)" className="opacity-10 dark:opacity-25" />')
+# Both sit in a desk-screen-light group, which breathes slowly (globals.css).
+g.append('<g className="desk-screen-light">')
+g.append(f'  <path d="{poly([P((x, y, 0)) for x, y, _ in circle3(place((0, -9, 0)), 34, 64)])}" fill="url(#desk-pool)" className="opacity-50 dark:opacity-100" />')
+g.append(f'  <path d="{quad(L2,-.04,1.04,-.02,1.05)}" fill="#6ee7b7" filter="url(#desk-bloom)" className="opacity-15 dark:opacity-40" />')
+g.append('</g>')
 # Shadows: a soft one cast away from the room light, and tight contact shadows where things meet the desk.
 foot = [P(deck(u, v, 0)) for u, v in [(0, 0), (1, 0), (1, 1), (0, 1)]]
 g.append(f'<path d="{poly([(x+10, y+14) for x, y in foot])}" fill="#000" filter="url(#desk-soft)" className="opacity-20 dark:opacity-50" />')
@@ -106,11 +112,13 @@ lap = []
 lap.append(f'<path d="{poly([P(deck(1,0,0)),P(deck(1,1,0)),P(deck(1,1)),P(deck(1,0))])}" fill="#0d1b15" />')
 lap.append(f'<path d="{poly([P(deck(0,0,0)),P(deck(1,0,0)),P(deck(1,0)),P(deck(0,0))])}" fill="#142820" />')
 lap.append(f'<path d="{quad(D2,0,1,0,1)}" fill="url(#desk-deck)" />')
-lap.append(f'<path d="{quad(D2,0,1,0,1)}" fill="url(#desk-spill)" stroke="#6fae92" strokeOpacity=".55" strokeWidth="1.2" strokeLinejoin="round" />')
+lap.append(f'<path d="{quad(D2,0,1,0,1)}" fill="url(#desk-spill)" stroke="#6fae92" strokeOpacity=".55" strokeWidth="1.2" strokeLinejoin="round" className="desk-screen-light" />')
 lap.append(f'<path d="{line([D2(.02,0),D2(.98,0)])}" stroke="#9fe6c5" strokeOpacity=".35" strokeWidth="1.4" strokeLinecap="round" />')
 lap.append(f'<path d="{quad(D2,.06,.94,.45,.95)}" fill="#06100b" stroke="#4c705d" strokeWidth="1.1" strokeLinejoin="round" />')
-LIT = {(0, 3), (1, 6), (2, 9), (1, 2), (3, 5), (2, 12), (0, 10)}
-keys, lit = [], []
+# The keys that type "whoami" + Enter, in order (row, column; row 0 is the number row). Each is its own
+# group so CSS can flash it in turn; without motion they simply stay lit.
+TYPED = [(1, 2), (2, 6), (1, 9), (2, 1), (3, 7), (1, 8), (2, 13)]
+keys, lit = [], {}
 for r in range(5):
     v1 = .935 - r*.096; v0 = v1 - .08
     if r == 4:
@@ -118,10 +126,12 @@ for r in range(5):
         continue
     for c in range(14):
         kw = .85/14; u0 = .075 + c*kw + .004
-        (lit if (r, c) in LIT else keys).append(quad(D2, u0, u0 + kw - .008, v0, v1))
+        k = quad(D2, u0, u0 + kw - .008, v0, v1)
+        if (r, c) in TYPED: lit[(r, c)] = k
+        else: keys.append(k)
 lap.append(f'<path d="{" ".join(keys)}" fill="url(#desk-keys)" stroke="#34584a" strokeWidth=".7" strokeLinejoin="round" />')
-lap.append(f'<path d="{" ".join(lit)}" fill="#6ee7b7" filter="url(#desk-glow)" className="desk-keys-glow" />')
-lap.append(f'<path d="{" ".join(lit)}" fill="#b9f8dc" />')
+for i, rc in enumerate(TYPED, 1):
+    lap.append(f'<g className="desk-key desk-key-{i}"><path d="{lit[rc]}" fill="#6ee7b7" filter="url(#desk-glow)" /><path d="{lit[rc]}" fill="#b9f8dc" /></g>')
 lap.append(f'<path d="{quad(D2,.34,.66,.06,.38)}" fill="url(#desk-trackpad)" stroke="#5a8a72" strokeOpacity=".55" strokeLinejoin="round" />')
 lap.append(f'<path d="{poly([P(lid(0,1)),P(lid(1,1)),P(lid(1,1,.6)),P(lid(0,1,.6))])}" fill="#2d4a3d" />')
 lap.append(f'<path d="{poly([P(lid(1,0)),P(lid(1,1)),P(lid(1,1,.6)),P(lid(1,0,.6))])}" fill="#16291f" />')
@@ -202,7 +212,7 @@ export function DeskScene({{ className }}: {{ className?: string }}) {{
       </defs>
 
       <rect width="{VBW}" height="{VBH}" className="fill-[#d6e9df] dark:fill-[#070c0a]" />
-      <rect width="{VBW}" height="{VBH}" fill="url(#desk-ambience)" className="desk-ambience-layer" />{"".join(nl + "      " + x for x in g)}
+      <rect width="{VBW}" height="{VBH}" fill="url(#desk-ambience)" />{"".join(nl + "      " + x for x in g)}
       {{/* Note contact shadows; the notes themselves are HTML, shown only when the whole desk fits. */}}
       <path d="{" ".join(shadows)}" fill="#000" filter="url(#desk-contact)" className="opacity-15 scene-narrow:hidden dark:opacity-40" />
 
