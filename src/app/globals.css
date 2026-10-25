@@ -242,6 +242,17 @@ body {
       animation-timeline: view();
       animation-range: entry 0% entry 90%;
     }
+
+    /* As the hero scrolls away, the desk settles back and dims. The frame clips (so it counts as a
+       scroll container), so the timeline is the frame's own trip through the page, by name. */
+    .desk-frame {
+      view-timeline: --hero block;
+    }
+    .desk-box {
+      animation: desk-exit linear both;
+      animation-timeline: --hero;
+      animation-range: exit 0% exit 100%;
+    }
   }
 }
 
@@ -361,6 +372,13 @@ body {
   100% {
     opacity: 0;
     translate: -10px -40px;
+  }
+}
+
+@keyframes desk-exit {
+  to {
+    opacity: 0.35;
+    scale: 0.92;
   }
 }
 
