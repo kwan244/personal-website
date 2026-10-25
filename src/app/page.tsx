@@ -117,7 +117,7 @@ export default function Home() {
 
       <section aria-label="About and skills" className="bg-surface">
         <div className="mx-auto grid max-w-7xl gap-12 px-4 py-24 lg:grid-cols-2">
-          <div id="about" className="scroll-mt-8">
+          <div id="about" className="reveal scroll-mt-8">
             <h2 className="text-4xl sm:text-5xl">About</h2>
             <p className="mt-4 text-lg text-muted">
               {profile.headline} · {profile.location}
@@ -129,7 +129,7 @@ export default function Home() {
               ))}
             </div>
           </div>
-          <div id="skills" className="scroll-mt-8">
+          <div id="skills" className="reveal scroll-mt-8">
             <h2 className="text-4xl sm:text-5xl">Skills</h2>
             <dl className="mt-4 grid gap-4 sm:grid-cols-2">
               {profile.skills.map((skill) => (
@@ -150,17 +150,17 @@ export default function Home() {
           </h2>
           <ul className="mt-10 space-y-16">
             {featured.map((project, i) => (
-              <li key={project.slug} className="relative grid items-center gap-8 md:grid-cols-2">
+              <li key={project.slug} className="reveal group relative grid items-center gap-8 md:grid-cols-2">
                 {project.image && (
                   <Image
                     src={project.image.src}
                     alt={project.image.alt}
                     sizes="(min-width: 768px) 50vw, 100vw"
-                    className={`h-auto w-full rounded-xl border border-border ${i % 2 ? "md:order-last" : ""}`}
+                    className={`h-auto w-full rounded-xl border border-border transition duration-300 ease-out group-focus-within:border-accent group-hover:border-accent group-hover:shadow-[0_18px_40px_-18px_rgb(0_0_0/0.45)] motion-safe:group-hover:-translate-y-1 ${i % 2 ? "md:order-last" : ""}`}
                   />
                 )}
                 <div>
-                  <h3 className="font-display text-4xl">
+                  <h3 className="font-display text-4xl transition-colors group-hover:text-accent">
                     {/* Stretched link: the whole row is clickable, with one accessible name. */}
                     <Link href={`/projects/${project.slug}`} prefetch={true} className="after:absolute after:inset-0">
                       {project.title}
@@ -175,8 +175,11 @@ export default function Home() {
           </ul>
           <ul className="mt-16 grid gap-6 md:grid-cols-3">
             {others.map((project) => (
-              <li key={project.slug} className="relative rounded-xl border border-border bg-surface p-6">
-                <h3 className="font-display text-2xl">
+              <li
+                key={project.slug}
+                className="reveal group relative rounded-xl border border-border bg-surface p-6 transition duration-300 ease-out focus-within:border-accent hover:border-accent hover:shadow-[0_18px_40px_-18px_rgb(0_0_0/0.45)] motion-safe:hover:-translate-y-1"
+              >
+                <h3 className="font-display text-2xl transition-colors group-hover:text-accent">
                   <Link href={`/projects/${project.slug}`} prefetch={true} className="after:absolute after:inset-0">
                     {project.title}
                   </Link>
@@ -190,7 +193,7 @@ export default function Home() {
       </section>
 
       <section id="contact" aria-labelledby="contact-heading" className="flex min-h-[70svh] scroll-mt-8 items-center bg-surface">
-        <div className="mx-auto w-full max-w-7xl px-4 py-24">
+        <div className="reveal mx-auto w-full max-w-7xl px-4 py-24">
           <h2 id="contact-heading" className="text-4xl sm:text-5xl">
             Contact
           </h2>

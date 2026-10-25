@@ -114,7 +114,7 @@ for r in range(5):
         kw = .85/14; u0 = .075 + c*kw + .004
         (lit if (r, c) in LIT else keys).append(quad(D2, u0, u0 + kw - .008, v0, v1))
 lap.append(f'<path d="{" ".join(keys)}" fill="url(#desk-keys)" stroke="#34584a" strokeWidth=".7" strokeLinejoin="round" />')
-lap.append(f'<path d="{" ".join(lit)}" fill="#6ee7b7" filter="url(#desk-glow)" />')
+lap.append(f'<path d="{" ".join(lit)}" fill="#6ee7b7" filter="url(#desk-glow)" className="desk-keys-glow" />')
 lap.append(f'<path d="{" ".join(lit)}" fill="#b9f8dc" />')
 lap.append(f'<path d="{quad(D2,.34,.66,.06,.38)}" fill="url(#desk-trackpad)" stroke="#5a8a72" strokeOpacity=".55" strokeLinejoin="round" />')
 lap.append(f'<path d="{poly([P(lid(0,1)),P(lid(1,1)),P(lid(1,1,.6)),P(lid(0,1,.6))])}" fill="#2d4a3d" />')
