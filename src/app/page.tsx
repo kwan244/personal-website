@@ -8,7 +8,7 @@ import { deskAnchors } from "@/components/deskAnchors";
 import { HeroBadge } from "@/components/HeroBadge";
 import { HeroFrame } from "@/components/HeroFrame";
 import { profile } from "@/content/profile";
-import { projects } from "@/content/projects";
+import { projects, type Project } from "@/content/projects";
 
 export const metadata: Metadata = { alternates: { canonical: "/" } };
 
@@ -31,34 +31,37 @@ function noteStyle(a: Anchor) {
 
 const noteAnchors: Record<string, Anchor> = deskAnchors.notes;
 
+function noteAnchor(slug: string): Anchor {
+  const anchor = noteAnchors[slug];
+  if (!anchor) {
+    throw new Error(`No desk spot for the "${slug}" note: add it to NOTES in scripts/desk-scene.py and re-run it.`);
+  }
+  return anchor;
+}
+
 // Skills the laptop's terminal cycles through (all from profile.skills).
 const screenStack = ["TypeScript", "React", "Next.js", "Spring Boot", "Prisma ORM", "Playwright"];
 
-// Each note's one-word context and paper tone.
-const noteMeta: Record<string, { label: string; tone: string }> = {
-  "stroke-outcome-prediction": { label: "Internship", tone: "from-[#a3e8c7] to-[#6cb592]" },
-  "auss-member-platform": { label: "Club platform", tone: "from-[#c4f1db] to-[#86c7a8]" },
-  plateful: { label: "Open source", tone: "from-[#a3e8c7] to-[#6cb592]" },
-  "guess-whos-the-thief": { label: "Team project", tone: "from-[#c4f1db] to-[#86c7a8]" },
-  "rock-paper-scissors": { label: "Self-taught", tone: "from-[#a3e8c7] to-[#6cb592]" },
-};
+// Paper tones, alternating from note to note.
+const noteTones = ["from-[#a3e8c7] to-[#6cb592]", "from-[#c4f1db] to-[#86c7a8]"];
 
 // A sticky note linking to a project. Pinned notes lie on the desk and scale with it (cqw).
-function NoteLink({ slug, title, pinned = false }: { slug: string; title: string; pinned?: boolean }) {
-  const { label, tone } = noteMeta[slug];
+function NoteLink({ project, index, pinned = false }: { project: Project; index: number; pinned?: boolean }) {
   return (
     <Link
-      href={`/projects/${slug}`}
+      href={`/projects/${project.slug}`}
       prefetch={true}
       style={pinned ? { fontSize: "1.75cqw" } : undefined}
       className={`relative isolate flex h-full flex-col justify-between leading-tight font-bold text-[#08170f] ${pinned ? "p-[0.75em]" : "p-3"}`}
     >
       <span
         aria-hidden="true"
-        className={`absolute inset-0 -z-10 bg-linear-160 ${tone} [clip-path:polygon(0_0,100%_0,100%_84%,90%_100%,0_100%)]`}
+        className={`absolute inset-0 -z-10 bg-linear-160 ${noteTones[index % noteTones.length]} [clip-path:polygon(0_0,100%_0,100%_84%,90%_100%,0_100%)]`}
       />
-      {title}
-      <span className="mt-2 font-mono text-[0.72em] font-semibold tracking-wide text-[#123826] uppercase">{label}</span>
+      {project.title}
+      <span className="mt-2 font-mono text-[0.72em] font-semibold tracking-wide text-[#123826] uppercase">
+        {project.noteLabel}
+      </span>
     </Link>
   );
 }
@@ -120,13 +123,13 @@ export default function Home() {
               </p>
             </div>
             <ul aria-label="Projects" className="hidden scene-wide:block">
-              {projects.map((project) => (
+              {projects.map((project, i) => (
                 <li
                   key={project.slug}
-                  style={noteStyle(noteAnchors[project.slug])}
+                  style={noteStyle(noteAnchor(project.slug))}
                   className="desk-note absolute origin-top-left"
                 >
-                  <NoteLink slug={project.slug} title={project.title} pinned />
+                  <NoteLink project={project} index={i} pinned />
                 </li>
               ))}
             </ul>
@@ -140,9 +143,9 @@ export default function Home() {
         </HeroFrame>
         {/* Narrow screens crop the desk's sides, so the notes become a list below it. */}
         <ul aria-label="Projects" className="mx-auto grid max-w-7xl gap-3 px-4 py-6 sm:grid-cols-2 scene-wide:hidden">
-          {projects.map((project) => (
+          {projects.map((project, i) => (
             <li key={project.slug} className="drop-shadow-lg">
-              <NoteLink slug={project.slug} title={project.title} />
+              <NoteLink project={project} index={i} />
             </li>
           ))}
         </ul>
