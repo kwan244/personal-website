@@ -59,17 +59,29 @@ export function DeskScene({ projectCount, className }: { projectCount: number; c
       {/* The idea glow (replaces the old hero blob); lit in the static pose. */}
       <ellipse id="desk-idea-halo" cx="500" cy="554" rx="240" ry="170" fill="url(#desk-halo)" opacity=".72" />
 
+      {/* The open lid casts a soft shadow on the desk behind it, so it reads as standing, not lying flat. */}
+      <path
+        d="M330 118H662L648 80H344Z"
+        fill="#000"
+        opacity=".18"
+        filter="url(#desk-blur)"
+        transform="translate(496 420) scale(1.15) translate(-496 -420)"
+      />
       <g id="desk-laptop" filter="url(#desk-shadow)" transform="translate(496 420) scale(1.15) translate(-496 -420)">
-        <path d="M338 71H654Q665 71 666 84L688 288Q689 301 676 302H318Q305 302 306 289L327 84Q328 72 338 71Z" fill="url(#desk-edge)" />
-        <path d="M339 73H653Q664 73 665 85L686 288Q686 299 675 299H319Q308 299 308 288L329 85Q330 74 339 73Z" fill="url(#desk-bezel)" />
-        <path d="M341 89H651L672 280H321Z" fill="url(#desk-screen)" />
-        <path d="M341 89H476L352 280H321Z" fill="#b0f4d4" opacity=".025" />
-        <circle cx="496" cy="81" r="2.3" fill="#274a3a" />
-        <g fill="#416c58"><circle cx="353" cy="109" r="4.4" /><circle cx="368" cy="109" r="4.4" /><circle cx="383" cy="109" r="4.4" /></g>
-        <g className="font-mono" fontSize="13.5">
-          <text x="352" y="143" fill="#d8ebdf">$ npm run build-me</text>
-          <path d="m353 160 3 4 7-10" fill="none" stroke="#80f2c4" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" />
-          <text x="372" y="165" fill="#7ff1c5">compiled {projectCount} projects</text>
+        {/* The lid is foreshortened to 82% about the hinge (y 301): seen from above, an upright screen
+            looks shorter. page.tsx squashes the HTML name and CV line by the same amount. */}
+        <g transform="translate(0 301) scale(1 0.82) translate(0 -301)">
+          <path d="M338 71H654Q665 71 666 84L678 288Q679 301 667 302H327Q315 302 316 289L327 84Q328 72 338 71Z" fill="url(#desk-edge)" />
+          <path d="M339 73H653Q664 73 665 85L676 288Q676 299 666 299H328Q318 299 318 288L329 85Q330 74 339 73Z" fill="url(#desk-bezel)" />
+          <path d="M341 89H651L663 280H330Z" fill="url(#desk-screen)" />
+          <path d="M341 89H476L359 280H330Z" fill="#b0f4d4" opacity=".025" />
+          <circle cx="496" cy="81" r="2.3" fill="#274a3a" />
+          <g fill="#416c58"><circle cx="353" cy="109" r="4.4" /><circle cx="368" cy="109" r="4.4" /><circle cx="383" cy="109" r="4.4" /></g>
+          <g className="font-mono" fontSize="13.5">
+            <text x="352" y="143" fill="#d8ebdf">$ npm run build-me</text>
+            <path d="m353 160 3 4 7-10" fill="none" stroke="#80f2c4" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" />
+            <text x="372" y="165" fill="#7ff1c5">compiled {projectCount} projects</text>
+          </g>
         </g>
         {/* The name (h1) and the Download CV prompt line sit here as real HTML, see page.tsx. */}
         <path d="M315 301H678Q687 301 689 312L716 478Q718 489 706 492H287Q274 490 276 479L304 313Q306 303 315 301Z" fill="url(#desk-deck)" stroke="#5e927b" strokeWidth="1" />
