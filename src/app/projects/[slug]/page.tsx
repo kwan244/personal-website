@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
+import { ProjectMorph } from "@/components/ProjectMorph";
 import { profile } from "@/content/profile";
 import { projects } from "@/content/projects";
 import { openGraphBase } from "@/app/shared-metadata";
@@ -82,20 +83,26 @@ async function ProjectDetails({ params }: Pick<PageProps<"/projects/[slug]">, "p
   return (
     <article className="mt-6">
       <header className="max-w-4xl">
-        <h1 className="text-5xl leading-none text-balance sm:text-7xl">{project.title}</h1>
+        <h1 className="text-5xl leading-none sm:text-7xl">
+          <ProjectMorph slug={project.slug} part="title">
+            <span className="inline-block text-balance">{project.title}</span>
+          </ProjectMorph>
+        </h1>
         <p className="mt-3 text-muted">{project.context}</p>
         <p className="mt-6 max-w-2xl text-lg sm:text-xl">{project.summary}</p>
       </header>
 
       {project.image && (
-        <Image
-          src={project.image.src}
-          alt={project.image.alt}
-          sizes="(min-width: 1280px) 1248px, 100vw"
-          className="mt-10 h-auto w-full rounded-xl border border-border shadow-[0_12px_40px_-12px_rgb(0_0_0/0.35)]"
-          loading="eager"
-          fetchPriority="high"
-        />
+        <ProjectMorph slug={project.slug} part="image">
+          <Image
+            src={project.image.src}
+            alt={project.image.alt}
+            sizes="(min-width: 1280px) 1248px, 100vw"
+            className="mt-10 h-auto w-full rounded-xl border border-border shadow-[0_12px_40px_-12px_rgb(0_0_0/0.35)]"
+            loading="eager"
+            fetchPriority="high"
+          />
+        </ProjectMorph>
       )}
 
       <div className="mt-12 grid gap-12 lg:grid-cols-[17rem_minmax(0,1fr)]">

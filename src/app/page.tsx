@@ -8,6 +8,8 @@ import { deskAnchors } from "@/components/deskAnchors";
 import { HeroBadge } from "@/components/HeroBadge";
 import { HeroFrame } from "@/components/HeroFrame";
 import { NoteDoodle } from "@/components/NoteDoodle";
+import { NoteFlight } from "@/components/NoteFlight";
+import { ProjectMorph } from "@/components/ProjectMorph";
 import { profile } from "@/content/profile";
 import { projects, type Project } from "@/content/projects";
 
@@ -50,8 +52,8 @@ const noteTones = ["from-[#a3e8c7] to-[#6cb592]", "from-[#c4f1db] to-[#86c7a8]"]
 const notePaper = "[clip-path:polygon(0_0,100%_0,100%_84%,90%_100%,0_100%)]";
 const noteFold = "[clip-path:polygon(90%_84%,100%_84%,90%_100%)]";
 
-// A sticky note linking to a project. Pinned notes lie on the desk and scale with it (cqw), and catch the
-// screen's light on the side facing the laptop.
+// A sticky note linking to its project card further down (on the desk, it flies there: see NoteFlight).
+// Pinned notes lie on the desk and scale with it (cqw), and catch the screen's light on the side facing the laptop.
 function NoteLink({
   project,
   index,
@@ -64,9 +66,8 @@ function NoteLink({
   light?: "left" | "right";
 }) {
   return (
-    <Link
-      href={`/projects/${project.slug}`}
-      prefetch={true}
+    <a
+      href={`#project-${project.slug}`}
       style={pinned ? { fontSize: "1.75cqw" } : undefined}
       className={`relative isolate flex h-full flex-col justify-between leading-tight text-[#08170f] ${pinned ? "p-[0.75em]" : "p-3"}`}
     >
@@ -98,7 +99,7 @@ function NoteLink({
           className="-my-[0.2em] mr-[0.45em] h-[1.6em] w-auto shrink-0 -rotate-6 text-[#123826]/80"
         />
       </span>
-    </Link>
+    </a>
   );
 }
 
@@ -221,20 +222,29 @@ export default function Home() {
           </h2>
           <ul className="mt-10 space-y-16">
             {featured.map((project, i) => (
-              <li key={project.slug} className="reveal group relative grid items-center gap-8 md:grid-cols-2">
+              <li
+                key={project.slug}
+                id={`project-${project.slug}`}
+                className="reveal group relative grid scroll-mt-8 items-center gap-8 md:grid-cols-2"
+              >
+                {/* The screenshot and title morph into the case study's (see ProjectMorph). */}
                 {project.image && (
-                  <Image
-                    src={project.image.src}
-                    alt={project.image.alt}
-                    sizes="(min-width: 768px) 50vw, 100vw"
-                    className={`h-auto w-full rounded-xl border border-border transition duration-300 ease-out group-focus-within:border-accent group-hover:border-accent group-hover:shadow-[0_18px_40px_-18px_rgb(0_0_0/0.45)] motion-safe:group-hover:-translate-y-1 ${i % 2 ? "md:order-last" : ""}`}
-                  />
+                  <ProjectMorph slug={project.slug} part="image">
+                    <Image
+                      src={project.image.src}
+                      alt={project.image.alt}
+                      sizes="(min-width: 768px) 50vw, 100vw"
+                      className={`h-auto w-full rounded-xl border border-border transition duration-300 ease-out group-focus-within:border-accent group-hover:border-accent group-hover:shadow-[0_18px_40px_-18px_rgb(0_0_0/0.45)] motion-safe:group-hover:-translate-y-1 ${i % 2 ? "md:order-last" : ""}`}
+                    />
+                  </ProjectMorph>
                 )}
                 <div>
                   <h3 className="font-display text-4xl transition-colors group-hover:text-accent">
                     {/* Stretched link: the whole row is clickable, with one accessible name. */}
                     <Link href={`/projects/${project.slug}`} prefetch={true} className="after:absolute after:inset-0">
-                      {project.title}
+                      <ProjectMorph slug={project.slug} part="title">
+                        <span className="inline-block">{project.title}</span>
+                      </ProjectMorph>
                     </Link>
                   </h3>
                   <p className="mt-2 text-sm text-muted">{project.context}</p>
@@ -248,11 +258,14 @@ export default function Home() {
             {others.map((project) => (
               <li
                 key={project.slug}
-                className="reveal group relative rounded-xl border border-border bg-surface p-6 transition duration-300 ease-out focus-within:border-accent hover:border-accent hover:shadow-[0_18px_40px_-18px_rgb(0_0_0/0.45)] motion-safe:hover:-translate-y-1"
+                id={`project-${project.slug}`}
+                className="reveal group relative scroll-mt-8 rounded-xl border border-border bg-surface p-6 transition duration-300 ease-out focus-within:border-accent hover:border-accent hover:shadow-[0_18px_40px_-18px_rgb(0_0_0/0.45)] motion-safe:hover:-translate-y-1"
               >
                 <h3 className="font-display text-2xl transition-colors group-hover:text-accent">
                   <Link href={`/projects/${project.slug}`} prefetch={true} className="after:absolute after:inset-0">
-                    {project.title}
+                    <ProjectMorph slug={project.slug} part="title">
+                      <span className="inline-block">{project.title}</span>
+                    </ProjectMorph>
                   </Link>
                 </h3>
                 <p className="mt-1 text-sm text-muted">{project.context}</p>
@@ -292,6 +305,7 @@ export default function Home() {
           </p>
         </div>
       </section>
+      <NoteFlight />
     </>
   );
 }
