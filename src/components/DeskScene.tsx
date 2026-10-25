@@ -130,7 +130,7 @@ export function DeskScene({ className }: { className?: string }) {
       />
       {/* Note contact shadows; the notes themselves are HTML, shown only when the whole desk fits. */}
       <path
-        d="M71.6 173.2 L357.6 163 L352.9 235.5 L45.2 247.3Z M65.3 311 L285.6 322.7 L250.8 414.1 L13.2 400.5Z M49 468 L261.4 458.1 L248.1 564 L17.7 575.6Z M813.4 567.9 L1015.9 578.1 L1042.3 688 L823.6 676.1Z M955.8 160.5 L1124.9 152.8 L1172.9 215.2 L993.1 224Z"
+        d="M71.6 173.2 L357.6 163 L352.9 235.5 L45.2 247.3Z M65.3 311 L285.6 322.7 L250.8 414.1 L13.2 400.5Z M49 468 L261.4 458.1 L248.1 564 L17.7 575.6Z M813.4 567.9 L1015.9 578.1 L1042.3 688 L823.6 676.1Z M933.3 154.1 L1124.5 145.4 L1177.2 213.4 L972.6 223.4Z"
         fill="#000"
         filter="url(#desk-contact)"
         className="opacity-15 scene-narrow:hidden dark:opacity-40"
