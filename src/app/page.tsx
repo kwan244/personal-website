@@ -14,12 +14,12 @@ export const metadata: Metadata = { alternates: { canonical: "/" } };
 const featured = projects.filter((p) => p.featured);
 const others = projects.filter((p) => !p.featured);
 
-type Anchor = { x: number; y: number; w: number; h: number; m: string };
+type Anchor = { w: string; h: string; transform: string };
 
-// Lays an HTML box onto the scene: positioned in %, sized in cqw (the scene is 1000 units = 100cqw wide)
-// and sheared by the generated matrix so it lies on the laptop screen or the desk.
+// Lays an HTML box onto the scene in its own 3D perspective (see deskAnchors.ts).
 function anchorStyle(a: Anchor): CSSProperties {
-  return { left: `${a.x}%`, top: `${a.y}%`, width: `${a.w / 10}cqw`, height: `${a.h / 10}cqw`, transform: a.m };
+  const { x, y } = deskAnchors.origin;
+  return { left: x, top: y, width: a.w, height: a.h, transform: a.transform };
 }
 
 const noteAnchors: Record<string, Anchor> = deskAnchors.notes;
@@ -40,7 +40,7 @@ function NoteLink({ slug, title, pinned = false }: { slug: string; title: string
     <Link
       href={`/projects/${slug}`}
       prefetch={true}
-      style={pinned ? { fontSize: "1.65cqw" } : undefined}
+      style={pinned ? { fontSize: "1.5cqw" } : undefined}
       className={`relative isolate flex h-full flex-col justify-between leading-tight font-bold text-[#08170f] ${pinned ? "p-[0.75em]" : "p-3"}`}
     >
       <span
@@ -63,16 +63,16 @@ export default function Home() {
             {/* On the laptop screen, which stays dark in both themes, so these use fixed mint colours. */}
             <div
               style={anchorStyle(deskAnchors.screen)}
-              className="absolute flex origin-top-left flex-col justify-center gap-[0.9cqw] px-[2.6cqw] pt-[1.6cqw] text-[#e2f3e8]"
+              className="absolute flex origin-top-left flex-col justify-center gap-[0.75cqw] px-[2.2cqw] pt-[1.4cqw] text-[#e2f3e8]"
             >
-              <p aria-hidden="true" className="font-mono text-[max(10px,1.35cqw)] text-[#8fb8a5]">
+              <p aria-hidden="true" className="font-mono text-[max(10px,1.15cqw)] text-[#8fb8a5]">
                 <span className="text-[#6ee7b7]">kevin@auckland ~ %</span> whoami
               </p>
-              <h1 id="hero-heading" className="text-[5.2cqw] leading-[0.95] whitespace-nowrap text-[#8bf5cb] uppercase">
+              <h1 id="hero-heading" className="text-[4.4cqw] leading-[0.95] whitespace-nowrap text-[#8bf5cb] uppercase">
                 {profile.name}
               </h1>
-              <p className="text-[max(11px,1.45cqw)] leading-snug text-balance text-[#c4dccf]">{profile.headline}</p>
-              <p className="flex items-center gap-[0.6cqw] font-mono text-[max(12px,1.5cqw)]">
+              <p className="text-[max(11px,1.25cqw)] leading-snug text-balance text-[#c4dccf]">{profile.headline}</p>
+              <p className="flex items-center gap-[0.6cqw] font-mono text-[max(12px,1.3cqw)]">
                 <span aria-hidden="true" className="text-[#6ee7b7]">
                   &gt;
                 </span>

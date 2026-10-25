@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
-/* The desk scene shows its full width (and the overlaid notes) only on screens at least 4:3. */
-@custom-variant scene-wide (@media (aspect-ratio >= 4/3));
-@custom-variant scene-narrow (@media (aspect-ratio < 4/3));
+/* The desk scene shows its full width (and the overlaid notes) only on screens at least 16:10. */
+@custom-variant scene-wide (@media (aspect-ratio >= 16/10));
+@custom-variant scene-narrow (@media (aspect-ratio < 16/10));
 
 /* Mint on ink. Every text pairing passes WCAG AA; borders are decorative (no form inputs yet). */
 :root {
@@ -66,12 +66,12 @@ body {
   font-family: var(--font-sans), system-ui, sans-serif;
 }
 
-/* The hero desk is a fixed 4:3 box (so the HTML notes, name and CV link stay pinned to their spots)
+/* The hero desk is a fixed 16:10 box (so the HTML notes, name and CV link stay pinned to their spots)
    sized to the frame's height: nothing is cropped top or bottom. Wider screens show the scene's
    edge colour either side, which matches the frame; narrower ones crop the sides. Frame: viewport
    height minus the header, capped so phones show the whole laptop. */
 .desk-frame {
-  --frame-h: min(calc(100svh - 3.5rem), 143.75vw);
+  --frame-h: min(calc(100svh - 3.5rem), 134vw);
   height: var(--frame-h);
 }
 
@@ -80,7 +80,7 @@ body {
   top: 0;
   left: 50%;
   height: 100%;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 16 / 10;
   translate: -50% 0;
 }
 
