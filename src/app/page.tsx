@@ -163,11 +163,7 @@ export default function Home() {
               {projects.map((project, i) => {
                 const anchor = noteAnchor(project.slug);
                 return (
-                  <li
-                    key={project.slug}
-                    style={noteStyle(anchor)}
-                    className="desk-note absolute origin-top-left"
-                  >
+                  <li key={project.slug} style={noteStyle(anchor)} className="desk-note absolute origin-top-left">
                     <NoteLink project={project} index={i} pinned light={anchor.light} />
                   </li>
                 );
