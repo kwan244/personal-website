@@ -139,9 +139,12 @@ mug.append(f'<path d="{line([P((mug_c[0] - mug_r*.97, mug_c[1] - mug_r*.25, z)) 
 mug.append(f'<path d="{poly(mtop)}" fill="#143020" stroke="#a7efd0" strokeWidth="1.6" />')
 mug.append(f'<path d="{poly([P(p) for p in circle3(mug_c, mug_r*.86, 64, z=mug_h-.7)])}" fill="url(#desk-coffee)" stroke="#a88659" strokeWidth="1" />')
 mx, my = P((mug_c[0], mug_c[1], mug_h))
-steam = (f'<path className="desk-wisp" d="M{f(mx-6)} {f(my-14)}c-14-20 16-34 7-54s-12-29-1-58" strokeWidth="7" />'
-         f'<path className="desk-wisp" d="M{f(mx+8)} {f(my-16)}c12-19-6-31 3-50s4-27-2-42" strokeWidth="3" />'
-         f'<path className="desk-wisp" d="M{f(mx-14)} {f(my-12)}c-9-16 11-30 5-46s-9-26-4-40" strokeWidth="4.5" />')
+# Steam: a soft haze plus four wisps, staggered by CSS (globals.css) so the plume never empties.
+steam = (f'<path className="desk-wisp" d="M{f(mx)} {f(my-10)}c-12-30 14-58 0-96s-8-50 4-80" strokeWidth="24" strokeOpacity=".45" />'
+         f'<path className="desk-wisp" d="M{f(mx-8)} {f(my-12)}c-16-24 18-40 8-64s-14-34 0-70" strokeWidth="9" />'
+         f'<path className="desk-wisp" d="M{f(mx+10)} {f(my-14)}c14-22-8-36 4-58s6-32-3-52" strokeWidth="5" />'
+         f'<path className="desk-wisp" d="M{f(mx-18)} {f(my-10)}c-11-19 13-35 6-54s-11-30-4-48" strokeWidth="6" />'
+         f'<path className="desk-wisp" d="M{f(mx+2)} {f(my-16)}c-6-26 14-44 2-72s-10-38 4-80" strokeWidth="4" />')
 
 # Paper lies flat, so its shadow is a thin contact line rather than a float.
 shadows, notes_out = [], {}
@@ -181,14 +184,14 @@ export function DeskScene({{ className }}: {{ className?: string }}) {{
         <radialGradient id="desk-coffee" cx=".4" cy=".35"><stop stopColor="#987149" /><stop offset=".55" stopColor="#715033" /><stop offset="1" stopColor="#352419" /></radialGradient>
         <linearGradient id="desk-steam" x2="0" y2="1">
           <stop stopOpacity="0" className="[stop-color:#5f8f78] dark:[stop-color:#c9ead8]" />
-          <stop offset=".5" stopOpacity=".55" className="[stop-color:#5f8f78] dark:[stop-color:#c9ead8]" />
+          <stop offset=".45" stopOpacity=".85" className="[stop-color:#5f8f78] dark:[stop-color:#c9ead8]" />
           <stop offset="1" stopOpacity="0" className="[stop-color:#5f8f78] dark:[stop-color:#c9ead8]" />
         </linearGradient>
         <filter id="desk-soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="14" /></filter>
         <filter id="desk-contact" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="3" /></filter>
         <filter id="desk-bloom" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="26" /></filter>
         <filter id="desk-glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="4" /></filter>
-        <filter id="desk-steam-blur" x="-100%" y="-30%" width="300%" height="160%"><feGaussianBlur stdDeviation="2.6" /></filter>
+        <filter id="desk-steam-blur" x="-100%" y="-30%" width="300%" height="160%"><feGaussianBlur stdDeviation="3.2" /></filter>
       </defs>
 
       <rect width="{VBW}" height="{VBH}" className="fill-[#d6e9df] dark:fill-[#070c0a]" />
@@ -202,7 +205,7 @@ export function DeskScene({{ className }}: {{ className?: string }}) {{
 
       <g id="desk-mug">{"".join(nl + "        " + x for x in mug)}
       </g>
-      <g id="desk-steam-rising" fill="none" stroke="url(#desk-steam)" strokeLinecap="round" filter="url(#desk-steam-blur)" opacity=".35">
+      <g id="desk-steam-rising" fill="none" stroke="url(#desk-steam)" strokeLinecap="round" filter="url(#desk-steam-blur)" opacity=".7">
         {steam}
       </g>
     </svg>

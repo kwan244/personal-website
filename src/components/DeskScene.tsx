@@ -66,7 +66,7 @@ export function DeskScene({ className }: { className?: string }) {
         </radialGradient>
         <linearGradient id="desk-steam" x2="0" y2="1">
           <stop stopOpacity="0" className="[stop-color:#5f8f78] dark:[stop-color:#c9ead8]" />
-          <stop offset=".5" stopOpacity=".55" className="[stop-color:#5f8f78] dark:[stop-color:#c9ead8]" />
+          <stop offset=".45" stopOpacity=".85" className="[stop-color:#5f8f78] dark:[stop-color:#c9ead8]" />
           <stop offset="1" stopOpacity="0" className="[stop-color:#5f8f78] dark:[stop-color:#c9ead8]" />
         </linearGradient>
         <filter id="desk-soft" x="-30%" y="-30%" width="160%" height="160%">
@@ -82,7 +82,7 @@ export function DeskScene({ className }: { className?: string }) {
           <feGaussianBlur stdDeviation="4" />
         </filter>
         <filter id="desk-steam-blur" x="-100%" y="-30%" width="300%" height="160%">
-          <feGaussianBlur stdDeviation="2.6" />
+          <feGaussianBlur stdDeviation="3.2" />
         </filter>
       </defs>
 
@@ -241,11 +241,13 @@ export function DeskScene({ className }: { className?: string }) {
         stroke="url(#desk-steam)"
         strokeLinecap="round"
         filter="url(#desk-steam-blur)"
-        opacity=".35"
+        opacity=".7"
       >
-        <path className="desk-wisp" d="M1065 397.1c-14-20 16-34 7-54s-12-29-1-58" strokeWidth="7" />
-        <path className="desk-wisp" d="M1079 395.1c12-19-6-31 3-50s4-27-2-42" strokeWidth="3" />
-        <path className="desk-wisp" d="M1057 399.1c-9-16 11-30 5-46s-9-26-4-40" strokeWidth="4.5" />
+        <path className="desk-wisp" d="M1071 401.1c-12-30 14-58 0-96s-8-50 4-80" strokeWidth="24" strokeOpacity=".45" />
+        <path className="desk-wisp" d="M1063 399.1c-16-24 18-40 8-64s-14-34 0-70" strokeWidth="9" />
+        <path className="desk-wisp" d="M1081 397.1c14-22-8-36 4-58s6-32-3-52" strokeWidth="5" />
+        <path className="desk-wisp" d="M1053 401.1c-11-19 13-35 6-54s-11-30-4-48" strokeWidth="6" />
+        <path className="desk-wisp" d="M1073 395.1c-6-26 14-44 2-72s-10-38 4-80" strokeWidth="4" />
       </g>
     </svg>
   );
