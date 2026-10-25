@@ -124,7 +124,7 @@ export default function Home() {
                 <li
                   key={project.slug}
                   style={noteStyle(noteAnchors[project.slug])}
-                  className={`desk-note absolute origin-top-left ${project.slug === "plateful" ? "desk-note-flutter" : ""}`}
+                  className="desk-note absolute origin-top-left"
                 >
                   <NoteLink slug={project.slug} title={project.title} pinned />
                 </li>

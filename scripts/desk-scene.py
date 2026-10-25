@@ -2,7 +2,7 @@
 # src/components/DeskScene.tsx, plus src/components/deskAnchors.ts: CSS 3D transforms that lay the HTML
 # overlays (screen text, notes) onto the same model through the same camera, so the text and the drawing
 # share one true perspective. Run: python scripts/desk-scene.py  (env AZ, EL, DIST, DECKW, TOP tweak the camera)
-import math, json, sys, os, random
+import math, json, sys, os
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "components")
 E = lambda k, d: float(os.environ.get(k, d))
@@ -95,7 +95,7 @@ g = []
 # Both sit in a desk-screen-light group, which breathes slowly (globals.css).
 g.append('<g className="desk-screen-light">')
 g.append(f'  <path d="{poly([P((x, y, 0)) for x, y, _ in circle3(place((0, -9, 0)), 34, 64)])}" fill="url(#desk-pool)" className="opacity-50 dark:opacity-100" />')
-g.append(f'  <path d="{quad(L2,-.04,1.04,-.02,1.05)}" fill="#6ee7b7" filter="url(#desk-bloom)" className="opacity-10 dark:opacity-25" />')
+g.append(f'  <path d="{quad(L2,-.04,1.04,-.02,1.05)}" fill="#6ee7b7" filter="url(#desk-bloom)" className="opacity-15 dark:opacity-40" />')
 g.append('</g>')
 # Shadows: a soft one cast away from the room light, and tight contact shadows where things meet the desk.
 foot = [P(deck(u, v, 0)) for u, v in [(0, 0), (1, 0), (1, 1), (0, 1)]]
@@ -159,14 +159,6 @@ steam = (f'<path className="desk-wisp" d="M{f(mx)} {f(my-10)}c-12-30 14-58 0-96s
          f'<path className="desk-wisp" d="M{f(mx-18)} {f(my-10)}c-11-19 13-35 6-54s-11-30-4-48" strokeWidth="6" />'
          f'<path className="desk-wisp" d="M{f(mx+2)} {f(my-16)}c-6-26 14-44 2-72s-10-38 4-80" strokeWidth="4" />')
 
-# Dust motes floating in the screen's light, in front of the lid (night only; animated in globals.css).
-rng = random.Random(7)
-motes = []
-for _ in range(14):
-    x, y, z = rng.uniform(-13, 13), rng.uniform(-6, 7), rng.uniform(4, 19)
-    mx_, my_ = P(place((x, y, z)))
-    motes.append(f'<circle className="desk-mote" cx="{f(mx_)}" cy="{f(my_)}" r="{rng.uniform(1.1, 2.3):.1f}" />')
-
 # Paper lies flat, so its shadow is a thin contact line rather than a float.
 shadows, notes_out = [], {}
 for slug, (c, s, rot) in NOTES.items():
@@ -223,9 +215,6 @@ export function DeskScene({{ className }}: {{ className?: string }}) {{
 
       <g id="desk-laptop">{"".join(nl + "        " + x for x in lap)}
         {{/* The name (h1), headline and Download CV prompt sit on the screen as real HTML, see page.tsx. */}}
-      </g>
-
-      <g className="hidden dark:inline" fill="#c8fbe3">{"".join(nl + "        " + x for x in motes)}
       </g>
 
       <g id="desk-mug">{"".join(nl + "        " + x for x in mug)}

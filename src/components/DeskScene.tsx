@@ -101,7 +101,7 @@ export function DeskScene({ className }: { className?: string }) {
           d="M492.7 21.4 L942.9 148.1 L848.1 460.9 L446.6 306.7Z"
           fill="#6ee7b7"
           filter="url(#desk-bloom)"
-          className="opacity-10 dark:opacity-25"
+          className="opacity-15 dark:opacity-40"
         />
       </g>
       <path
@@ -224,23 +224,6 @@ export function DeskScene({ className }: { className?: string }) {
           <circle cx="551.9" cy="91.6" r="4.5" />
         </g>
         {/* The name (h1), headline and Download CV prompt sit on the screen as real HTML, see page.tsx. */}
-      </g>
-
-      <g className="hidden dark:inline" fill="#c8fbe3">
-        <circle className="desk-mote" cx="465.1" cy="323.3" r="1.2" />
-        <circle className="desk-mote" cx="560.9" cy="433.7" r="1.7" />
-        <circle className="desk-mote" cx="413.6" cy="361.6" r="1.2" />
-        <circle className="desk-mote" cx="570.7" cy="361.4" r="1.4" />
-        <circle className="desk-mote" cx="651.4" cy="295.1" r="1.6" />
-        <circle className="desk-mote" cx="695" cy="386.7" r="1.4" />
-        <circle className="desk-mote" cx="407.5" cy="365.7" r="2.1" />
-        <circle className="desk-mote" cx="466.9" cy="265.4" r="1.5" />
-        <circle className="desk-mote" cx="533.6" cy="468.5" r="1.3" />
-        <circle className="desk-mote" cx="616.8" cy="402.7" r="1.8" />
-        <circle className="desk-mote" cx="525.5" cy="297.1" r="1.9" />
-        <circle className="desk-mote" cx="487.2" cy="294.4" r="2.2" />
-        <circle className="desk-mote" cx="625.5" cy="297.8" r="1.2" />
-        <circle className="desk-mote" cx="562" cy="362.7" r="1.7" />
       </g>
 
       <g id="desk-mug">

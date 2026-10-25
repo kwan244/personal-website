@@ -109,16 +109,6 @@ body {
   display: block;
 }
 
-/* Dust motes only show while they drift (motion allowed, night theme). */
-.desk-mote {
-  opacity: 0;
-}
-
-/* The Plateful note lifts its far edge now and then, so it rotates in its own perspective. */
-.desk-note-flutter {
-  transform-style: preserve-3d;
-}
-
 /* Sticky notes lie on the desk via --t (deskAnchors.ts). Hovered or focused, a note lifts towards
    the viewer and grows a little about its centre. */
 .desk-note {
@@ -220,34 +210,11 @@ body {
   }
 
   .desk-screen-light {
-    animation: desk-breathe 6s ease-in-out infinite alternate;
-  }
-
-  .desk-mote {
-    animation: desk-mote 12s linear infinite;
-  }
-  .desk-mote:nth-child(even) {
-    animation-name: desk-mote-left;
-    animation-duration: 15s;
-  }
-  .desk-mote:nth-child(3n) {
-    animation-duration: 10s;
-    animation-delay: -3s;
-  }
-  .desk-mote:nth-child(4n + 1) {
-    animation-delay: -7s;
-  }
-  .desk-mote:nth-child(5n + 2) {
-    animation-delay: -11s;
+    animation: desk-breathe 4s ease-in-out infinite alternate;
   }
 
   .badge-arrow {
     animation: badge-nudge 3.5s ease-in-out infinite;
-  }
-
-  .desk-note-flutter > a {
-    transform-origin: 50% 100%;
-    animation: desk-flutter 9s ease-in-out infinite;
   }
 
   @supports (animation-timeline: view()) {
@@ -361,39 +328,8 @@ body {
 }
 
 @keyframes desk-breathe {
-  to {
-    opacity: 0.68;
-  }
-}
-
-@keyframes desk-mote {
-  0% {
-    opacity: 0;
-    translate: 0 0;
-  }
-  25% {
-    opacity: 0.75;
-  }
-  75% {
-    opacity: 0.5;
-  }
-  100% {
-    opacity: 0;
-    translate: 9px -48px;
-  }
-}
-
-@keyframes desk-mote-left {
-  0% {
-    opacity: 0;
-    translate: 0 0;
-  }
-  30% {
-    opacity: 0.6;
-  }
-  100% {
-    opacity: 0;
-    translate: -10px -40px;
+  from {
+    opacity: 0.3;
   }
 }
 
@@ -411,23 +347,6 @@ body {
   }
   88% {
     translate: 0 3px;
-  }
-}
-
-@keyframes desk-flutter {
-  0%,
-  78%,
-  100% {
-    transform: none;
-  }
-  84% {
-    transform: rotateX(-16deg);
-  }
-  89% {
-    transform: rotateX(-5deg);
-  }
-  94% {
-    transform: rotateX(-10deg);
   }
 }
 
