@@ -10,6 +10,9 @@ export type Project = {
   title: string;
   summary: string;
   context: string;
+  // My part in one line (clear on team projects) and when, for the case study's at-a-glance panel.
+  roleLabel: string;
+  dates: string;
   // Featured projects get a large card with a screenshot on the home page.
   featured?: boolean;
   stack: string[];
@@ -32,6 +35,8 @@ export const projects: Project[] = [
     summary:
       "A full-stack web app that lets clinicians upload MRI scans and patient data, run AI stroke outcome predictions and view the results in a 3D brain viewer.",
     context: "Summer internship · Auckland Bioengineering Institute · 2025–26",
+    roleLabel: "Sole developer, as a summer intern",
+    dates: "Dec 2025 – Mar 2026",
     featured: true,
     stack: [
       "Next.js",
@@ -75,6 +80,8 @@ export const projects: Project[] = [
     summary:
       "The live membership, events and check-in platform for the Auckland University Strength Society, built by a student dev team.",
     context: "AUSS 2026 dev team · Auckland University Strength Society · 2026",
+    roleLabel: "Developer on the club's dev team",
+    dates: "Feb 2026 – present",
     featured: true,
     stack: ["React", "TypeScript", "Vite", "Tailwind CSS", "Express", "Prisma", "PostgreSQL", "Zod", "Stripe", "Railway"],
     problem:
@@ -110,6 +117,8 @@ export const projects: Project[] = [
     summary:
       "An open-source, full-stack restaurant discovery app. I forked the public repository and contributed responsive UI, testing and accessibility features through pull requests.",
     context: "SOFTENG 310 open-source contribution · University of Auckland · 2025",
+    roleLabel: "Contributor: mobile UI, frontend tests and accessibility",
+    dates: "Sep – Oct 2025",
     stack: ["React", "Vite", "Spring Boot", "MongoDB", "TomTom Maps", "Vitest", "React Testing Library"],
     problem:
       "Finding a restaurant means juggling cuisine, price, tags, name and location. Plateful brings search, filters, favourites and map-based search together in one responsive app, with a React frontend, a Spring Boot API and a MongoDB database.",
@@ -142,6 +151,8 @@ export const projects: Project[] = [
     summary:
       "An AI-driven detective game where players question suspects and solve clues to crack a jewellery theft.",
     context: "SOFTENG 206 team project (3 people) · University of Auckland · 2024",
+    roleLabel: "One of 3: AI dialogue, game logic, puzzles and media",
+    dates: "Sep – Dec 2024",
     stack: ["Java", "JavaFX", "Maven", "OpenAI API", "JLayer"],
     problem:
       "A mystery game where questioning suspects feels open-ended, with AI-generated responses to whatever the player asks instead of a fixed script.",
@@ -164,6 +175,8 @@ export const projects: Project[] = [
     title: "Rock Paper Scissors",
     summary: "A browser game against a computer opponent that adapts to how you play.",
     context: "Self-learning project · 2025",
+    roleLabel: "Solo",
+    dates: "Jan 2025",
     stack: ["HTML", "CSS", "JavaScript"],
     problem:
       "I wanted to learn HTML, CSS and JavaScript properly, step by step, by building one complete thing without a framework: a game against the computer with three difficulty levels and progress that survives a page refresh.",
