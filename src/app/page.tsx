@@ -116,7 +116,7 @@ export default function Home() {
             text={profile.badge}
             href="#projects"
             label="See my projects"
-            className="absolute bottom-4 left-4 size-[clamp(4.5rem,min(15svh,22vw),8rem)] sm:right-8 sm:bottom-8 sm:left-auto"
+            className="desk-badge absolute bottom-4 left-4 size-[clamp(4.5rem,min(15svh,22vw),8rem)] sm:right-8 sm:bottom-8 sm:left-auto"
           />
         </ParallaxFrame>
         {/* Narrow screens crop the desk's sides, so the notes become a list below it. */}
