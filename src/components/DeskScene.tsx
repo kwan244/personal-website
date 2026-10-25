@@ -22,7 +22,6 @@ export function DeskScene({ projectCount, className }: { projectCount: number; c
         <linearGradient id="desk-trackpad" x2="1" y2="1"><stop stopColor="#12271c" /><stop offset="1" stopColor="#243f32" /></linearGradient>
         <linearGradient id="desk-cloth" x2=".9" y2=".7"><stop stopColor="#345f4e" /><stop offset=".18" stopColor="#173a2a" /><stop offset=".48" stopColor="#0c2017" /><stop offset="1" stopColor="#050e09" /></linearGradient>
         <linearGradient id="desk-arm" x2="1" y2=".6"><stop stopColor="#254e3e" /><stop offset=".26" stopColor="#19382a" /><stop offset=".6" stopColor="#0c2017" /><stop offset="1" stopColor="#07100b" /></linearGradient>
-        <linearGradient id="desk-cuff" x2=".7" y2="1"><stop stopColor="#315341" /><stop offset=".2" stopColor="#173729" /><stop offset="1" stopColor="#08150e" /></linearGradient>
         <linearGradient id="desk-skin" x2=".3" y2="1"><stop stopColor="#5f8f78" /><stop offset=".45" stopColor="#2f4d40" /><stop offset="1" stopColor="#16251e" /></linearGradient>
         <linearGradient id="desk-hand-skin" gradientUnits="userSpaceOnUse" x1="0" y1="-72" x2="0" y2="6"><stop stopColor="#6a9c84" /><stop offset=".4" stopColor="#3a5c4c" /><stop offset="1" stopColor="#1b2d24" /></linearGradient>
         <radialGradient id="desk-hair" cx=".36" cy=".12" r=".87"><stop stopColor="#254c38" /><stop offset=".35" stopColor="#10271a" /><stop offset=".7" stopColor="#070e09" /><stop offset="1" stopColor="#030705" /></radialGradient>
@@ -106,9 +105,6 @@ export function DeskScene({ projectCount, className }: { projectCount: number; c
         <path d="M810 770C824 732 826 690 809 660C796 636 780 605 763 579L701 495L681 465Q665 455 639 479L631 496L663 540L698 623L732 705L748 770Z" fill="url(#desk-arm)" />
         <g className="desk-hand"><use href="#desk-relaxed-hand" /></g>
         <g className="desk-hand desk-hand-right"><use href="#desk-relaxed-hand" transform="translate(1000 0) scale(-1 1)" /></g>
-        <path d="M299 495L319 467Q340 452 367 481L369 493L349 524Q324 495 299 495Z" fill="url(#desk-cuff)" />
-        <path d="M701 495L681 467Q660 452 633 481L631 493L651 524Q676 495 701 495Z" fill="url(#desk-cuff)" />
-        <path d="M318 467Q338 453 367 481M682 467Q662 453 633 481" fill="none" stroke="#7ec599" strokeOpacity=".3" strokeWidth="1.4" />
         <path d="M427 654Q450 646 456 637H544Q550 646 573 654L565 703H435Z" fill="#0a1a10" />
         <path d="M457 643H543L545 691Q502 715 454 691Z" fill="url(#desk-skin)" />
         <ellipse cx="412" cy="640" rx="10" ry="20" fill="url(#desk-skin)" transform="rotate(-9 412 640)" />
