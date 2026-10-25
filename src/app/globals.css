@@ -13,7 +13,6 @@
   --accent: #047857;
   --accent-foreground: #ffffff;
   --border: #d3e3db;
-  --glow: #a7f3d0;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -25,7 +24,6 @@
     --accent: #6ee7b7;
     --accent-foreground: #0a0d0c;
     --border: #24302b;
-    --glow: #065f46;
   }
 }
 
@@ -37,7 +35,6 @@
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-border: var(--border);
-  --color-glow: var(--glow);
   --font-sans: var(--font-geist-sans);
   --font-display: var(--font-anton);
   --font-mono: var(--font-jetbrains-mono);
@@ -53,8 +50,9 @@
   }
 }
 
-/* clip, not hidden: stops the hero blob widening the page without breaking sticky positioning.
-   Set on html too, or body's value moves to the viewport and body no longer clips. */
+/* clip, not hidden: nothing wider than the viewport can add a sideways scroll, and sticky positioning
+   (the case-study aside) still works. Set on html too, or body's value moves to the viewport and body
+   no longer clips. */
 html,
 body {
   overflow-x: clip;
@@ -81,7 +79,9 @@ body {
   left: 50%;
   height: 100%;
   aspect-ratio: 16 / 10;
-  /* translate (centring + parallax) is set below */
+  /* Centred, plus the parallax offset (below). */
+  translate: calc(-50% + var(--mx) * -6px) calc(var(--my) * -4px);
+  will-change: translate;
 }
 
 /* Rotate/translate properties, not transform: the badge text keeps its SVG transform attributes. */
@@ -121,10 +121,11 @@ body {
   filter: drop-shadow(0 22px 24px rgb(0 0 0 / 0.4));
 }
 
-/* Mouse parallax: HeroFrame moves --mx / --my on the scene and the badge (fine pointers, motion
-   allowed): the scene drifts a few pixels against the pointer and the badge with it, so the two separate.
-   The values don't inherit, so a change restyles only these two layers, and will-change keeps each on
-   its own layer, so moving them never repaints the drawing. HeroFrame does the easing. */
+/* Mouse parallax: HeroFrame moves --mx / --my on the scene (.desk-box, above) and the badge (fine
+   pointers, motion allowed): the scene drifts a few pixels against the pointer and the badge with it, so
+   the two separate. The values don't inherit, so a change restyles only these two layers, and
+   will-change keeps each on its own layer, so moving them never repaints the drawing. HeroFrame does
+   the easing. */
 @property --mx {
   syntax: "<number>";
   inherits: false;
@@ -134,10 +135,6 @@ body {
   syntax: "<number>";
   inherits: false;
   initial-value: 0;
-}
-.desk-box {
-  translate: calc(-50% + var(--mx) * -6px) calc(var(--my) * -4px);
-  will-change: translate;
 }
 .desk-badge {
   translate: calc(var(--mx) * 4px) calc(var(--my) * 3px);

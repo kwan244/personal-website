@@ -1,7 +1,10 @@
 # Generates the hero desk scene (the laptop at a 3/4 view, project notes on the desk) as
 # src/components/DeskScene.tsx, plus src/components/deskAnchors.ts: CSS 3D transforms that lay the HTML
 # overlays (screen text, notes) onto the same model through the same camera, so the text and the drawing
-# share one true perspective. Run: python scripts/desk-scene.py  (env AZ, EL, DIST, DECKW, TOP tweak the camera)
+# share one true perspective. Run: python scripts/desk-scene.py
+# Env overrides: AZ, EL, DIST (camera angle and distance), DECKW, TOP (framing), YAW, LSCALE (the laptop's
+# turn and size on the desk), LEAN (how far the notes are propped up). Every project in src/content/projects.ts
+# needs a spot in NOTES below.
 import math, json, sys, os
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "components")

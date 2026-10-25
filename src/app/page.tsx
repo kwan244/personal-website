@@ -25,8 +25,8 @@ function anchorStyle(a: Anchor): CSSProperties {
 
 // Notes take their transform as --t, so the hover lift in globals.css can build on it.
 function noteStyle(a: Anchor) {
-  const { x, y } = deskAnchors.origin;
-  return { left: x, top: y, width: a.w, height: a.h, "--t": a.transform } as CSSProperties;
+  const { transform, ...box } = anchorStyle(a);
+  return { ...box, "--t": transform } as CSSProperties;
 }
 
 const noteAnchors: Record<string, Anchor> = deskAnchors.notes;
