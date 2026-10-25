@@ -63,24 +63,24 @@ export function DeskScene({ projectCount, className }: { projectCount: number; c
         {/* The lid is foreshortened to 82% about the hinge (y 301): seen from above, an upright screen
             looks shorter. page.tsx squashes the HTML name and CV line by the same amount. */}
         <g transform="translate(0 301) scale(1 0.82) translate(0 -301)">
-          <path d="M338 71H654Q665 71 666 84L678 288Q679 301 667 302H327Q315 302 316 289L327 84Q328 72 338 71Z" fill="url(#desk-edge)" />
-          <path d="M339 73H653Q664 73 665 85L676 288Q676 299 666 299H328Q318 299 318 288L329 85Q330 74 339 73Z" fill="url(#desk-bezel)" />
-          <path d="M341 89H651L663 280H330Z" fill="url(#desk-screen)" />
-          <path d="M341 89H476L359 280H330Z" fill="#b0f4d4" opacity=".025" />
+          <path d="M315 71H677Q689 71 690 84L701 288Q702 301 689 302H303Q290 301 291 288L302 84Q303 71 315 71Z" fill="url(#desk-edge)" />
+          <path d="M316 73H676Q687 73 688 85L699 288Q699 299 688 299H304Q293 299 293 288L304 85Q305 73 316 73Z" fill="url(#desk-bezel)" />
+          <path d="M318 89H674L686 280H306Z" fill="url(#desk-screen)" />
+          <path d="M318 89H460L330 280H306Z" fill="#b0f4d4" opacity=".025" />
           <circle cx="496" cy="81" r="2.3" fill="#274a3a" />
-          <g fill="#416c58"><circle cx="353" cy="109" r="4.4" /><circle cx="368" cy="109" r="4.4" /><circle cx="383" cy="109" r="4.4" /></g>
+          <g fill="#416c58"><circle cx="333" cy="109" r="4.4" /><circle cx="348" cy="109" r="4.4" /><circle cx="363" cy="109" r="4.4" /></g>
           <g className="font-mono" fontSize="13.5">
-            <text x="352" y="143" fill="#d8ebdf">$ npm run build-me</text>
-            <path d="m353 160 3 4 7-10" fill="none" stroke="#80f2c4" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" />
-            <text x="372" y="165" fill="#7ff1c5">compiled {projectCount} projects</text>
+            <text x="332" y="143" fill="#d8ebdf">$ npm run build-me</text>
+            <path d="m333 160 3 4 7-10" fill="none" stroke="#80f2c4" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" />
+            <text x="352" y="165" fill="#7ff1c5">compiled {projectCount} projects</text>
           </g>
         </g>
         {/* The name (h1) and the Download CV prompt line sit here as real HTML, see page.tsx. */}
-        <path d="M315 301H678Q687 301 689 312L716 478Q718 489 706 492H287Q274 490 276 479L304 313Q306 303 315 301Z" fill="url(#desk-deck)" stroke="#5e927b" strokeWidth="1" />
-        <path d="M347 300H647L649 306H345Z" fill="#040c08" stroke="#1c3929" />
-        <path d="M309 312L280 477Q279 486 289 488H705Q713 487 711 478L686 313" fill="none" stroke="#8cd2b0" strokeOpacity=".18" strokeWidth="2" />
-        <path d="M337 318H655Q661 318 662 324L676 406Q677 414 669 414H324Q316 414 318 406L330 325Q331 318 337 318Z" fill="#07110b" stroke="#567963" strokeWidth="1.5" />
-        <path d="M336 321H657L672 410H322Z" fill="url(#desk-key-grid)" />
+        <path d="M291 301H701Q710 301 711 312L716 478Q718 489 706 492H287Q274 490 276 479L281 313Q283 303 291 301Z" fill="url(#desk-deck)" stroke="#5e927b" strokeWidth="1" />
+        <path d="M325 300H667L669 306H323Z" fill="#040c08" stroke="#1c3929" />
+        <path d="M286 312L280 477Q279 486 289 488H705Q713 487 711 478L706 313" fill="none" stroke="#8cd2b0" strokeOpacity=".18" strokeWidth="2" />
+        <path d="M322 318H670Q676 318 677 324L684 406Q685 414 677 414H316Q308 414 309 406L316 325Q317 318 322 318Z" fill="#07110b" stroke="#567963" strokeWidth="1.5" />
+        <path d="M321 321H671L680 410H313Z" fill="url(#desk-key-grid)" />
         <path d="M415 395H570L572 410H413Z" fill="url(#desk-key)" stroke="#365543" strokeWidth="1" />
         <path d="M447 422H545Q549 422 549 426L552 477Q552 481 548 481H444Q440 481 440 477L443 426Q443 422 447 422Z" fill="url(#desk-trackpad)" stroke="#5a7c65" strokeOpacity=".6" />
         <path d="M448 424H544" stroke="#050d08" strokeOpacity=".7" />
