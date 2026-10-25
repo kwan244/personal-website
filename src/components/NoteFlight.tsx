@@ -14,6 +14,10 @@ export function NoteFlight() {
       if (!note || !card || !document.startViewTransition) return;
       if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
       event.preventDefault();
+      // One flight at a time: a double-click would otherwise skip the first mid-way and break the second.
+      const root = document.documentElement;
+      if ("noteFlight" in root.dataset) return;
+      root.dataset.noteFlight = "";
 
       // A flat copy of the note, sized like the original (which is drawn in perspective on the desk).
       const sticker = note.cloneNode(true) as HTMLElement;
@@ -32,8 +36,6 @@ export function NoteFlight() {
         transformOrigin: "100% 0",
       });
 
-      const root = document.documentElement;
-      root.dataset.noteFlight = "";
       note.style.viewTransitionName = "note-flight";
       const transition = document.startViewTransition(() => {
         note.style.viewTransitionName = "";
