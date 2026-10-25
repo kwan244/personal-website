@@ -82,6 +82,8 @@ body {
   /* Centred, plus the parallax offset (below). */
   translate: calc(-50% + var(--mx) * -6px) calc(var(--my) * -4px);
   will-change: translate;
+  /* The scroll-away shrinks it towards its bottom edge, so no gap opens above About. */
+  transform-origin: 50% 100%;
 }
 
 /* Rotate/translate properties, not transform: the badge text keeps its SVG transform attributes. */
