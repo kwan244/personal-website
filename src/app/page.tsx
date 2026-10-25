@@ -8,6 +8,7 @@ import { deskAnchors } from "@/components/deskAnchors";
 import { HeroBadge } from "@/components/HeroBadge";
 import { HeroFrame } from "@/components/HeroFrame";
 import { NoteDoodle } from "@/components/NoteDoodle";
+import { NotesToCards } from "@/components/NotesToCards";
 import { ProjectMorph } from "@/components/ProjectMorph";
 import { profile } from "@/content/profile";
 import { projects, type Project } from "@/content/projects";
@@ -163,7 +164,12 @@ export default function Home() {
               {projects.map((project, i) => {
                 const anchor = noteAnchor(project.slug);
                 return (
-                  <li key={project.slug} style={noteStyle(anchor)} className="desk-note absolute origin-top-left">
+                  <li
+                    key={project.slug}
+                    data-note={project.slug}
+                    style={noteStyle(anchor)}
+                    className="desk-note absolute origin-top-left"
+                  >
                     <NoteLink project={project} index={i} pinned light={anchor.light} />
                   </li>
                 );
@@ -222,7 +228,11 @@ export default function Home() {
           </h2>
           <ul className="mt-10 space-y-16">
             {featured.map((project, i) => (
-              <li key={project.slug} className="reveal group relative grid items-center gap-8 md:grid-cols-2">
+              <li
+                key={project.slug}
+                data-card={project.slug}
+                className="reveal group relative grid items-center gap-8 md:grid-cols-2"
+              >
                 {/* The screenshot and title morph into the case study's (see ProjectMorph). */}
                 {project.image && (
                   <ProjectMorph slug={project.slug} part="image">
@@ -254,6 +264,7 @@ export default function Home() {
             {others.map((project) => (
               <li
                 key={project.slug}
+                data-card={project.slug}
                 className="reveal group relative rounded-xl border border-border bg-surface p-6 transition duration-300 ease-out focus-within:border-accent hover:border-accent hover:shadow-[0_18px_40px_-18px_rgb(0_0_0/0.45)] motion-safe:hover:-translate-y-1"
               >
                 <h3 className="font-display text-2xl transition-colors group-hover:text-accent">
@@ -300,6 +311,7 @@ export default function Home() {
           </p>
         </div>
       </section>
+      <NotesToCards />
     </>
   );
 }
