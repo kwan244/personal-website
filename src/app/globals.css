@@ -114,6 +114,11 @@ body {
   opacity: 0;
 }
 
+/* The Plateful note lifts its far edge now and then, so it rotates in its own perspective. */
+.desk-note-flutter {
+  transform-style: preserve-3d;
+}
+
 /* Sticky notes lie on the desk via --t (deskAnchors.ts). Hovered or focused, a note lifts towards
    the viewer and grows a little about its centre. */
 .desk-note {
@@ -238,6 +243,11 @@ body {
 
   .badge-arrow {
     animation: badge-nudge 3.5s ease-in-out infinite;
+  }
+
+  .desk-note-flutter > a {
+    transform-origin: 50% 100%;
+    animation: desk-flutter 9s ease-in-out infinite;
   }
 
   @supports (animation-timeline: view()) {
@@ -393,6 +403,23 @@ body {
   }
   88% {
     translate: 0 3px;
+  }
+}
+
+@keyframes desk-flutter {
+  0%,
+  78%,
+  100% {
+    transform: none;
+  }
+  84% {
+    transform: rotateX(-16deg);
+  }
+  89% {
+    transform: rotateX(-5deg);
+  }
+  94% {
+    transform: rotateX(-10deg);
   }
 }
 
