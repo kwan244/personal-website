@@ -8,11 +8,20 @@ import { useEffect, useRef, type ReactNode } from "react";
 const MAX_SPEED = 1.6;
 const EASE = 0.1;
 
-// The hero frame. While a mouse-like pointer is over it, moves --mx / --my (-1 to 1: the pointer's
-// position from the centre) towards the pointer on the scene and the badge, for the CSS parallax in
-// globals.css. Never when reduced motion is asked for.
-export function ParallaxFrame({ className, children }: { className?: string; children: ReactNode }) {
+// The hero frame. It marks itself data-offscreen while scrolled out of view, so globals.css can pause the
+// hero's looping animations (they repaint the drawing every frame). And while a mouse-like pointer is over
+// it, it moves --mx / --my (-1 to 1: the pointer's position from the centre) towards the pointer on the
+// scene and the badge, for the CSS parallax. Never when reduced motion is asked for.
+export function HeroFrame({ className, children }: { className?: string; children: ReactNode }) {
   const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(([entry]) => el.toggleAttribute("data-offscreen", !entry.isIntersecting));
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     const el = ref.current;

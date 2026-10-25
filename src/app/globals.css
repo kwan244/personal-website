@@ -121,10 +121,10 @@ body {
   filter: drop-shadow(0 22px 24px rgb(0 0 0 / 0.4));
 }
 
-/* Mouse parallax: ParallaxFrame moves --mx / --my on the scene and the badge (fine pointers, motion
+/* Mouse parallax: HeroFrame moves --mx / --my on the scene and the badge (fine pointers, motion
    allowed): the scene drifts a few pixels against the pointer and the badge with it, so the two separate.
    The values don't inherit, so a change restyles only these two layers, and will-change keeps each on
-   its own layer, so moving them never repaints the drawing. ParallaxFrame does the easing. */
+   its own layer, so moving them never repaints the drawing. HeroFrame does the easing. */
 @property --mx {
   syntax: "<number>";
   inherits: false;
@@ -253,6 +253,12 @@ body {
       animation-range: exit 0% exit 100%;
     }
   }
+}
+
+/* Off screen (HeroFrame sets data-offscreen) the hero's loops stop, so they don't keep repainting while
+   the visitor reads further down. The desk's own scroll-away animation keeps tracking the scroll. */
+.desk-frame[data-offscreen] *:not(.desk-box) {
+  animation-play-state: paused;
 }
 
 @keyframes badge-spin {

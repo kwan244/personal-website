@@ -6,7 +6,7 @@ import { CopyEmailButton } from "@/components/CopyEmailButton";
 import { DeskScene } from "@/components/DeskScene";
 import { deskAnchors } from "@/components/deskAnchors";
 import { HeroBadge } from "@/components/HeroBadge";
-import { ParallaxFrame } from "@/components/ParallaxFrame";
+import { HeroFrame } from "@/components/HeroFrame";
 import { profile } from "@/content/profile";
 import { projects } from "@/content/projects";
 
@@ -67,7 +67,7 @@ export default function Home() {
   return (
     <>
       <section aria-labelledby="hero-heading">
-        <ParallaxFrame className="desk-frame relative overflow-hidden bg-[#d6e9df] dark:bg-[#070c0a]">
+        <HeroFrame className="desk-frame relative overflow-hidden bg-[#d6e9df] dark:bg-[#070c0a]">
           <div className="desk-box @container">
             <DeskScene className="size-full" />
             {/* On the laptop screen, which stays dark in both themes, so these use fixed mint colours. */}
@@ -137,7 +137,7 @@ export default function Home() {
             label="See my projects"
             className="desk-badge absolute bottom-4 left-4 size-[clamp(4.5rem,min(15svh,22vw),8rem)] sm:right-8 sm:bottom-8 sm:left-auto"
           />
-        </ParallaxFrame>
+        </HeroFrame>
         {/* Narrow screens crop the desk's sides, so the notes become a list below it. */}
         <ul aria-label="Projects" className="mx-auto grid max-w-7xl gap-3 px-4 py-6 sm:grid-cols-2 scene-wide:hidden">
           {projects.map((project) => (
