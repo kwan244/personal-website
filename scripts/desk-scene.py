@@ -109,8 +109,10 @@ lap.append(f'<path d="{quad(D2,0,1,0,1)}" fill="url(#desk-deck)" />')
 lap.append(f'<path d="{quad(D2,0,1,0,1)}" fill="url(#desk-spill)" stroke="#6fae92" strokeOpacity=".55" strokeWidth="1.2" strokeLinejoin="round" />')
 lap.append(f'<path d="{line([D2(.02,0),D2(.98,0)])}" stroke="#9fe6c5" strokeOpacity=".35" strokeWidth="1.4" strokeLinecap="round" />')
 lap.append(f'<path d="{quad(D2,.06,.94,.45,.95)}" fill="#06100b" stroke="#4c705d" strokeWidth="1.1" strokeLinejoin="round" />')
-LIT = {(0, 3), (1, 6), (2, 9), (1, 2), (3, 5), (2, 12), (0, 10)}
-keys, lit = [], []
+# The keys that type "whoami" + Enter, in order (row, column; row 0 is the number row). Each is its own
+# group so CSS can flash it in turn; without motion they simply stay lit.
+TYPED = [(1, 2), (2, 6), (1, 9), (2, 1), (3, 7), (1, 8), (2, 13)]
+keys, lit = [], {}
 for r in range(5):
     v1 = .935 - r*.096; v0 = v1 - .08
     if r == 4:
@@ -118,10 +120,12 @@ for r in range(5):
         continue
     for c in range(14):
         kw = .85/14; u0 = .075 + c*kw + .004
-        (lit if (r, c) in LIT else keys).append(quad(D2, u0, u0 + kw - .008, v0, v1))
+        k = quad(D2, u0, u0 + kw - .008, v0, v1)
+        if (r, c) in TYPED: lit[(r, c)] = k
+        else: keys.append(k)
 lap.append(f'<path d="{" ".join(keys)}" fill="url(#desk-keys)" stroke="#34584a" strokeWidth=".7" strokeLinejoin="round" />')
-lap.append(f'<path d="{" ".join(lit)}" fill="#6ee7b7" filter="url(#desk-glow)" className="desk-keys-glow" />')
-lap.append(f'<path d="{" ".join(lit)}" fill="#b9f8dc" />')
+for i, rc in enumerate(TYPED, 1):
+    lap.append(f'<g className="desk-key desk-key-{i}"><path d="{lit[rc]}" fill="#6ee7b7" filter="url(#desk-glow)" /><path d="{lit[rc]}" fill="#b9f8dc" /></g>')
 lap.append(f'<path d="{quad(D2,.34,.66,.06,.38)}" fill="url(#desk-trackpad)" stroke="#5a8a72" strokeOpacity=".55" strokeLinejoin="round" />')
 lap.append(f'<path d="{poly([P(lid(0,1)),P(lid(1,1)),P(lid(1,1,.6)),P(lid(0,1,.6))])}" fill="#2d4a3d" />')
 lap.append(f'<path d="{poly([P(lid(1,0)),P(lid(1,1)),P(lid(1,1,.6)),P(lid(1,0,.6))])}" fill="#16291f" />')

@@ -91,6 +91,14 @@ body {
   transform-origin: 50% 50%;
 }
 
+/* The laptop's terminal: "whoami" types itself. Without motion the word is simply there. */
+.desk-typed {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  vertical-align: bottom;
+}
+
 /* Sticky notes lie on the desk via --t (deskAnchors.ts). Hovered or focused, a note lifts towards
    the viewer and grows a little about its centre. */
 .desk-note {
@@ -156,8 +164,35 @@ body {
     animation: desk-blink 1.1s step-end infinite;
   }
 
-  .desk-keys-glow {
-    animation: desk-keys 2.8s ease-in-out infinite alternate;
+  /* One 7s typing loop: "whoami" types out letter by letter while its keys flash in the same order
+     (each key's negative delay is the moment its letter appears), then Enter, then a pause. */
+  .desk-typed {
+    animation: desk-type 7s infinite;
+  }
+  .desk-key {
+    opacity: 0.15;
+    animation: desk-press 7s linear infinite;
+  }
+  .desk-key-1 {
+    animation-delay: -6.74s;
+  }
+  .desk-key-2 {
+    animation-delay: -6.49s;
+  }
+  .desk-key-3 {
+    animation-delay: -6.23s;
+  }
+  .desk-key-4 {
+    animation-delay: -5.97s;
+  }
+  .desk-key-5 {
+    animation-delay: -5.71s;
+  }
+  .desk-key-6 {
+    animation-delay: -5.46s;
+  }
+  .desk-key-7 {
+    animation-delay: -5.15s;
   }
 
   @supports (animation-timeline: view()) {
@@ -198,9 +233,25 @@ body {
   }
 }
 
-@keyframes desk-keys {
-  from {
-    opacity: 0.35;
+@keyframes desk-type {
+  0% {
+    width: 0;
+    animation-timing-function: steps(6, end);
+  }
+  22%,
+  100% {
+    width: 6ch;
+  }
+}
+
+@keyframes desk-press {
+  0%,
+  5% {
+    opacity: 1;
+  }
+  12%,
+  100% {
+    opacity: 0.15;
   }
 }
 

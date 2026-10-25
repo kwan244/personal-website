@@ -74,7 +74,7 @@ export default function Home() {
             >
               {/* The prompt and headline drop on small scenes, where they wouldn't fit on the screen. */}
               <p aria-hidden="true" className="font-mono text-[max(10px,1.15cqw)] text-[#8fb8a5] @max-4xl:hidden">
-                <span className="text-[#6ee7b7]">kevin@auckland ~ %</span> whoami
+                <span className="text-[#6ee7b7]">kevin@auckland ~ %</span> <span className="desk-typed">whoami</span>
               </p>
               <h1 id="hero-heading" className="text-[4.4cqw] leading-[0.95] whitespace-nowrap text-[#8bf5cb] uppercase">
                 {profile.name}
