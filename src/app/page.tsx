@@ -95,7 +95,7 @@ function NoteLink({
         {/* Kept clear of the folded corner. */}
         <NoteDoodle
           kind={project.noteDoodle}
-          className="-my-[0.2em] mr-[0.45em] size-[1.6em] shrink-0 -rotate-6 text-[#123826]/80"
+          className="-my-[0.2em] mr-[0.45em] h-[1.6em] w-auto shrink-0 -rotate-6 text-[#123826]/80"
         />
       </span>
     </Link>

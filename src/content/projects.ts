@@ -6,7 +6,7 @@ import rockPaperScissorsImage from "./images/rock-paper-scissors.png";
 import strokeImage from "./images/stroke-outcome-prediction.png";
 
 // The pen sketch on a project's sticky note (see NoteDoodle).
-export type NoteDoodle = "brain" | "dumbbell" | "plate" | "magnifier" | "scissors";
+export type NoteDoodle = "brain" | "dumbbell" | "plate" | "magnifier" | "fist";
 
 export type Project = {
   slug: string;
@@ -192,7 +192,7 @@ export const projects: Project[] = [
     roleLabel: "Solo",
     dates: "Jan 2025",
     noteLabel: "Self-taught",
-    noteDoodle: "scissors",
+    noteDoodle: "fist",
     stack: ["HTML", "CSS", "JavaScript"],
     problem:
       "I wanted to learn HTML, CSS and JavaScript properly, step by step, by building one complete thing without a framework: a game against the computer with three difficulty levels and progress that survives a page refresh.",
