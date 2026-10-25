@@ -92,8 +92,11 @@ def note_corners(c, s, rot, lean=NOTE_LEAN):  # TL, TR, BR, BL; TL is the far-le
 
 g = []
 # Light: the screen is the key light. A pool on the desk in front of it and a bloom around the lid.
-g.append(f'<path d="{poly([P((x, y, 0)) for x, y, _ in circle3(place((0, -9, 0)), 34, 64)])}" fill="url(#desk-pool)" className="opacity-50 dark:opacity-100" />')
-g.append(f'<path d="{quad(L2,-.04,1.04,-.02,1.05)}" fill="#6ee7b7" filter="url(#desk-bloom)" className="opacity-10 dark:opacity-25" />')
+# Both sit in a desk-screen-light group, which breathes slowly (globals.css).
+g.append('<g className="desk-screen-light">')
+g.append(f'  <path d="{poly([P((x, y, 0)) for x, y, _ in circle3(place((0, -9, 0)), 34, 64)])}" fill="url(#desk-pool)" className="opacity-50 dark:opacity-100" />')
+g.append(f'  <path d="{quad(L2,-.04,1.04,-.02,1.05)}" fill="#6ee7b7" filter="url(#desk-bloom)" className="opacity-10 dark:opacity-25" />')
+g.append('</g>')
 # Shadows: a soft one cast away from the room light, and tight contact shadows where things meet the desk.
 foot = [P(deck(u, v, 0)) for u, v in [(0, 0), (1, 0), (1, 1), (0, 1)]]
 g.append(f'<path d="{poly([(x+10, y+14) for x, y in foot])}" fill="#000" filter="url(#desk-soft)" className="opacity-20 dark:opacity-50" />')
@@ -106,7 +109,7 @@ lap = []
 lap.append(f'<path d="{poly([P(deck(1,0,0)),P(deck(1,1,0)),P(deck(1,1)),P(deck(1,0))])}" fill="#0d1b15" />')
 lap.append(f'<path d="{poly([P(deck(0,0,0)),P(deck(1,0,0)),P(deck(1,0)),P(deck(0,0))])}" fill="#142820" />')
 lap.append(f'<path d="{quad(D2,0,1,0,1)}" fill="url(#desk-deck)" />')
-lap.append(f'<path d="{quad(D2,0,1,0,1)}" fill="url(#desk-spill)" stroke="#6fae92" strokeOpacity=".55" strokeWidth="1.2" strokeLinejoin="round" />')
+lap.append(f'<path d="{quad(D2,0,1,0,1)}" fill="url(#desk-spill)" stroke="#6fae92" strokeOpacity=".55" strokeWidth="1.2" strokeLinejoin="round" className="desk-screen-light" />')
 lap.append(f'<path d="{line([D2(.02,0),D2(.98,0)])}" stroke="#9fe6c5" strokeOpacity=".35" strokeWidth="1.4" strokeLinecap="round" />')
 lap.append(f'<path d="{quad(D2,.06,.94,.45,.95)}" fill="#06100b" stroke="#4c705d" strokeWidth="1.1" strokeLinejoin="round" />')
 # The keys that type "whoami" + Enter, in order (row, column; row 0 is the number row). Each is its own

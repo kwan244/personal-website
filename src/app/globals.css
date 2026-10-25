@@ -209,6 +209,10 @@ body {
     animation: desk-reel 15s cubic-bezier(0.65, 0, 0.35, 1) infinite;
   }
 
+  .desk-screen-light {
+    animation: desk-breathe 6s ease-in-out infinite alternate;
+  }
+
   @supports (animation-timeline: view()) {
     .reveal {
       animation: reveal cubic-bezier(0.16, 1, 0.3, 1) both;
@@ -297,6 +301,12 @@ body {
   }
   100% {
     translate: 0 -9em;
+  }
+}
+
+@keyframes desk-breathe {
+  to {
+    opacity: 0.68;
   }
 }
 
