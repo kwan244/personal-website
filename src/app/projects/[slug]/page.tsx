@@ -64,7 +64,7 @@ export default function ProjectPage({ params }: PageProps<"/projects/[slug]">) {
   return (
     <div className="mx-auto max-w-7xl px-4 py-12">
       <Link href="/#projects" className="text-sm text-muted hover:underline">
-        ← All projects
+        <span aria-hidden="true">←</span> All projects
       </Link>
       <Suspense fallback={<p className="mt-6 text-muted">Loading project…</p>}>
         <ProjectDetails params={params} />
@@ -82,7 +82,7 @@ async function ProjectDetails({ params }: Pick<PageProps<"/projects/[slug]">, "p
   return (
     <article className="mt-6">
       <header className="max-w-4xl">
-        <h1 className="text-5xl leading-none sm:text-7xl">{project.title}</h1>
+        <h1 className="text-5xl leading-none text-balance sm:text-7xl">{project.title}</h1>
         <p className="mt-3 text-muted">{project.context}</p>
         <p className="mt-6 max-w-2xl text-lg sm:text-xl">{project.summary}</p>
       </header>
@@ -93,6 +93,7 @@ async function ProjectDetails({ params }: Pick<PageProps<"/projects/[slug]">, "p
           alt={project.image.alt}
           sizes="(min-width: 1280px) 1248px, 100vw"
           className="mt-10 h-auto w-full rounded-xl border border-border shadow-[0_12px_40px_-12px_rgb(0_0_0/0.35)]"
+          loading="eager"
           fetchPriority="high"
         />
       )}
@@ -154,7 +155,9 @@ async function ProjectDetails({ params }: Pick<PageProps<"/projects/[slug]">, "p
               href={`/projects/${previous.slug}`}
               className="rounded-xl border border-border p-5 transition-colors hover:border-accent"
             >
-              <span className="text-sm text-muted">← Previous</span>
+              <span className="text-sm text-muted">
+                <span aria-hidden="true">←</span> Previous
+              </span>
               <span className="mt-1 block font-display text-2xl">{previous.title}</span>
             </Link>
           )}
@@ -163,7 +166,9 @@ async function ProjectDetails({ params }: Pick<PageProps<"/projects/[slug]">, "p
               href={`/projects/${next.slug}`}
               className="rounded-xl border border-border p-5 text-right transition-colors hover:border-accent sm:col-start-2"
             >
-              <span className="text-sm text-muted">Next →</span>
+              <span className="text-sm text-muted">
+                Next <span aria-hidden="true">→</span>
+              </span>
               <span className="mt-1 block font-display text-2xl">{next.title}</span>
             </Link>
           )}
