@@ -65,9 +65,9 @@ export function DeskScene({ className }: { className?: string }) {
           <stop offset="1" stopColor="#352419" />
         </radialGradient>
         <linearGradient id="desk-steam" x2="0" y2="1">
-          <stop stopOpacity="0" className="[stop-color:#5f8f78] dark:[stop-color:#c9ead8]" />
-          <stop offset=".45" stopOpacity=".85" className="[stop-color:#5f8f78] dark:[stop-color:#c9ead8]" />
-          <stop offset="1" stopOpacity="0" className="[stop-color:#5f8f78] dark:[stop-color:#c9ead8]" />
+          <stop stopOpacity="0" className="[stop-color:#ffffff] dark:[stop-color:#c9ead8]" />
+          <stop offset=".45" stopOpacity=".85" className="[stop-color:#ffffff] dark:[stop-color:#c9ead8]" />
+          <stop offset="1" stopOpacity="0" className="[stop-color:#ffffff] dark:[stop-color:#c9ead8]" />
         </linearGradient>
         <filter id="desk-soft" x="-30%" y="-30%" width="160%" height="160%">
           <feGaussianBlur stdDeviation="14" />
@@ -84,10 +84,13 @@ export function DeskScene({ className }: { className?: string }) {
         <filter id="desk-steam-blur" x="-100%" y="-30%" width="300%" height="160%">
           <feGaussianBlur stdDeviation="3.2" />
         </filter>
+        <filter id="desk-steam-shade" x="-150%" y="-40%" width="400%" height="180%">
+          <feGaussianBlur stdDeviation="7" />
+        </filter>
       </defs>
 
       <rect width="1200" height="750" className="fill-[#d6e9df] dark:fill-[#070c0a]" />
-      <rect width="1200" height="750" fill="url(#desk-ambience)" />
+      <rect width="1200" height="750" fill="url(#desk-ambience)" className="desk-ambience-layer" />
       <path
         d="M956.4 673.1 L960.7 636.7 L960.1 601.2 L954.9 566.9 L945.4 534.1 L932.2 502.9 L915.5 473.5 L895.7 446.1 L873.2 420.6 L848.3 397.3 L821.2 376.1 L792.3 357 L761.7 340.1 L729.8 325.3 L696.8 312.6 L662.7 302 L627.9 293.6 L592.4 287.2 L556.5 283 L520.3 280.8 L483.8 280.7 L447.4 282.6 L411 286.7 L375 292.8 L339.3 301 L304.2 311.3 L269.9 323.8 L236.5 338.3 L204.3 355 L173.5 373.9 L144.2 394.9 L116.9 417.9 L91.8 443.1 L69.3 470.3 L49.5 499.5 L33.1 530.5 L20.2 563.2 L11.4 597.3 L7 632.7 L7.4 669.1 L13 705.9 L24.2 742.9 L41 779.4 L63.8 815 L92.6 849.1 L127.3 880.9 L167.7 909.8 L213.3 935.2 L263.6 956.4 L317.8 972.9 L375 984.3 L434.2 990.2 L494.3 990.5 L554.2 985.2 L612.7 974.4 L668.7 958.4 L721.4 937.7 L769.8 912.8 L813.4 884.2 L851.6 852.7 L884.2 818.9 L910.9 783.5 L931.7 747 L946.8 710Z"
         fill="url(#desk-pool)"
@@ -235,13 +238,28 @@ export function DeskScene({ className }: { className?: string }) {
           strokeWidth="1"
         />
       </g>
+      {/* By day, white steam needs a faint shade behind it to show against the pale room. */}
+      <g
+        fill="none"
+        stroke="#5f8f78"
+        strokeLinecap="round"
+        filter="url(#desk-steam-shade)"
+        opacity=".16"
+        className="dark:hidden"
+      >
+        <path className="desk-wisp" d="M1071 401.1c-12-30 14-58 0-96s-8-50 4-80" strokeWidth="24" strokeOpacity=".45" />
+        <path className="desk-wisp" d="M1063 399.1c-16-24 18-40 8-64s-14-34 0-70" strokeWidth="9" />
+        <path className="desk-wisp" d="M1081 397.1c14-22-8-36 4-58s6-32-3-52" strokeWidth="5" />
+        <path className="desk-wisp" d="M1053 401.1c-11-19 13-35 6-54s-11-30-4-48" strokeWidth="6" />
+        <path className="desk-wisp" d="M1073 395.1c-6-26 14-44 2-72s-10-38 4-80" strokeWidth="4" />
+      </g>
       <g
         id="desk-steam-rising"
         fill="none"
         stroke="url(#desk-steam)"
         strokeLinecap="round"
         filter="url(#desk-steam-blur)"
-        opacity=".7"
+        className="opacity-90 dark:opacity-70"
       >
         <path className="desk-wisp" d="M1071 401.1c-12-30 14-58 0-96s-8-50 4-80" strokeWidth="24" strokeOpacity=".45" />
         <path className="desk-wisp" d="M1063 399.1c-16-24 18-40 8-64s-14-34 0-70" strokeWidth="9" />

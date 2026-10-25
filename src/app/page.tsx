@@ -6,6 +6,7 @@ import { CopyEmailButton } from "@/components/CopyEmailButton";
 import { DeskScene } from "@/components/DeskScene";
 import { deskAnchors } from "@/components/deskAnchors";
 import { HeroBadge } from "@/components/HeroBadge";
+import { ParallaxFrame } from "@/components/ParallaxFrame";
 import { profile } from "@/content/profile";
 import { projects } from "@/content/projects";
 
@@ -20,6 +21,12 @@ type Anchor = { w: string; h: string; transform: string };
 function anchorStyle(a: Anchor): CSSProperties {
   const { x, y } = deskAnchors.origin;
   return { left: x, top: y, width: a.w, height: a.h, transform: a.transform };
+}
+
+// Notes take their transform as --t, so the hover lift in globals.css can build on it.
+function noteStyle(a: Anchor) {
+  const { x, y } = deskAnchors.origin;
+  return { left: x, top: y, width: a.w, height: a.h, "--t": a.transform } as CSSProperties;
 }
 
 const noteAnchors: Record<string, Anchor> = deskAnchors.notes;
@@ -57,7 +64,7 @@ export default function Home() {
   return (
     <>
       <section aria-labelledby="hero-heading">
-        <div className="desk-frame relative overflow-hidden bg-[#d6e9df] dark:bg-[#070c0a]">
+        <ParallaxFrame className="desk-frame relative overflow-hidden bg-[#d6e9df] dark:bg-[#070c0a]">
           <div className="desk-box @container">
             <DeskScene className="size-full" />
             {/* On the laptop screen, which stays dark in both themes, so these use fixed mint colours. */}
@@ -81,7 +88,7 @@ export default function Home() {
                   download
                   className="py-1 text-[#7ff2c2] underline underline-offset-4 [--accent:#6ee7b7]"
                 >
-                  Download CV (PDF)
+                  click here to download CV (PDF)
                 </a>
                 <span aria-hidden="true" className="desk-cursor inline-block h-[1.15em] w-[0.55em] bg-[#7ff2c2]" />
               </p>
@@ -90,8 +97,8 @@ export default function Home() {
               {projects.map((project) => (
                 <li
                   key={project.slug}
-                  style={anchorStyle(noteAnchors[project.slug])}
-                  className="absolute origin-top-left"
+                  style={noteStyle(noteAnchors[project.slug])}
+                  className="desk-note absolute origin-top-left"
                 >
                   <NoteLink slug={project.slug} title={project.title} pinned />
                 </li>
@@ -102,9 +109,9 @@ export default function Home() {
             text={profile.badge}
             href="#projects"
             label="See my projects"
-            className="absolute bottom-4 left-4 size-20 sm:right-8 sm:bottom-8 sm:left-auto sm:size-32"
+            className="desk-badge absolute bottom-4 left-4 size-20 sm:right-8 sm:bottom-8 sm:left-auto sm:size-32"
           />
-        </div>
+        </ParallaxFrame>
         {/* Narrow screens crop the desk's sides, so the notes become a list below it. */}
         <ul aria-label="Projects" className="mx-auto grid max-w-7xl gap-3 px-4 py-6 sm:grid-cols-2 scene-wide:hidden">
           {projects.map((project) => (

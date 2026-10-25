@@ -183,19 +183,20 @@ export function DeskScene({{ className }}: {{ className?: string }}) {{
         <linearGradient id="desk-ceramic" x2="1" y2=".25"><stop stopColor="#4f8a70" /><stop offset=".14" stopColor="#24503b" /><stop offset=".5" stopColor="#102b1e" /><stop offset="1" stopColor="#050e09" /></linearGradient>
         <radialGradient id="desk-coffee" cx=".4" cy=".35"><stop stopColor="#987149" /><stop offset=".55" stopColor="#715033" /><stop offset="1" stopColor="#352419" /></radialGradient>
         <linearGradient id="desk-steam" x2="0" y2="1">
-          <stop stopOpacity="0" className="[stop-color:#5f8f78] dark:[stop-color:#c9ead8]" />
-          <stop offset=".45" stopOpacity=".85" className="[stop-color:#5f8f78] dark:[stop-color:#c9ead8]" />
-          <stop offset="1" stopOpacity="0" className="[stop-color:#5f8f78] dark:[stop-color:#c9ead8]" />
+          <stop stopOpacity="0" className="[stop-color:#ffffff] dark:[stop-color:#c9ead8]" />
+          <stop offset=".45" stopOpacity=".85" className="[stop-color:#ffffff] dark:[stop-color:#c9ead8]" />
+          <stop offset="1" stopOpacity="0" className="[stop-color:#ffffff] dark:[stop-color:#c9ead8]" />
         </linearGradient>
         <filter id="desk-soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="14" /></filter>
         <filter id="desk-contact" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="3" /></filter>
         <filter id="desk-bloom" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="26" /></filter>
         <filter id="desk-glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="4" /></filter>
         <filter id="desk-steam-blur" x="-100%" y="-30%" width="300%" height="160%"><feGaussianBlur stdDeviation="3.2" /></filter>
+        <filter id="desk-steam-shade" x="-150%" y="-40%" width="400%" height="180%"><feGaussianBlur stdDeviation="7" /></filter>
       </defs>
 
       <rect width="{VBW}" height="{VBH}" className="fill-[#d6e9df] dark:fill-[#070c0a]" />
-      <rect width="{VBW}" height="{VBH}" fill="url(#desk-ambience)" />{"".join(nl + "      " + x for x in g)}
+      <rect width="{VBW}" height="{VBH}" fill="url(#desk-ambience)" className="desk-ambience-layer" />{"".join(nl + "      " + x for x in g)}
       {{/* Note contact shadows; the notes themselves are HTML, shown only when the whole desk fits. */}}
       <path d="{" ".join(shadows)}" fill="#000" filter="url(#desk-contact)" className="opacity-15 scene-narrow:hidden dark:opacity-40" />
 
@@ -205,7 +206,11 @@ export function DeskScene({{ className }}: {{ className?: string }}) {{
 
       <g id="desk-mug">{"".join(nl + "        " + x for x in mug)}
       </g>
-      <g id="desk-steam-rising" fill="none" stroke="url(#desk-steam)" strokeLinecap="round" filter="url(#desk-steam-blur)" opacity=".7">
+      {{/* By day, white steam needs a faint shade behind it to show against the pale room. */}}
+      <g fill="none" stroke="#5f8f78" strokeLinecap="round" filter="url(#desk-steam-shade)" opacity=".16" className="dark:hidden">
+        {steam}
+      </g>
+      <g id="desk-steam-rising" fill="none" stroke="url(#desk-steam)" strokeLinecap="round" filter="url(#desk-steam-blur)" className="opacity-90 dark:opacity-70">
         {steam}
       </g>
     </svg>
