@@ -159,15 +159,14 @@ export default function Home() {
               </p>
             </div>
             <ul aria-label="Projects" className="hidden scene-wide:block">
-              {projects.map((project, i) => (
-                <li
-                  key={project.slug}
-                  style={noteStyle(noteAnchor(project.slug))}
-                  className="desk-note absolute origin-top-left"
-                >
-                  <NoteLink project={project} index={i} pinned light={noteAnchor(project.slug).light} />
-                </li>
-              ))}
+              {projects.map((project, i) => {
+                const anchor = noteAnchor(project.slug);
+                return (
+                  <li key={project.slug} style={noteStyle(anchor)} className="desk-note absolute origin-top-left">
+                    <NoteLink project={project} index={i} pinned light={anchor.light} />
+                  </li>
+                );
+              })}
             </ul>
           </div>
           <HeroBadge
