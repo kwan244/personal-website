@@ -257,6 +257,14 @@ body {
       animation-range: entry 0% entry 90%;
     }
 
+    /* Meanwhile About and Skills grow from small to full size as they come up into view. */
+    .about-pop {
+      transform-origin: 50% 0;
+      animation: about-pop linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 100%;
+    }
+
     /* As the hero scrolls away, the desk settles back and dims. The frame clips (so it counts as a
        scroll container), so the timeline is the frame's own trip through the page, by name. */
     .desk-frame {
@@ -420,6 +428,13 @@ body {
   }
   94% {
     transform: rotateX(-10deg);
+  }
+}
+
+@keyframes about-pop {
+  from {
+    opacity: 0.25;
+    scale: 0.8;
   }
 }
 

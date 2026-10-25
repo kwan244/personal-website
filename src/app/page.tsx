@@ -149,8 +149,8 @@ export default function Home() {
       </section>
 
       <section aria-label="About and skills" className="bg-surface">
-        <div className="mx-auto grid max-w-7xl gap-12 px-4 py-24 lg:grid-cols-2">
-          <div id="about" className="reveal scroll-mt-8">
+        <div className="about-pop mx-auto grid max-w-7xl gap-12 px-4 py-24 lg:grid-cols-2">
+          <div id="about" className="scroll-mt-8">
             <h2 className="text-4xl sm:text-5xl">About</h2>
             <p className="mt-4 text-lg text-muted">
               {profile.headline} · {profile.location}
@@ -162,7 +162,7 @@ export default function Home() {
               ))}
             </div>
           </div>
-          <div id="skills" className="reveal scroll-mt-8">
+          <div id="skills" className="scroll-mt-8">
             <h2 className="text-4xl sm:text-5xl">Skills</h2>
             <dl className="mt-4 grid gap-4 sm:grid-cols-2">
               {profile.skills.map((skill) => (
