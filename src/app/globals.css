@@ -236,6 +236,10 @@ body {
     animation-delay: -11s;
   }
 
+  .badge-arrow {
+    animation: badge-nudge 3.5s ease-in-out infinite;
+  }
+
   @supports (animation-timeline: view()) {
     .reveal {
       animation: reveal cubic-bezier(0.16, 1, 0.3, 1) both;
@@ -372,6 +376,23 @@ body {
   100% {
     opacity: 0;
     translate: -10px -40px;
+  }
+}
+
+@keyframes badge-nudge {
+  0%,
+  60%,
+  100% {
+    translate: 0 0;
+  }
+  70% {
+    translate: 0 6px;
+  }
+  80% {
+    translate: 0 0;
+  }
+  88% {
+    translate: 0 3px;
   }
 }
 
