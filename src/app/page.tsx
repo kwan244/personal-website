@@ -31,6 +31,9 @@ function noteStyle(a: Anchor) {
 
 const noteAnchors: Record<string, Anchor> = deskAnchors.notes;
 
+// Skills the laptop's terminal cycles through (all from profile.skills).
+const screenStack = ["TypeScript", "React", "Next.js", "Spring Boot", "Prisma ORM", "Playwright"];
+
 // Each note's one-word context and paper tone.
 const noteMeta: Record<string, { label: string; tone: string }> = {
   "stroke-outcome-prediction": { label: "Internship", tone: "from-[#a3e8c7] to-[#6cb592]" },
@@ -81,6 +84,22 @@ export default function Home() {
               </h1>
               <p className="text-[max(11px,1.25cqw)] leading-snug text-balance text-[#c4dccf] @max-4xl:hidden">
                 {profile.headline}
+              </p>
+              {/* Decorative: the Skills section lists these properly. Shows the first one without motion. */}
+              <p
+                aria-hidden="true"
+                className="font-mono text-[max(11px,1.2cqw)] leading-[1.5em] text-[#8fb8a5] @max-4xl:hidden"
+              >
+                <span className="text-[#6ee7b7]">stack:</span>{" "}
+                <span className="desk-reel">
+                  <span className="desk-reel-track">
+                    {[...screenStack, screenStack[0]].map((skill, i) => (
+                      <span key={i} className="block text-[#d8f5e6]">
+                        {skill}
+                      </span>
+                    ))}
+                  </span>
+                </span>
               </p>
               {/* Inline, so the cursor follows the last word when the link wraps on small screens. */}
               <p className="font-mono text-[max(12px,1.3cqw)]">

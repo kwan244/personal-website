@@ -91,12 +91,22 @@ body {
   transform-origin: 50% 50%;
 }
 
-/* The laptop's terminal: "whoami" types itself. Without motion the word is simply there. */
+/* The laptop's terminal: "whoami" types itself, and the stack line shows one skill at a time. Without
+   motion the word is simply there and the reel rests on its first skill. */
 .desk-typed {
   display: inline-block;
   overflow: hidden;
   white-space: nowrap;
   vertical-align: bottom;
+}
+.desk-reel {
+  display: inline-block;
+  height: 1.5em;
+  overflow: hidden;
+  vertical-align: top;
+}
+.desk-reel-track {
+  display: block;
 }
 
 /* Sticky notes lie on the desk via --t (deskAnchors.ts). Hovered or focused, a note lifts towards
@@ -195,6 +205,10 @@ body {
     animation-delay: -5.15s;
   }
 
+  .desk-reel-track {
+    animation: desk-reel 15s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+  }
+
   @supports (animation-timeline: view()) {
     .reveal {
       animation: reveal cubic-bezier(0.16, 1, 0.3, 1) both;
@@ -252,6 +266,37 @@ body {
   12%,
   100% {
     opacity: 0.15;
+  }
+}
+
+/* Six skills plus a copy of the first, so the loop wraps without a jump. */
+@keyframes desk-reel {
+  0%,
+  13.5% {
+    translate: 0 0;
+  }
+  16.67%,
+  30.2% {
+    translate: 0 -1.5em;
+  }
+  33.33%,
+  46.8% {
+    translate: 0 -3em;
+  }
+  50%,
+  63.5% {
+    translate: 0 -4.5em;
+  }
+  66.67%,
+  80.2% {
+    translate: 0 -6em;
+  }
+  83.33%,
+  96.8% {
+    translate: 0 -7.5em;
+  }
+  100% {
+    translate: 0 -9em;
   }
 }
 
