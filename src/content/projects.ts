@@ -86,8 +86,8 @@ export const projects: Project[] = [
     slug: "auss-member-platform",
     title: "AUSS Member Platform",
     summary:
-      "The live membership, events and check-in platform for the Auckland University Strength Society, built by a student dev team.",
-    context: "AUSS 2026 dev team · Auckland University Strength Society · 2026",
+      "The live membership, events and check-in platform for the Auckland University Strength Society, built by the club's student dev team.",
+    context: "AUSS club dev team · Auckland University Strength Society · 2026",
     roleLabel: "Developer on the club's dev team",
     dates: "Feb 2026 – present",
     noteLabel: "Club platform",
