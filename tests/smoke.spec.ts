@@ -53,6 +53,8 @@ test("no sideways scroll at 360px", async ({ page }) => {
   await page.setViewportSize({ width: 360, height: 780 });
   for (const href of ["/", ...(await caseStudies(page))]) {
     await page.goto(href);
+    // globals.css clips sideways overflow on html and body, which would hide (not fix) anything too wide.
+    await page.addStyleTag({ content: "html, body { overflow-x: visible !important; }" });
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - innerWidth);
     expect(overflow, href).toBeLessThanOrEqual(0);
   }
