@@ -212,7 +212,7 @@ test("encoded links to real case studies still load, and malformed ones are reje
     expect(response?.status(), href).toBe(200);
     await expect(page.getByRole("heading", { level: 1, name: title })).toBeVisible();
   }
-  // Rejected one way or another: this server gives the 404 page, Vercel's edge answers 400 before the app runs.
+  // Rejected, not crashed: this server gives the 404 page, Vercel's edge answers 400 before the app runs.
   const malformed = await page.goto("/projects/%E0%A4%A");
-  expect(malformed?.status()).toBeGreaterThanOrEqual(400);
+  expect([400, 404]).toContain(malformed?.status());
 });
