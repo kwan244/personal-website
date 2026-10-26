@@ -216,3 +216,20 @@ test("encoded links to real case studies still load, and malformed ones are reje
   const malformed = await page.goto("/projects/%E0%A4%A");
   expect([400, 404]).toContain(malformed?.status());
 });
+
+test("link names include their visible text, for voice control", async ({ page }) => {
+  for (const href of ["/", (await caseStudies(page))[0]]) {
+    await page.goto(href);
+    await expect(page.getByRole("link", { name: "Kevin Wang — home" })).toBeVisible();
+    // Off by default in axe (it's marked experimental), so run it on its own.
+    const { violations } = await new AxeBuilder({ page }).withRules(["label-content-name-mismatch"]).analyze();
+    expect(
+      violations.map((v) => v.nodes.map((n) => n.target).join(", ")),
+      href,
+    ).toEqual([]);
+  }
+  await page.goto("/");
+  await expect(
+    page.getByRole("link", { name: "Creativity sparks, greatness in progress: see my projects" }),
+  ).toBeVisible();
+});
