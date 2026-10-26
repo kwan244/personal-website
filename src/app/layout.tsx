@@ -28,6 +28,8 @@ const caveat = Caveat({
   subsets: ["latin"],
 });
 
+const themeScript = `try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}`;
+
 const title = `${profile.name} | ${profile.headline}`;
 const description = `Portfolio of ${profile.name} (${profile.legalName}), ${profile.headline.toLowerCase()} based in ${profile.location}.`;
 
@@ -43,10 +45,16 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
+    // The script may set data-theme before React hydrates, hence suppressHydrationWarning.
     <html
       lang="en-NZ"
+      suppressHydrationWarning
       className={`${geistSans.variable} ${anton.variable} ${jetBrainsMono.variable} ${caveat.variable} h-full antialiased`}
     >
+      <head>
+        {/* Applies a saved theme pick before first paint, so there's no flash of the other theme. */}
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body className="flex min-h-full flex-col">
         <a
           href="#main"

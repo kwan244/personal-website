@@ -4,6 +4,19 @@
 @custom-variant scene-wide (@media (aspect-ratio >= 16/10));
 @custom-variant scene-narrow (@media (aspect-ratio < 16/10));
 
+/* The theme follows the system until the visitor picks one with the header toggle; the pick is saved and put
+   on <html data-theme> before first paint by a script in the layout. dark: utilities follow the same rule. */
+@custom-variant dark {
+  &:where([data-theme="dark"], [data-theme="dark"] *) {
+    @slot;
+  }
+  @media (prefers-color-scheme: dark) {
+    &:where(:root:not([data-theme="light"]), :root:not([data-theme="light"]) *) {
+      @slot;
+    }
+  }
+}
+
 /* Mint on ink. Every text pairing passes WCAG AA; borders are decorative (no form inputs yet). */
 :root {
   --background: #f6fbf8;
@@ -14,10 +27,12 @@
   --accent-foreground: #ffffff;
   --border: #d3e3db;
   --header-h: 4rem;
+  color-scheme: light;
 }
 
+/* The dark tokens twice: once for a dark system with no pick, once for a dark pick. */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --background: #0a0d0c;
     --surface: #121816;
     --foreground: #eef6f2;
@@ -25,7 +40,18 @@
     --accent: #6ee7b7;
     --accent-foreground: #0a0d0c;
     --border: #24302b;
+    color-scheme: dark;
   }
+}
+:root[data-theme="dark"] {
+  --background: #0a0d0c;
+  --surface: #121816;
+  --foreground: #eef6f2;
+  --muted: #9fb8ad;
+  --accent: #6ee7b7;
+  --accent-foreground: #0a0d0c;
+  --border: #24302b;
+  color-scheme: dark;
 }
 
 @theme inline {

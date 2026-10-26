@@ -158,3 +158,25 @@ test("Contact is marked at the bottom of a tall screen", async ({ page }) => {
   await page.evaluate(() => document.getElementById("projects")!.scrollIntoView());
   await expect(nav.getByRole("link", { name: "Projects" })).toHaveAttribute("aria-current", "true");
 });
+
+test("the theme toggle overrides the system theme and is remembered", async ({ page }) => {
+  await page.emulateMedia({ colorScheme: "dark" });
+  await page.goto("/");
+  const toggle = page.getByRole("button", { name: "Dark theme" });
+  const background = () => page.evaluate(() => getComputedStyle(document.body).backgroundColor);
+  await expect(toggle).toHaveAttribute("aria-pressed", "true");
+  expect(await background()).toBe("rgb(10, 13, 12)");
+  await toggle.click();
+  await expect(toggle).toHaveAttribute("aria-pressed", "false");
+  expect(await background()).toBe("rgb(246, 251, 248)");
+  await page.reload();
+  expect(await page.evaluate(() => document.documentElement.dataset.theme)).toBe("light");
+  expect(await background()).toBe("rgb(246, 251, 248)");
+});
+
+test("a saved theme is applied before the page body is parsed", async ({ page }) => {
+  const html = await (await page.request.get("/")).text();
+  const script = html.indexOf('localStorage.getItem("theme")');
+  expect(script).toBeGreaterThan(0);
+  expect(script).toBeLessThan(html.indexOf("<body"));
+});
