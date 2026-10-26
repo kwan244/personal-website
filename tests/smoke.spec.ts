@@ -3,9 +3,16 @@ import { expect, test, type Page } from "@playwright/test";
 
 // Desktop Chrome is 1280 × 720, wider than 16:10, so the notes lie on the desk.
 
+// In both themes, with reduced motion: otherwise the scroll reveals leave most of the page at opacity 0, and
+// axe skips invisible text. Reloaded so no colour is mid-transition when the theme changes.
 async function expectNoAxeViolations(page: Page) {
-  const { violations } = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21aa"]).analyze();
-  expect(violations.map((v) => `${v.id}: ${v.nodes.map((n) => n.target).join(", ")}`)).toEqual([]);
+  for (const colorScheme of ["light", "dark"] as const) {
+    await page.emulateMedia({ colorScheme, reducedMotion: "reduce" });
+    await page.reload();
+    const { violations } = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21aa"]).analyze();
+    const found = violations.map((v) => `${v.id}: ${v.nodes.map((n) => n.target).join(", ")}`);
+    expect(found, `${colorScheme} theme`).toEqual([]);
+  }
 }
 
 // The case studies, read off the project cards so the tests follow projects.ts.
