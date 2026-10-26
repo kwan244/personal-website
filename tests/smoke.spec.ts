@@ -112,3 +112,15 @@ test("a case study's sticky facts stay below the header", async ({ page }) => {
     expect(stickAt, href).toBeGreaterThanOrEqual(header);
   }
 });
+
+test("going Back mid-flight leaves focus at the hero", async ({ page }) => {
+  await page.goto("/");
+  await page.locator(".desk-note a").first().click();
+  // Back once the flight has recorded its history entry, while the note is still in the air.
+  await expect(page).toHaveURL(/#project-/);
+  expect(await page.evaluate(() => "noteFlight" in document.documentElement.dataset)).toBe(true);
+  await page.goBack();
+  await expect.poll(() => page.evaluate(() => "noteFlight" in document.documentElement.dataset)).toBe(false);
+  expect(await page.evaluate(() => scrollY)).toBe(0);
+  expect(await page.evaluate(() => document.activeElement?.closest('[id^="project-"]') ?? null)).toBeNull();
+});
