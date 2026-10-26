@@ -13,30 +13,37 @@ const navItems = [
   { id: "contact", label: "Contact", href: "#contact" },
 ];
 
-// The section crossing a line 40% down the screen (home page only; About's band also holds Skills). Nothing
-// is marked on the hero.
+// The last section whose top has passed a line 40% down the screen (home page only; About's band also holds
+// Skills), so nothing is marked on the hero. At the very bottom it's Contact: on a tall screen the footer can
+// never reach the line.
 function useCurrentSection() {
   const pathname = usePathname();
   const [current, setCurrent] = useState<string | null>(null);
   useEffect(() => {
     if (pathname !== "/") return;
-    const ids = new Map<Element, string>();
-    for (const { id } of navItems) {
+    const sections = navItems.flatMap(({ id }) => {
       const section = document.getElementById(id)?.closest("section");
-      if (section) ids.set(section, id);
-    }
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          const id = ids.get(entry.target)!;
-          if (entry.isIntersecting) setCurrent(id);
-          else setCurrent((shown) => (shown === id ? null : shown));
-        }
-      },
-      { rootMargin: "-40% 0px -60% 0px" },
-    );
-    ids.forEach((_, section) => observer.observe(section));
-    return () => observer.disconnect();
+      return section ? [{ id, section }] : [];
+    });
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const root = document.documentElement;
+      const atBottom = innerHeight + scrollY >= root.scrollHeight - 2;
+      let shown: string | null = null;
+      for (const { id, section } of sections) if (section.getBoundingClientRect().top <= innerHeight * 0.4) shown = id;
+      setCurrent(atBottom ? "contact" : shown);
+    };
+    // At most once a frame, however fast the scroll events come.
+    const schedule = () => (frame ||= requestAnimationFrame(update));
+    schedule();
+    addEventListener("scroll", schedule, { passive: true });
+    addEventListener("resize", schedule);
+    return () => {
+      cancelAnimationFrame(frame);
+      removeEventListener("scroll", schedule);
+      removeEventListener("resize", schedule);
+    };
   }, [pathname]);
   return pathname === "/" ? current : null;
 }

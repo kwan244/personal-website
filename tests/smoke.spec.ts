@@ -146,3 +146,15 @@ test("Contact jumps to the footer on the current page", async ({ page }) => {
   await expect(page).toHaveURL(new RegExp(`${href}#contact$`));
   await expect(page.getByRole("heading", { name: "Good things begin with a conversation." })).toBeInViewport();
 });
+
+test("Contact is marked at the bottom of a tall screen", async ({ page }) => {
+  await page.setViewportSize({ width: 1920, height: 1080 });
+  await page.goto("/");
+  const nav = page.locator("header nav").first();
+  await page.waitForTimeout(200);
+  await expect(nav.locator('[aria-current="true"]')).toHaveCount(0);
+  await page.evaluate(() => scrollTo(0, document.documentElement.scrollHeight));
+  await expect(nav.getByRole("link", { name: "Contact" })).toHaveAttribute("aria-current", "true");
+  await page.evaluate(() => document.getElementById("projects")!.scrollIntoView());
+  await expect(nav.getByRole("link", { name: "Projects" })).toHaveAttribute("aria-current", "true");
+});
