@@ -10,6 +10,8 @@ export type Profile = {
   email: string;
   github: string;
   linkedin: string;
+  // This site's own repository, for the footer's "View source" link.
+  source: string;
   cv: string;
 };
 
@@ -28,12 +30,16 @@ export const profile: Profile = {
   skills: [
     { group: "Languages", items: ["TypeScript", "JavaScript", "Java", "C", "MATLAB"] },
     { group: "Frontend", items: ["Next.js", "React", "Tailwind CSS", "Vite", "HTML & CSS"] },
-    { group: "Backend & data", items: ["REST APIs", "Spring Boot", "Prisma ORM", "MySQL", "MongoDB", "AWS S3", "Database design"] },
+    {
+      group: "Backend & data",
+      items: ["REST APIs", "Spring Boot", "Prisma ORM", "MySQL", "MongoDB", "AWS S3", "Database design"],
+    },
     { group: "Testing", items: ["Jest", "Vitest", "React Testing Library", "Playwright"] },
   ],
   email: "kevinw4ng712@gmail.com",
   github: "https://github.com/kwan244",
   linkedin: "https://www.linkedin.com/in/kevin-wang-2464a4317/",
+  source: "https://github.com/kwan244/personal-website",
   // Public copy without the phone number.
   cv: "/Kevin-Wang-CV.pdf",
 };

@@ -2,7 +2,6 @@ import type { CSSProperties } from "react";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { CopyEmailButton } from "@/components/CopyEmailButton";
 import { DeskScene } from "@/components/DeskScene";
 import { deskAnchors } from "@/components/deskAnchors";
 import { HeroBadge } from "@/components/HeroBadge";
@@ -276,35 +275,6 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="contact" aria-labelledby="contact-heading" className="flex min-h-[70svh] scroll-mt-8 items-center bg-surface">
-        <div className="reveal mx-auto w-full max-w-7xl px-4 py-24">
-          <h2 id="contact-heading" className="text-4xl sm:text-5xl">
-            Contact
-          </h2>
-          <a
-            href={`mailto:${profile.email}`}
-            className="mt-6 block font-display text-[clamp(1.75rem,8vw,5rem)] leading-tight [overflow-wrap:anywhere] text-accent hover:underline"
-          >
-            {/* If it ever has to wrap, break before the @ rather than mid-word. */}
-            {profile.email.split("@")[0]}
-            <wbr />@{profile.email.split("@")[1]}
-          </a>
-          <div className="mt-6 flex flex-wrap items-center gap-3">
-            <CopyEmailButton email={profile.email} />
-          </div>
-          <p className="mt-8">
-            Or find me on{" "}
-            <a href={profile.github} className="text-accent underline">
-              GitHub
-            </a>{" "}
-            and{" "}
-            <a href={profile.linkedin} className="text-accent underline">
-              LinkedIn
-            </a>
-            .
-          </p>
-        </div>
-      </section>
       <NoteFlight />
     </>
   );
