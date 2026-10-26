@@ -202,3 +202,16 @@ test("unknown pages and case studies return a real 404 with the site's page", as
   }
   await expectNoAxeViolations(page);
 });
+
+test("encoded links to real case studies still load, and malformed ones 404", async ({ page }) => {
+  for (const [href, title] of [
+    ["/projects/%70lateful", "Plateful"],
+    ["/projects/rock%2Dpaper-scissors", "Rock Paper Scissors"],
+  ]) {
+    const response = await page.goto(href);
+    expect(response?.status(), href).toBe(200);
+    await expect(page.getByRole("heading", { level: 1, name: title })).toBeVisible();
+  }
+  const malformed = await page.goto("/projects/%E0%A4%A");
+  expect(malformed?.status()).toBe(404);
+});

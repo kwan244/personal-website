@@ -7,8 +7,17 @@ const slugs = new Set(projects.map((project) => project.slug));
 // a 200) and only then finds the slug missing. Rewriting to a path no route matches renders not-found.tsx
 // with a 404.
 export function proxy(request: NextRequest) {
-  const slug = request.nextUrl.pathname.split("/")[2];
-  if (!slugs.has(slug)) return NextResponse.rewrite(new URL("/404", request.url));
+  if (!slugs.has(decodedSlug(request.nextUrl.pathname))) return NextResponse.rewrite(new URL("/404", request.url));
+}
+
+// The path arrives still encoded (/projects/%70lateful), but the page decodes its params, so compare the decoded
+// slug. A malformed encoding can't be any project.
+function decodedSlug(pathname: string) {
+  try {
+    return decodeURIComponent(pathname.split("/")[2]);
+  } catch {
+    return "";
+  }
 }
 
 // One segment only, so the case studies' own image routes (/projects/<slug>/opengraph-image) pass straight by.
