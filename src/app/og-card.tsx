@@ -19,17 +19,15 @@ async function loadFonts() {
   return Promise.all([googleFont("Anton"), googleFont("JetBrains+Mono:wght@500"), googleFont("Geist:wght@500")]);
 }
 
-export async function ogCard({
-  command,
-  title,
-  titleSize,
-  subtitle,
-}: {
-  command: string;
-  title: string;
-  titleSize: number;
-  subtitle: string;
-}) {
+// The title should dominate even at LinkedIn's ~160px thumbnail: the largest size that fits it on one line
+// (short titles), else on two balanced lines, within the card's 1032px text width. 0.44em is Anton's average
+// letter width, measured from the rendered cards.
+function titleSize(title: string) {
+  const fit = (lines: number) => 1032 / ((title.length / lines) * 0.44);
+  return Math.floor(fit(1) >= 150 ? Math.min(fit(1), 210) : Math.min(fit(2), 136));
+}
+
+export async function ogCard({ command, title, subtitle }: { command: string; title: string; subtitle: string }) {
   const [anton, mono, sans] = await loadFonts();
   return new ImageResponse(
     <div
@@ -38,8 +36,7 @@ export async function ogCard({
         height: "100%",
         display: "flex",
         flexDirection: "column",
-        justifyContent: "space-between",
-        padding: "60px 84px",
+        padding: "56px 84px 64px",
         background: "radial-gradient(ellipse 70% 80% at 30% 55%, #123827 0%, #0a0d0c 70%)",
         color: "#eef6f2",
         fontFamily: "Geist",
@@ -64,24 +61,25 @@ export async function ogCard({
         </div>
         <div style={{ fontFamily: "JetBrains Mono", fontSize: 28, color: "#eef6f2" }}>Kevin Wang</div>
       </div>
-      <div style={{ display: "flex", flexDirection: "column" }}>
-        <div style={{ display: "flex", fontFamily: "JetBrains Mono", fontSize: 30, color: "#8fb8a5" }}>
-          <span style={{ color: "#6ee7b7" }}>kevin@auckland ~ %</span>
+      {/* The rest, centred in the space below the mark, so short titles don't leave a gap. */}
+      <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", flexGrow: 1, paddingTop: 28 }}>
+        <div style={{ display: "flex", fontFamily: "JetBrains Mono", fontSize: 32, color: "#8fb8a5" }}>
+          <span style={{ color: "#6ee7b7" }}>~ %</span>
           <span style={{ marginLeft: 16 }}>{command}</span>
         </div>
         <div
           style={{
             fontFamily: "Anton",
-            fontSize: titleSize,
+            fontSize: titleSize(title),
             lineHeight: 1.02,
             color: "#8bf5cb",
-            marginTop: 18,
+            marginTop: 14,
             textWrap: "balance",
           }}
         >
           {title}
         </div>
-        <div style={{ fontSize: 36, color: "#c4dccf", marginTop: 26, textWrap: "balance" }}>{subtitle}</div>
+        <div style={{ fontSize: 40, color: "#c4dccf", marginTop: 24 }}>{subtitle}</div>
       </div>
     </div>,
     {
