@@ -38,7 +38,7 @@ export const profile: Profile = {
   ],
   email: "kevinw4ng712@gmail.com",
   github: "https://github.com/kwan244",
-  linkedin: "https://www.linkedin.com/in/kevin-wang-2464a4317/",
+  linkedin: "https://www.linkedin.com/in/kevin-wang712/",
   source: "https://github.com/kwan244/personal-website",
   // Public copy without the phone number.
   cv: "/Kevin-Wang-CV.pdf",
