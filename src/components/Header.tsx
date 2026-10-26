@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { Icon, icons } from "@/components/Icon";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { profile } from "@/content/profile";
 
 // Contact is the footer, on every page, so its link stays on the current page.
@@ -130,6 +131,8 @@ export function Header() {
             <span className="sr-only">Download </span>CV<span className="sr-only"> (PDF)</span>
             <Icon d={icons.download} />
           </a>
+
+          <ThemeToggle />
 
           <button
             ref={menuButton}
