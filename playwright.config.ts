@@ -11,6 +11,8 @@ export default defineConfig({
   webServer: {
     command: "npm run start -- -p 3100",
     url: "http://localhost:3100",
-    reuseExistingServer: !process.env.CI,
+    // Always a fresh server: a leftover one keeps serving the previous build, whose pages point at script files
+    // a rebuild replaced, so interactive tests fail for no real reason. Now it's a clear "port in use" error.
+    reuseExistingServer: false,
   },
 });

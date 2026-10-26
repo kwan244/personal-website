@@ -34,7 +34,7 @@ A personal portfolio that makes my CV credible to NZ grad recruiters (full-stack
 
 ## Git workflow
 
-- Never commit to `main` directly. Work on branches named `<type>/<short-description>` (e.g. `feat/dark-mode-toggle`), merged by squash-merging a PR. CI (lint + build) and the Vercel preview must pass.
+- Never commit to `main` directly. Work on branches named `<type>/<short-description>` (e.g. `feat/dark-mode-toggle`), merged by squash-merging a PR. CI (lint, build and smoke tests) and the Vercel preview must pass.
 - Decide per change whether it needs its own branch. Features and anything worth its own preview, review or revert get a separate branch and PR. Small fixes (content tweaks, typos, docs, plan updates) go on an already-open related branch, or are batched onto one shared `fix/` or `docs/` branch. Avoid one-commit PRs for trivial changes.
 - One feature per commit, one at a time: when a request lists several features, implement one, commit it, and stop for my review and push before starting the next.
 - Commit messages and PR titles use [Conventional Commits](https://www.conventionalcommits.org): `<type>: <imperative summary>`, e.g. `feat: add project case-study pages`. The PR title becomes the squashed commit on `main`.

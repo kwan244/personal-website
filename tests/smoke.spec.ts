@@ -233,3 +233,15 @@ test("link names include their visible text, for voice control", async ({ page }
     page.getByRole("link", { name: "Creativity sparks, greatness in progress: see my projects" }),
   ).toBeVisible();
 });
+
+test("the phone menu closes when the KW link goes home", async ({ page }) => {
+  await page.setViewportSize({ width: 360, height: 780 });
+  await page.goto("/projects/plateful");
+  const button = page.getByRole("button", { name: "Menu" });
+  await button.click();
+  await expect(page.locator("#mobile-nav")).toBeVisible();
+  await page.getByRole("link", { name: "Kevin Wang — home" }).click();
+  await expect(page).toHaveURL(/\/$/);
+  await expect(page.locator("#mobile-nav")).toBeHidden();
+  await expect(button).toHaveAttribute("aria-expanded", "false");
+});
