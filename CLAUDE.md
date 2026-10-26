@@ -25,6 +25,7 @@ A personal portfolio that makes my CV credible to NZ grad recruiters (full-stack
 - `npm run dev` — local dev server
 - `npm run build` — production build
 - `npm run lint` — ESLint
+- `npm test` — Playwright smoke tests + axe against the production build (run `npm run build` first)
 
 ## Git workflow
 - Never commit to `main` directly. Work on branches named `<type>/<short-description>` (e.g. `feat/dark-mode-toggle`), merged by squash-merging a PR. CI (lint + build) and the Vercel preview must pass.
@@ -33,7 +34,7 @@ A personal portfolio that makes my CV credible to NZ grad recruiters (full-stack
 - Commit messages and PR titles use [Conventional Commits](https://www.conventionalcommits.org): `<type>: <imperative summary>`, e.g. `feat: add project case-study pages`. The PR title becomes the squashed commit on `main`.
 - Keep commit messages short: a subject line only (≤50 chars, imperative) for small or obvious changes. Add a 1–2 line body only for a non-obvious reason, trade-off or known limitation; never restate what the diff shows.
 - Types: `feat` (new feature/content), `fix` (bug fix), `docs` (docs only), `style` (formatting, no logic change), `refactor`, `perf`, `test`, `chore` (deps, tooling), `ci` (workflows).
-- Commit only once `npm run lint` and `npm run build` pass. **Never push until I've reviewed the commit and said to push**; then push it promptly rather than letting reviewed commits pile up.
+- Commit only once `npm run lint`, `npm run build` and `npm test` pass. **Never push until I've reviewed the commit and said to push**; then push it promptly rather than letting reviewed commits pile up.
 - Open the PR right after a branch's first (approved) push (as a draft if the work isn't finished) so CI runs on every push; mark it ready for review when done.
 - No `Co-Authored-By` or other AI attribution lines.
 
