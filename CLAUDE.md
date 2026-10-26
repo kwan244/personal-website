@@ -22,7 +22,7 @@ A personal portfolio that makes my CV credible to NZ grad recruiters (full-stack
 - Use the Next.js `Image` and Metadata APIs.
 - Keep it minimal: no extra libraries unless clearly needed. **Ask before adding any dependency.**
 - Stay host-portable (AWS migration planned): no Vercel-specific packages or services (`@vercel/*`, Edge Config, KV/Blob, Vercel cron).
-- Library docs: Next.js from `node_modules/next/dist/docs/` (see AGENTS.md); every other library (Tailwind, React, GSAP, …) via Context7 before writing code against it.
+- Library docs: Next.js from `node_modules/next/dist/docs/` (see AGENTS.md); every other library (Tailwind, React, Playwright, axe, …) via Context7 before writing code against it.
 - Design work (visual polish, layout, typography, motion, the hero scene): load the `impeccable` skill first and follow its playbook.
 
 ## Commands
