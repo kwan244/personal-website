@@ -1,5 +1,6 @@
-// A round sticker that links somewhere. The circling text is decorative (aria-hidden) so the link
-// is announced once, by its label. textLength stretches any text to fill the circle.
+// A round sticker that links somewhere. The circling text is drawn aria-hidden and spoken as part of the
+// link's name instead ("Creativity sparks, greatness in progress: see my projects"), so the name includes
+// what's visible, as voice control needs. textLength stretches any text to fill the circle.
 export function HeroBadge({
   text,
   href,
@@ -11,8 +12,17 @@ export function HeroBadge({
   label: string;
   className?: string;
 }) {
+  const spoken = text
+    .split("✦")
+    .map((part) => part.trim().toLowerCase())
+    .filter(Boolean)
+    .join(", ");
   return (
-    <a href={href} aria-label={label} className={`hero-badge block rounded-full ${className ?? ""}`}>
+    <a
+      href={href}
+      aria-label={`${spoken.charAt(0).toUpperCase()}${spoken.slice(1)}: ${label}`}
+      className={`hero-badge block rounded-full ${className ?? ""}`}
+    >
       <svg viewBox="0 0 100 100" aria-hidden="true" className="size-full">
         <defs>
           <path id="hero-badge-circle" d="M 50,50 m -38,0 a 38,38 0 1,1 76,0 a 38,38 0 1,1 -76,0" />

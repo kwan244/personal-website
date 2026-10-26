@@ -172,7 +172,7 @@ export default function Home() {
           <HeroBadge
             text={profile.badge}
             href="#projects"
-            label="See my projects"
+            label="see my projects"
             className="desk-badge absolute bottom-4 left-4 size-[clamp(4.5rem,min(15svh,22vw),8rem)] sm:right-8 sm:bottom-8 sm:left-auto"
           />
         </HeroFrame>
