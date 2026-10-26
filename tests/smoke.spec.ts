@@ -100,3 +100,15 @@ test("the phone menu opens, and Escape closes it and returns focus", async ({ pa
   await expect(page.locator("#mobile-nav")).toBeHidden();
   await expect(button).toBeFocused();
 });
+
+test("a case study's sticky facts stay below the header", async ({ page }) => {
+  for (const href of await caseStudies(page)) {
+    await page.goto(href);
+    // Where the aside sticks, against the sticky header's height (Desktop Chrome is wide enough to stick it).
+    const [stickAt, header] = await page.evaluate(() => [
+      parseFloat(getComputedStyle(document.querySelector('[aria-label="At a glance"]')!).top),
+      document.querySelector("header")!.offsetHeight,
+    ]);
+    expect(stickAt, href).toBeGreaterThanOrEqual(header);
+  }
+});

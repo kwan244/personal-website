@@ -107,7 +107,7 @@ async function ProjectDetails({ params }: Pick<PageProps<"/projects/[slug]">, "p
 
       <div className="mt-12 grid gap-12 lg:grid-cols-[17rem_minmax(0,1fr)]">
         {/* At a glance: what I did, when, with what. Sticks beside the write-up on wide screens. */}
-        <aside aria-label="At a glance" className="self-start lg:sticky lg:top-8">
+        <aside aria-label="At a glance" className="self-start lg:sticky lg:top-[calc(var(--header-h)+2rem)]">
           <dl className="grid gap-6 sm:grid-cols-2 lg:grid-cols-1">
             <Fact term="My role">{project.roleLabel}</Fact>
             <Fact term="When">{project.dates}</Fact>
