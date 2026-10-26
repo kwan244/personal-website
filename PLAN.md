@@ -19,9 +19,9 @@
   - [x] `feat/dark-mode-toggle`: a toggle in the header built on the new tokens (follows `prefers-color-scheme` until chosen, remembers the choice, no flash of the wrong theme)
   - [x] `feat/og-image`: link-preview cards in the laptop screen's look (mint on ink, the terminal prompt, Anton): your name on the home page, each project's title and context on its case study; rendered at build time with `next/og`, fonts fetched once and cached; large-image card on X
 - [ ] **Phase 4 (days 10–14)** (one PR per step):
-  - [ ] Accessibility + Lighthouse pass
+  - [x] `fix/accessibility-lighthouse-pass`: Lighthouse on a production build (home and a case study): accessibility, best practices and SEO 100, desktop performance 100, mobile 91–95, CLS 0; keyboard order and focus rings checked on desktop and phone. Fixed link names that left out their visible text (label in name, for voice control). Mobile LCP (~3 s on the simulated slow phone, mostly the handwriting font) left as is: it meets the bar
   - [x] `feat/not-found-page`: a 404 page in the site's terminal voice (heading, one line, links home and to the projects), and a real 404 status for unknown `/projects/<slug>` URLs via `src/proxy.ts` (the page can't: its shell streams with a 200 before the slug is checked). The proxy reads the slugs from `projects.ts`, so there's no second list to keep in sync
-  - [ ] README (stack, how to run, screenshot)
+  - [x] `docs/readme`: README with what the site is, light/dark screenshots (matching the reader's GitHub theme), what's notable under the hood, the stack, how to run and test it, the layout, and how to edit content
   - [ ] Custom domain
   - [ ] Link the site from my CV, GitHub and LinkedIn
 - [ ] **Later:** blog (MDX) with project write-ups
