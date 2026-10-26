@@ -28,6 +28,7 @@
 - [ ] **Later (after Phase 4):** migrate hosting from Vercel to AWS (S3 + CloudFront via static export, or Amplify); write it up as a blog post
 
 ## CV fixes (in FlowCV, then replace `public/Kevin-Wang-CV.pdf` with a no-phone export)
+
 - [ ] ABI internship: describe the work as full-stack, not "frontend", to match the site (API routes, Prisma on AWS RDS MySQL, S3, 3D viewer, PDF reports, tests)
 - [ ] Add the AUSS Member Platform project
 - [ ] Add a link to the portfolio site (once the custom domain is set in Phase 4)
