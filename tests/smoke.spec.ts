@@ -192,3 +192,27 @@ test("every page has a link preview image that loads", async ({ page }) => {
     expect(response.headers()["content-type"], href).toBe("image/png");
   }
 });
+
+test("unknown pages and case studies return a real 404 with the site's page", async ({ page }) => {
+  for (const href of ["/no-such-page", "/projects/no-such-project"]) {
+    const response = await page.goto(href);
+    expect(response?.status(), href).toBe(404);
+    await expect(page.getByRole("heading", { level: 1, name: "Page not found" })).toBeVisible();
+    await expect(page.getByRole("link", { name: "Back to the home page" })).toHaveAttribute("href", "/");
+  }
+  await expectNoAxeViolations(page);
+});
+
+test("encoded links to real case studies still load, and malformed ones are rejected", async ({ page }) => {
+  for (const [href, title] of [
+    ["/projects/%70lateful", "Plateful"],
+    ["/projects/rock%2Dpaper-scissors", "Rock Paper Scissors"],
+  ]) {
+    const response = await page.goto(href);
+    expect(response?.status(), href).toBe(200);
+    await expect(page.getByRole("heading", { level: 1, name: title })).toBeVisible();
+  }
+  // Rejected, not crashed: this server gives the 404 page, Vercel's edge answers 400 before the app runs.
+  const malformed = await page.goto("/projects/%E0%A4%A");
+  expect([400, 404]).toContain(malformed?.status());
+});
