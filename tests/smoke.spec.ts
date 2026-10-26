@@ -124,3 +124,17 @@ test("going Back mid-flight leaves focus at the hero", async ({ page }) => {
   expect(await page.evaluate(() => scrollY)).toBe(0);
   expect(await page.evaluate(() => document.activeElement?.closest('[id^="project-"]') ?? null)).toBeNull();
 });
+
+test("turning on reduced motion mid-visit stops the parallax", async ({ page }) => {
+  await page.goto("/");
+  const shift = () =>
+    page.evaluate(() => document.querySelector<HTMLElement>(".desk-box")!.style.getPropertyValue("--mx"));
+  await page.mouse.move(100, 200);
+  await page.mouse.move(150, 250);
+  await expect.poll(shift).not.toBe("");
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await expect.poll(shift).toBe("");
+  await page.mouse.move(1000, 400);
+  await page.waitForTimeout(300);
+  expect(await shift()).toBe("");
+});
