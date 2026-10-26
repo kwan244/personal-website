@@ -93,7 +93,18 @@ export const projects: Project[] = [
     noteLabel: "Club platform",
     noteDoodle: "dumbbell",
     featured: true,
-    stack: ["React", "TypeScript", "Vite", "Tailwind CSS", "Express", "Prisma", "PostgreSQL", "Zod", "Stripe", "Railway"],
+    stack: [
+      "React",
+      "TypeScript",
+      "Vite",
+      "Tailwind CSS",
+      "Express",
+      "Prisma",
+      "PostgreSQL",
+      "Zod",
+      "Stripe",
+      "Railway",
+    ],
     problem:
       "AUSS needed one place for members to join and pay, for execs to run events and check people in, and for visitors to find out about the club and its sponsors.",
     role: [
@@ -160,8 +171,7 @@ export const projects: Project[] = [
   {
     slug: "guess-whos-the-thief",
     title: "Guess Who's the Thief",
-    summary:
-      "An AI-driven detective game where players question suspects and solve clues to crack a jewellery theft.",
+    summary: "An AI-driven detective game where players question suspects and solve clues to crack a jewellery theft.",
     context: "SOFTENG 206 team project (3 people) · University of Auckland · 2024",
     roleLabel: "One of 3: AI dialogue, game logic, puzzles and media",
     dates: "Sep – Dec 2024",

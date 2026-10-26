@@ -33,12 +33,12 @@ npm install
 npm run dev        # http://localhost:3000
 ```
 
-| Command | What it does |
-| --- | --- |
-| `npm run dev` | Development server |
-| `npm run build` | Production build |
-| `npm run lint` | ESLint |
-| `npm test` | Smoke tests (Playwright + axe) against the production build |
+| Command         | What it does                                                |
+| --------------- | ----------------------------------------------------------- |
+| `npm run dev`   | Development server                                          |
+| `npm run build` | Production build                                            |
+| `npm run lint`  | ESLint                                                      |
+| `npm test`      | Smoke tests (Playwright + axe) against the production build |
 
 Before the first `npm test`, install the test browser once with `npx playwright install chromium`, and run `npm run build` before each test run.
 
