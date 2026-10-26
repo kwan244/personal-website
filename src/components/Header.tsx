@@ -77,21 +77,34 @@ export function Header() {
     return () => document.removeEventListener("keydown", onKeyDown);
   }, [open]);
 
+  // The current section gets an underline with a dot in its middle; on hover the dot appears and the line
+  // grows out of it.
   const navLink = (id: string, label: string, className: string) => (
     <Link
       href={`/#${id}`}
       aria-current={current === id ? "true" : undefined}
       onClick={() => setOpen(false)}
-      className={`decoration-2 underline-offset-8 transition-colors hover:text-accent aria-[current=true]:text-accent aria-[current=true]:underline ${className}`}
+      className={`group/nav font-mono transition-colors hover:text-accent aria-[current=true]:text-accent ${className}`}
     >
-      {label}
+      <span className="relative inline-block pb-2">
+        {label}
+        <span
+          aria-hidden="true"
+          className="absolute inset-x-0 bottom-0 h-0.5 scale-x-0 rounded-full bg-current group-hover/nav:scale-x-100 group-aria-[current=true]/nav:scale-x-100 motion-safe:transition-transform motion-safe:duration-300 motion-safe:ease-out"
+        />
+        <span
+          aria-hidden="true"
+          className="absolute bottom-0 left-1/2 size-1.5 -translate-x-1/2 translate-y-[calc(50%-1px)] rounded-full bg-current opacity-0 ring-[3px] ring-background transition-opacity group-hover/nav:opacity-100 group-aria-[current=true]/nav:opacity-100"
+        />
+      </span>
     </Link>
   );
 
   return (
     // Its own view-transition name keeps it still while the page glides or crossfades beneath it.
     <header className="sticky top-0 z-40 border-b border-border bg-background [view-transition-name:site-header]">
-      <div className="mx-auto flex h-(--header-h) max-w-7xl items-center gap-3 px-4">
+      {/* Three columns from tablet width, so the links sit in the true middle whatever is either side. */}
+      <div className="mx-auto flex h-(--header-h) max-w-7xl items-center gap-3 px-4 md:grid md:grid-cols-[1fr_auto_1fr]">
         <Link href="/" className="mr-auto flex items-center gap-3">
           <span
             aria-hidden="true"
@@ -104,34 +117,35 @@ export function Header() {
         </Link>
 
         <nav aria-label="Main" className="max-md:hidden">
-          <ul className="flex gap-8">
+          <ul className="flex gap-10">
             {navItems.map(({ id, label }) => (
-              <li key={id}>{navLink(id, label, "py-2")}</li>
+              <li key={id}>{navLink(id, label, "block pt-2 text-[0.95rem]")}</li>
             ))}
           </ul>
         </nav>
-        <span aria-hidden="true" className="mx-3 h-8 w-px bg-border max-md:hidden" />
 
-        <a
-          href={profile.cv}
-          download
-          className="inline-flex h-11 items-center gap-2 rounded-md border border-accent px-3 font-semibold text-accent transition-colors hover:bg-accent hover:text-accent-foreground"
-        >
-          <span className="sr-only">Download </span>CV<span className="sr-only"> (PDF)</span>
-          <Icon d={downloadIcon} />
-        </a>
+        <div className="flex items-center gap-3 md:justify-self-end">
+          <a
+            href={profile.cv}
+            download
+            className="inline-flex h-11 items-center gap-2 rounded-md border border-accent px-3 font-semibold text-accent transition-colors hover:bg-accent hover:text-accent-foreground"
+          >
+            <span className="sr-only">Download </span>CV<span className="sr-only"> (PDF)</span>
+            <Icon d={downloadIcon} />
+          </a>
 
-        <button
-          ref={menuButton}
-          type="button"
-          aria-expanded={open}
-          aria-controls="mobile-nav"
-          onClick={() => setOpen(!open)}
-          className="flex h-11 min-w-11 flex-col items-center justify-center text-[0.7rem] leading-none md:hidden"
-        >
-          <Icon d={open ? closeIcon : menuIcon} className="size-6" />
-          Menu
-        </button>
+          <button
+            ref={menuButton}
+            type="button"
+            aria-expanded={open}
+            aria-controls="mobile-nav"
+            onClick={() => setOpen(!open)}
+            className="flex h-11 min-w-11 flex-col items-center justify-center text-[0.7rem] leading-none md:hidden"
+          >
+            <Icon d={open ? closeIcon : menuIcon} className="size-6" />
+            Menu
+          </button>
+        </div>
       </div>
 
       <nav
@@ -143,7 +157,7 @@ export function Header() {
         <ul className="mx-auto max-w-7xl px-4 pb-3">
           {navItems.map(({ id, label }) => (
             <li key={id} className="border-b border-border last:border-0">
-              {navLink(id, label, "block py-3.5 text-xl")}
+              {navLink(id, label, "block pt-3.5 pb-2 text-lg")}
             </li>
           ))}
         </ul>
