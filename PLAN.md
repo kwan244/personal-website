@@ -21,7 +21,7 @@
 - [ ] **Phase 4 (days 10–14)** (one PR per step):
   - [ ] Accessibility + Lighthouse pass
   - [x] `feat/not-found-page`: a 404 page in the site's terminal voice (heading, one line, links home and to the projects), and a real 404 status for unknown `/projects/<slug>` URLs via `src/proxy.ts` (the page can't: its shell streams with a 200 before the slug is checked). The proxy reads the slugs from `projects.ts`, so there's no second list to keep in sync
-  - [ ] README (stack, how to run, screenshot)
+  - [x] `docs/readme`: README with what the site is, light/dark screenshots (matching the reader's GitHub theme), what's notable under the hood, the stack, how to run and test it, the layout, and how to edit content
   - [ ] Custom domain
   - [ ] Link the site from my CV, GitHub and LinkedIn
 - [ ] **Later:** blog (MDX) with project write-ups
