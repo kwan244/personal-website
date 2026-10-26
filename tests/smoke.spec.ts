@@ -192,3 +192,13 @@ test("every page has a link preview image that loads", async ({ page }) => {
     expect(response.headers()["content-type"], href).toBe("image/png");
   }
 });
+
+test("unknown pages and case studies return a real 404 with the site's page", async ({ page }) => {
+  for (const href of ["/no-such-page", "/projects/no-such-project"]) {
+    const response = await page.goto(href);
+    expect(response?.status(), href).toBe(404);
+    await expect(page.getByRole("heading", { level: 1, name: "Page not found" })).toBeVisible();
+    await expect(page.getByRole("link", { name: "Back to the home page" })).toHaveAttribute("href", "/");
+  }
+  await expectNoAxeViolations(page);
+});

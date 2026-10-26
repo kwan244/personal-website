@@ -18,7 +18,12 @@
   - [x] `feat/footer-contact`: the footer becomes the Contact section on every page (the home page's own Contact section goes): a rounded panel headed "Good things begin with a conversation.", the email as the main action (circle arrow and "Email Kevin" as one link) with the existing Copy button, GitHub and LinkedIn rows, quieter "Download CV" and "View source" links; below it name and legal name, Auckland, New Zealand, and "Back to top". Icons as inline SVGs, no icon library
   - [x] `feat/dark-mode-toggle`: a toggle in the header built on the new tokens (follows `prefers-color-scheme` until chosen, remembers the choice, no flash of the wrong theme)
   - [x] `feat/og-image`: link-preview cards in the laptop screen's look (mint on ink, the terminal prompt, Anton): your name on the home page, each project's title and context on its case study; rendered at build time with `next/og`, fonts fetched once and cached; large-image card on X
-- [ ] **Phase 4 (days 10–14):** accessibility + Lighthouse pass, 404 page (plus a real 404 status for unknown `/projects/<slug>` URLs via a `src/proxy.ts` slug check, with the slug list kept separate from `projects.ts`), README (stack, how to run, screenshot), custom domain, link from CV/GitHub/LinkedIn
+- [ ] **Phase 4 (days 10–14)** (one PR per step):
+  - [ ] Accessibility + Lighthouse pass
+  - [x] `feat/not-found-page`: a 404 page in the site's terminal voice (heading, one line, links home and to the projects), and a real 404 status for unknown `/projects/<slug>` URLs via `src/proxy.ts` (the page can't: its shell streams with a 200 before the slug is checked). The proxy reads the slugs from `projects.ts`, so there's no second list to keep in sync
+  - [ ] README (stack, how to run, screenshot)
+  - [ ] Custom domain
+  - [ ] Link the site from my CV, GitHub and LinkedIn
 - [ ] **Later:** blog (MDX) with project write-ups
 - [ ] **Later (after Phase 4):** migrate hosting from Vercel to AWS (S3 + CloudFront via static export, or Amplify); write it up as a blog post
 

@@ -60,7 +60,7 @@ function Fact({ term, children }: { term: string; children: ReactNode }) {
 
 // The back link is URL-independent, so it stays in the shared App Shell; only
 // the params-dependent details sit behind Suspense (keeps navigation instant).
-// shortcut: unknown slugs stream a not-found page with 200 + noindex instead of a 404; add a Proxy check if a real 404 status matters.
+// Unknown slugs never get here: src/proxy.ts answers them with a real 404.
 export default function ProjectPage({ params }: PageProps<"/projects/[slug]">) {
   return (
     <div className="mx-auto max-w-7xl px-4 py-12">
