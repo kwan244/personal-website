@@ -55,7 +55,8 @@ export function NoteFlight() {
       transition.finished.finally(() => {
         delete root.dataset.noteFlight;
         sticker.style.viewTransitionName = "";
-        card.querySelector("a")?.focus({ preventScroll: true });
+        // Unless Back was pressed mid-flight: then the page is at the hero again and focus stays there.
+        if (location.hash === note.hash) card.querySelector("a")?.focus({ preventScroll: true });
         sticker
           .animate({ opacity: 0 }, { duration: 500, delay: 700, easing: "ease-in", fill: "forwards" })
           .finished.then(() => sticker.remove());

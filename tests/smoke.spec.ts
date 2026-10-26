@@ -88,3 +88,53 @@ test("pressing Enter twice on a note starts one flight", async ({ page }) => {
   await expect(page.locator('[id^="project-"] h3 a').first()).toBeFocused();
   expect(await page.evaluate(() => (window as unknown as { flights: number }).flights)).toBe(1);
 });
+
+test("the phone menu opens, and Escape closes it and returns focus", async ({ page }) => {
+  await page.setViewportSize({ width: 360, height: 780 });
+  await page.goto("/");
+  const button = page.getByRole("button", { name: "Menu" });
+  await button.click();
+  await expect(button).toHaveAttribute("aria-expanded", "true");
+  await expect(page.locator("#mobile-nav").getByRole("link", { name: "Projects" })).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(page.locator("#mobile-nav")).toBeHidden();
+  await expect(button).toBeFocused();
+});
+
+test("a case study's sticky facts stay below the header", async ({ page }) => {
+  for (const href of await caseStudies(page)) {
+    await page.goto(href);
+    // Where the aside sticks, against the sticky header's height (Desktop Chrome is wide enough to stick it).
+    const [stickAt, header] = await page.evaluate(() => [
+      parseFloat(getComputedStyle(document.querySelector('[aria-label="At a glance"]')!).top),
+      document.querySelector("header")!.offsetHeight,
+    ]);
+    expect(stickAt, href).toBeGreaterThanOrEqual(header);
+  }
+});
+
+test("going Back mid-flight leaves focus at the hero", async ({ page }) => {
+  await page.goto("/");
+  await page.locator(".desk-note a").first().click();
+  // Back once the flight has recorded its history entry, while the note is still in the air.
+  await expect(page).toHaveURL(/#project-/);
+  expect(await page.evaluate(() => "noteFlight" in document.documentElement.dataset)).toBe(true);
+  await page.goBack();
+  await expect.poll(() => page.evaluate(() => "noteFlight" in document.documentElement.dataset)).toBe(false);
+  expect(await page.evaluate(() => scrollY)).toBe(0);
+  expect(await page.evaluate(() => document.activeElement?.closest('[id^="project-"]') ?? null)).toBeNull();
+});
+
+test("turning on reduced motion mid-visit stops the parallax", async ({ page }) => {
+  await page.goto("/");
+  const shift = () =>
+    page.evaluate(() => document.querySelector<HTMLElement>(".desk-box")!.style.getPropertyValue("--mx"));
+  await page.mouse.move(100, 200);
+  await page.mouse.move(150, 250);
+  await expect.poll(shift).not.toBe("");
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await expect.poll(shift).toBe("");
+  await page.mouse.move(1000, 400);
+  await page.waitForTimeout(300);
+  expect(await shift()).toBe("");
+});
