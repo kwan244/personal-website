@@ -13,6 +13,7 @@
   --accent: #047857;
   --accent-foreground: #ffffff;
   --border: #d3e3db;
+  --header-h: 4rem;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -54,6 +55,11 @@
 /* clip, not hidden: nothing wider than the viewport can add a sideways scroll, and sticky positioning
    (the case-study aside) still works. Set on html too, or body's value moves to the viewport and body
    no longer clips. */
+/* Jumps to a section stop below the sticky header. */
+html {
+  scroll-padding-top: var(--header-h);
+}
+
 html,
 body {
   overflow-x: clip;
@@ -70,7 +76,7 @@ body {
    edge colour either side, which matches the frame; narrower ones crop the sides. Frame: viewport
    height minus the header, capped so phones show the whole laptop. */
 .desk-frame {
-  --frame-h: min(calc(100svh - 3.5rem), 116vw);
+  --frame-h: min(calc(100svh - var(--header-h)), 116vw);
   height: var(--frame-h);
 }
 

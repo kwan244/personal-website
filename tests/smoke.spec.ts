@@ -88,3 +88,15 @@ test("pressing Enter twice on a note starts one flight", async ({ page }) => {
   await expect(page.locator('[id^="project-"] h3 a').first()).toBeFocused();
   expect(await page.evaluate(() => (window as unknown as { flights: number }).flights)).toBe(1);
 });
+
+test("the phone menu opens, and Escape closes it and returns focus", async ({ page }) => {
+  await page.setViewportSize({ width: 360, height: 780 });
+  await page.goto("/");
+  const button = page.getByRole("button", { name: "Menu" });
+  await button.click();
+  await expect(button).toHaveAttribute("aria-expanded", "true");
+  await expect(page.locator("#mobile-nav").getByRole("link", { name: "Projects" })).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(page.locator("#mobile-nav")).toBeHidden();
+  await expect(button).toBeFocused();
+});
