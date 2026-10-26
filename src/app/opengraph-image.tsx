@@ -8,7 +8,6 @@ export const contentType = "image/png";
 
 export default function Image() {
   return ogCard({
-    command: "whoami",
     title: profile.name.toUpperCase(),
     subtitle: profile.headline,
   });

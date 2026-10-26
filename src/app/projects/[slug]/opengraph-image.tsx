@@ -16,7 +16,6 @@ export default async function Image({ params }: { params: Promise<{ slug: string
   const { slug } = await params;
   const project = projects.find((p) => p.slug === slug) ?? notFound();
   return ogCard({
-    command: "cat README.md",
     title: project.title,
     // One short line that still reads in a thumbnail: the kind of project and when.
     subtitle: `${project.noteLabel} · ${project.dates}`,

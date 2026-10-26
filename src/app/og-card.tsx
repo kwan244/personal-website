@@ -1,7 +1,7 @@
 import { cacheLife } from "next/cache";
 import { ImageResponse } from "next/og";
 
-// The link-preview card, in the laptop screen's look (mint on ink, a terminal prompt, a title in Anton), for
+// The link-preview card, in the laptop screen's look (mint on ink, the KW mark, a title in Anton), for
 // the home page and each case study. 1200 × 630, rendered at build time.
 export const ogSize = { width: 1200, height: 630 };
 
@@ -27,7 +27,7 @@ function titleSize(title: string) {
   return Math.floor(fit(1) >= 150 ? Math.min(fit(1), 210) : Math.min(fit(2), 136));
 }
 
-export async function ogCard({ command, title, subtitle }: { command: string; title: string; subtitle: string }) {
+export async function ogCard({ title, subtitle }: { title: string; subtitle: string }) {
   const [anton, mono, sans] = await loadFonts();
   return new ImageResponse(
     <div
@@ -63,17 +63,12 @@ export async function ogCard({ command, title, subtitle }: { command: string; ti
       </div>
       {/* The rest, centred in the space below the mark, so short titles don't leave a gap. */}
       <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", flexGrow: 1, paddingTop: 28 }}>
-        <div style={{ display: "flex", fontFamily: "JetBrains Mono", fontSize: 32, color: "#8fb8a5" }}>
-          <span style={{ color: "#6ee7b7" }}>~ %</span>
-          <span style={{ marginLeft: 16 }}>{command}</span>
-        </div>
         <div
           style={{
             fontFamily: "Anton",
             fontSize: titleSize(title),
             lineHeight: 1.02,
             color: "#8bf5cb",
-            marginTop: 14,
             textWrap: "balance",
           }}
         >
