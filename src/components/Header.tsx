@@ -3,34 +3,15 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { Icon, icons } from "@/components/Icon";
 import { profile } from "@/content/profile";
 
+// Contact is the footer, on every page, so its link stays on the current page.
 const navItems = [
-  { id: "about", label: "About" },
-  { id: "projects", label: "Projects" },
-  { id: "contact", label: "Contact" },
+  { id: "about", label: "About", href: "/#about" },
+  { id: "projects", label: "Projects", href: "/#projects" },
+  { id: "contact", label: "Contact", href: "#contact" },
 ];
-
-// Thin line icons in the doodles' round-capped style; decorative, so the text beside them names the control.
-function Icon({ d, className = "size-5" }: { d: string; className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      aria-hidden="true"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-    >
-      <path d={d} />
-    </svg>
-  );
-}
-const downloadIcon = "M12 4v11M7.5 10.5 12 15l4.5-4.5M5 16v3h14v-3";
-const menuIcon = "M4 7h16M4 12h16M4 17h16";
-const closeIcon = "M6 6l12 12M18 6 6 18";
 
 // The section crossing a line 40% down the screen (home page only; About's band also holds Skills). Nothing
 // is marked on the hero.
@@ -79,9 +60,9 @@ export function Header() {
 
   // The current section gets an underline with a dot in its middle; on hover the dot appears and the line
   // grows out of it.
-  const navLink = (id: string, label: string, className: string) => (
+  const navLink = ({ id, label, href }: (typeof navItems)[number], className: string) => (
     <Link
-      href={`/#${id}`}
+      href={href}
       aria-current={current === id ? "true" : undefined}
       onClick={() => setOpen(false)}
       className={`group/nav font-mono transition-colors hover:text-accent aria-[current=true]:text-accent ${className}`}
@@ -127,8 +108,8 @@ export function Header() {
 
         <nav aria-label="Main" className="max-md:hidden">
           <ul className="flex gap-10">
-            {navItems.map(({ id, label }) => (
-              <li key={id}>{navLink(id, label, "block pt-2 text-[0.95rem]")}</li>
+            {navItems.map((item) => (
+              <li key={item.id}>{navLink(item, "block pt-2 text-[0.95rem]")}</li>
             ))}
           </ul>
         </nav>
@@ -140,7 +121,7 @@ export function Header() {
             className="inline-flex h-11 items-center gap-2 rounded-md border border-accent px-3 font-semibold text-accent transition-colors hover:bg-accent hover:text-accent-foreground"
           >
             <span className="sr-only">Download </span>CV<span className="sr-only"> (PDF)</span>
-            <Icon d={downloadIcon} />
+            <Icon d={icons.download} />
           </a>
 
           <button
@@ -151,7 +132,7 @@ export function Header() {
             onClick={() => setOpen(!open)}
             className="flex h-11 min-w-11 flex-col items-center justify-center text-[0.7rem] leading-none md:hidden"
           >
-            <Icon d={open ? closeIcon : menuIcon} className="size-6" />
+            <Icon d={open ? icons.close : icons.menu} className="size-6" />
             Menu
           </button>
         </div>
@@ -164,9 +145,9 @@ export function Header() {
         className="absolute inset-x-0 top-full border-b border-border bg-background md:hidden"
       >
         <ul className="mx-auto max-w-7xl px-4 pb-3">
-          {navItems.map(({ id, label }) => (
-            <li key={id} className="border-b border-border last:border-0">
-              {navLink(id, label, "block pt-3.5 pb-2 text-lg")}
+          {navItems.map((item) => (
+            <li key={item.id} className="border-b border-border last:border-0">
+              {navLink(item, "block pt-3.5 pb-2 text-lg")}
             </li>
           ))}
         </ul>

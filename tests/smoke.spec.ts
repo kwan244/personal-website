@@ -138,3 +138,11 @@ test("turning on reduced motion mid-visit stops the parallax", async ({ page }) 
   await page.waitForTimeout(300);
   expect(await shift()).toBe("");
 });
+
+test("Contact jumps to the footer on the current page", async ({ page }) => {
+  const [href] = await caseStudies(page);
+  await page.goto(href);
+  await page.locator("header nav").getByRole("link", { name: "Contact" }).click();
+  await expect(page).toHaveURL(new RegExp(`${href}#contact$`));
+  await expect(page.getByRole("heading", { name: "Good things begin with a conversation." })).toBeInViewport();
+});
