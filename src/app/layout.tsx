@@ -41,6 +41,8 @@ export const metadata: Metadata = {
   },
   description,
   openGraph: { ...openGraphBase, type: "website", title, description, url: "/" },
+  // The preview image (opengraph-image.tsx) shown full width rather than as a thumbnail.
+  twitter: { card: "summary_large_image" },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

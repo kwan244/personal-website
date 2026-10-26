@@ -180,3 +180,15 @@ test("a saved theme is applied before the page body is parsed", async ({ page })
   expect(script).toBeGreaterThan(0);
   expect(script).toBeLessThan(html.indexOf("<body"));
 });
+
+test("every page has a link preview image that loads", async ({ page }) => {
+  for (const href of ["/", ...(await caseStudies(page))]) {
+    await page.goto(href);
+    const image = await page.locator('meta[property="og:image"]').getAttribute("content");
+    expect(image, href).toBeTruthy();
+    // The tag holds the deployed URL; fetch the same path from this server.
+    const response = await page.request.get(new URL(image!).pathname);
+    expect(response.status(), href).toBe(200);
+    expect(response.headers()["content-type"], href).toBe("image/png");
+  }
+});
