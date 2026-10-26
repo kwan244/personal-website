@@ -2,7 +2,7 @@
 
 My personal portfolio: who I am, what I've built, and how to reach me. I'm Kevin Wang (Wangxun Wang), a fourth-year Software Engineering student at the University of Auckland.
 
-**Live:** [personal-website-two-gray-19.vercel.app](https://personal-website-two-gray-19.vercel.app)
+**Live:** [kevin-wang.dev](https://www.kevin-wang.dev)
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/screenshot-dark.jpg">
