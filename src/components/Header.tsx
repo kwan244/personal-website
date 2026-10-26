@@ -101,8 +101,9 @@ export function Header() {
   );
 
   return (
-    // Its own view-transition name keeps it still while the page glides or crossfades beneath it.
-    <header className="sticky top-0 z-40 border-b border-border bg-background [view-transition-name:site-header]">
+    // Its own view-transition name keeps it still while the page glides or crossfades beneath it. Mostly
+    // opaque with a blur, so the page shows through faintly but the links stay legible; solid without blur.
+    <header className="sticky top-0 z-40 border-b border-border bg-background [view-transition-name:site-header] supports-backdrop-filter:bg-background/85 supports-backdrop-filter:backdrop-blur-md">
       {/* Three columns from tablet width, so the links sit in the true middle whatever is either side. */}
       <div className="mx-auto flex h-(--header-h) max-w-7xl items-center gap-3 px-4 md:grid md:grid-cols-[1fr_auto_1fr]">
         {/* The signature: on first load K, then W, appear in the mark and the name types out (CSS in
