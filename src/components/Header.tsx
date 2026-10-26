@@ -105,15 +105,23 @@ export function Header() {
     <header className="sticky top-0 z-40 border-b border-border bg-background [view-transition-name:site-header]">
       {/* Three columns from tablet width, so the links sit in the true middle whatever is either side. */}
       <div className="mx-auto flex h-(--header-h) max-w-7xl items-center gap-3 px-4 md:grid md:grid-cols-[1fr_auto_1fr]">
-        <Link href="/" className="mr-auto flex items-center gap-3">
+        {/* The signature: on first load K, then W, appear in the mark and the name types out (CSS in
+            globals.css, so it plays from first paint and never replays on navigation). The link's name stays
+            fixed; phones show only the mark. */}
+        <Link href="/" aria-label={`${profile.name} — home`} className="mr-auto flex items-center gap-3">
           <span
             aria-hidden="true"
             className="grid size-11 place-items-center rounded-sm border-2 border-accent font-display text-xl text-accent"
           >
-            KW
+            <span>
+              <span className="sig-k">K</span>
+              <span className="sig-w">W</span>
+            </span>
           </span>
-          {/* Phones show only the mark; the name stays for screen readers. */}
-          <span className="text-lg font-semibold max-sm:sr-only">{profile.name}</span>
+          <span aria-hidden="true" className="relative font-mono text-[1.15rem] font-bold max-sm:hidden">
+            <span className="sig-name inline-block">{profile.name}</span>
+            <span className="sig-caret absolute top-1/2 h-[1.1em] w-[0.55em] -translate-y-1/2 bg-accent opacity-0" />
+          </span>
         </Link>
 
         <nav aria-label="Main" className="max-md:hidden">
