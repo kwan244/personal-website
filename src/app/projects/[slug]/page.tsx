@@ -64,8 +64,15 @@ function Fact({ term, children }: { term: string; children: ReactNode }) {
 export default function ProjectPage({ params }: PageProps<"/projects/[slug]">) {
   return (
     <div className="mx-auto max-w-7xl px-4 py-12">
-      <Link href="/#projects" className="text-sm text-muted hover:underline">
-        <span aria-hidden="true">←</span> All projects
+      {/* Bordered like the previous/next cards at the foot of the page; the arrow leans the way it goes. */}
+      <Link
+        href="/#projects"
+        className="group inline-flex min-h-11 items-center gap-2 rounded-xl border border-border px-4 text-sm transition-colors hover:border-accent hover:text-accent"
+      >
+        <span aria-hidden="true" className="motion-safe:transition-transform group-hover:-translate-x-1">
+          ←
+        </span>
+        All projects
       </Link>
       <Suspense fallback={<p className="mt-6 text-muted">Loading project…</p>}>
         <ProjectDetails params={params} />
