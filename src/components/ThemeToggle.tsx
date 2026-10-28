@@ -54,7 +54,7 @@ export function ThemeToggle() {
       type="button"
       aria-pressed={dark}
       onClick={toggle}
-      className="grid size-11 place-items-center rounded-md border border-border transition-colors hover:border-accent hover:text-accent"
+      className="grid size-11 place-items-center rounded-md border border-accent text-accent transition-colors hover:bg-accent hover:text-accent-foreground"
     >
       <span className="sr-only">Dark theme</span>
       {/* The icon offers the other theme; CSS picks it, so it's right from first paint. */}
