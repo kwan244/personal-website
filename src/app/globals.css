@@ -491,6 +491,41 @@ body {
   }
 }
 
+/* The phone menu unrolls from under the header when it opens: its bottom edge travels down and the links
+   ride with it. With reduced motion it fades in instead; closing is instant either way. */
+@media (prefers-reduced-motion: no-preference) {
+  .mobile-nav {
+    animation: menu-unroll 260ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .mobile-nav > ul {
+    animation: menu-ride 260ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mobile-nav {
+    animation: menu-fade 150ms ease-out;
+  }
+}
+/* An explicit end: inset() can't interpolate to the panel's own clip-path: none. */
+@keyframes menu-unroll {
+  from {
+    clip-path: inset(0 0 100% 0);
+  }
+  to {
+    clip-path: inset(0);
+  }
+}
+@keyframes menu-ride {
+  from {
+    translate: 0 -100%;
+  }
+}
+@keyframes menu-fade {
+  from {
+    opacity: 0;
+  }
+}
+
 /* Page transitions (ProjectMorph): a project's screenshot and title morph between its card and its case
    study, softened mid-flight; everything else crossfades. Clicks pass through the transition overlay. */
 ::view-transition-group(.morph) {

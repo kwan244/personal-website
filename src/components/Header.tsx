@@ -157,7 +157,7 @@ export function Header() {
         id="mobile-nav"
         aria-label="Main"
         hidden={!open}
-        className="absolute inset-x-0 top-full border-b border-border bg-background md:hidden"
+        className="mobile-nav absolute inset-x-0 top-full border-b border-border bg-background md:hidden"
       >
         <ul className="mx-auto max-w-7xl px-4 pb-3">
           {navItems.map((item) => (
