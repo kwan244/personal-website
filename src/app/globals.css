@@ -119,13 +119,6 @@ body {
   transform-origin: 50% 100%;
 }
 
-/* Rotate/translate properties, not transform: the badge text keeps its SVG transform attributes. */
-.badge-spin,
-.badge-boost {
-  transform-box: view-box;
-  transform-origin: 50% 50%;
-}
-
 /* The laptop's terminal: "whoami" types itself, and the stack line shows one skill at a time. Without
    motion the word is simply there and the reel rests on its first skill. */
 .desk-typed {
